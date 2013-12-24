@@ -10,7 +10,7 @@
        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
 	<!-- The IoHandler implementation -->
-	<bean id="serverHandler" class="com.krakentech.server.handler.ServerHandler" />
+	<bean id="serverHandler" class="com.krakentouch.server.handler.ServerHandler" />
 
 	<!-- executorFilter多线程处理 -->
 	<bean id="executorFilter" class="org.apache.mina.filter.executor.ExecutorFilter" />
@@ -26,7 +26,7 @@
 			<!-- 处理对象流时候用ObjectSerializationCodecFactory -->
 			<!-- <bean class="org.apache.mina.filter.codec.serialization.ObjectSerializationCodecFactory" 
 				/> -->
-			<bean class="com.krakentech.server.filter.ServerCodeFactory" />
+			<bean class="com.krakentouch.server.filter.ServerCodeFactory" />
 		</constructor-arg>
 	</bean>
 
@@ -65,13 +65,14 @@
 		<property name="reuseAddress" value="true" />
 	</bean>
 
+
 	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver">
 		</property>
-		<property name="url" value="jdbc:mysql://127.0.0.1:3306/test">
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/cyy">
 		</property>
 		<property name="username" value="root"></property>
-		<property name="password" value="123"></property>
+		<property name="password" value="mysql"></property>
 	</bean>
 
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -92,7 +93,7 @@
 
 	<!-- 注册Mapper方式二：也可不指定特定mapper，而使用自动扫描包的方式来注册各种Mapper ，配置如下： -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.krakentech.server.mapper" />
+		<property name="basePackage" value="com.krakentouch.server.mapper" />
 	</bean>
 
 	<bean id="transactionManager"

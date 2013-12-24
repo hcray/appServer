@@ -40,7 +40,7 @@
 		</layout>
 	</appender>
 
-	<logger name="com.krakentech.server" addtivity="false">
+	<logger name="com.krakentouch.server" addtivity="false">
 		<level value="DEBUG" />
 		<appender-ref ref="appServer" />
 	</logger>
