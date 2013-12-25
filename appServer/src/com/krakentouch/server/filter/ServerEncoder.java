@@ -16,11 +16,10 @@ public class ServerEncoder implements ProtocolEncoder{
 	}
 
 	@Override
-	public void encode(IoSession arg0, Object arg1, ProtocolEncoderOutput arg2)
+	public void encode(IoSession session, Object obj, ProtocolEncoderOutput out)
 			throws Exception {
-		// TODO Auto-generated method stub
-		
+		LOG.debug("encode(...)");
+		out.write(obj);
 	}
-
 
 }

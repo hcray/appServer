@@ -39,7 +39,7 @@
 			<map>
 				<entry key="executor" value-ref="executorFilter" />
 				<entry key="mdcInjectionFilter" value-ref="mdcInjectionFilter" />
-				<!-- <entry key="codecFilter" value-ref="codecFilter" /> -->
+				<entry key="codecFilter" value-ref="codecFilter" />
 				<entry key="loggingFilter" value-ref="loggingFilter" />
 			</map>
 		</property>

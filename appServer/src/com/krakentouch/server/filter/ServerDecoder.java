@@ -11,10 +11,10 @@ public class ServerDecoder implements ProtocolDecoder{
 	private static final Logger LOG = LoggerFactory.getLogger(ServerDecoder.class); 
 	
 	@Override
-	public void decode(IoSession arg0, IoBuffer arg1, ProtocolDecoderOutput arg2)
+	public void decode(IoSession session, IoBuffer ioBuffer, ProtocolDecoderOutput out)
 			throws Exception {
-		// TODO Auto-generated method stub
-		
+		LOG.debug("decode(...)");
+		out.write(ioBuffer);
 	}
 
 	@Override
