@@ -65,7 +65,7 @@
 		<property name="reuseAddress" value="true" />
 	</bean>
 
-
+	<!-- 数据源 -->
 	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver">
 		</property>
@@ -96,6 +96,7 @@
 		<property name="basePackage" value="com.krakentouch.server.mapper" />
 	</bean>
 
+	<!-- 事务管理器 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="myDataSource" />
