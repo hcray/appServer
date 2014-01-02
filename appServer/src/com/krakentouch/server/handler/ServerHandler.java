@@ -7,9 +7,22 @@ import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.krakentouch.server.domain.User;
+import com.krakentouch.server.service.UserService;
+
 public class ServerHandler extends IoHandlerAdapter {
 	// 日志
 	private static final Logger LOG = LoggerFactory.getLogger(ServerHandler.class);
+	
+	private UserService userService;
+
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 
 	@Override
 	public void exceptionCaught(IoSession session, Throwable cause)
@@ -45,7 +58,13 @@ public class ServerHandler extends IoHandlerAdapter {
 
 	@Override
 	public void sessionCreated(IoSession session) throws Exception {
-		LOG.debug("session Created");
+		LOG.debug("session Created start...");
+		User user = new User();
+		user.setName("handler");
+		user.setAge(12);
+		userService.insertUser(user);
+		LOG.debug("session Created end...");
+		
 	}
 
 	@Override

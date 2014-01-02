@@ -14,7 +14,9 @@
        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
 	<!-- The IoHandler implementation -->
-	<bean id="serverHandler" class="com.krakentouch.server.handler.ServerHandler" />
+	<bean id="serverHandler" class="com.krakentouch.server.handler.ServerHandler">
+		<property name="userService" ref="userService"></property>
+	</bean>
 
 	<!-- executorFilter多线程处理 -->
 	<bean id="executorFilter" class="org.apache.mina.filter.executor.ExecutorFilter" />
