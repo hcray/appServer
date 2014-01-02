@@ -2,6 +2,9 @@ package com.krakentouch.server.bootstrap;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.krakentouch.server.domain.User;
+import com.krakentouch.server.service.UserService;
+
 public class BootstrapClass {
 
 	public static void main(String[] args) {
@@ -27,12 +30,15 @@ public class BootstrapClass {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//ClassPathXmlApplicationContext ct =
 		 */
-		  
-		new ClassPathXmlApplicationContext("applicationContext.xml");
+		ClassPathXmlApplicationContext ct = new ClassPathXmlApplicationContext("applicationContext.xml");
 		
 		System.out.println("Server started...");
+		UserService userService = (UserService) ct.getBean("userService");
+		User user = new User();
+		user.setName("tom");
+		user.setAge(12);
+		userService.insertUser(user);
 	}
 
 }

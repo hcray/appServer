@@ -2,8 +2,8 @@ package com.krakentouch.server.dao.impl;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 
-import com.krakentouch.server.bean.User;
 import com.krakentouch.server.dao.UserDao;
+import com.krakentouch.server.domain.User;
 
 public class UserDaoImpl extends SqlSessionDaoSupport implements UserDao {
 

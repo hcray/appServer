@@ -1,7 +1,7 @@
 package com.krakentouch.server.dao;
 
-import com.krakentouch.server.bean.User;
 import com.krakentouch.server.dao.impl.UserDaoImpl;
+import com.krakentouch.server.domain.User;
 
 public class UserDaoTest {
 

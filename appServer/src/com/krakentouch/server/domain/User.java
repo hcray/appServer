@@ -1,4 +1,4 @@
-package com.krakentouch.server.mapper;
+package com.krakentouch.server.domain;
 
 public class User {
 	private String id;

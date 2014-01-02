@@ -9,8 +9,7 @@ import org.slf4j.LoggerFactory;
 
 public class ServerHandler extends IoHandlerAdapter {
 	// 日志
-	private static final Logger LOG = LoggerFactory
-			.getLogger(ServerHandler.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ServerHandler.class);
 
 	@Override
 	public void exceptionCaught(IoSession session, Throwable cause)
