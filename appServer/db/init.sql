@@ -65,3 +65,33 @@ create table TerminalLog(
 	DeskID char(8) comment '终端串号',
 	Script varchar(1024)comment '终端日志内容'
 )comment '终端日志';
+
+drop table if EXISTS StageMap;
+create table StageMap(
+	StageSN int(10) primary key comment '流水号',
+	Status int(1) comment'工作状态（0~1分别表示待机、游戏）',
+	HostIndex int(20) comment'桌主座位序号',
+	GameID char(6) comment'串号'
+)comment '游戏桌映射表';
+
+drop table if EXISTS SeatMap;
+create table SeatMap(
+	StageSN int(20) comment '流水号',
+	PlayerID char(10) comment '串号',
+	SeatIndex int(20) comment '座位序号'
+)comment '游戏座位映射表';
+
+drop table if EXISTS PlayerMap;
+create table PlayerMap(
+	PlayerID char(10) comment '串号',
+	DeskID char(8) comment '串号',
+	Status int(1) comment '工作状态（0~3分别表示待机、询人、查桌、游戏）',
+	GameID char(6) comment '串号'
+)comment '玩家映射表';
+
+drop table if EXISTS DeskMap;
+create table DeskMap(
+	DeskID char(8) comment '串号',
+	Mode int(1) comment '工作模式（0~2分别表示单人独占、多人独占、多人分占）',
+	Status int(1) comment '工作状态（保留）'
+)comment '终端映射表';

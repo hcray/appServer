@@ -34,12 +34,13 @@ public class BootstrapClass {
 		ClassPathXmlApplicationContext ct = new ClassPathXmlApplicationContext("applicationContext.xml");
 		
 		System.out.println("Server started...");
-		
+		/*
 		UserService userService = (UserService) ct.getBean("userService");
 		User user = new User();
 		user.setName("tom");
 		user.setAge(12);
 		userService.insertUser(user);
+		*/
 	}
 
 }
