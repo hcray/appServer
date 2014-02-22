@@ -20,7 +20,7 @@
 			</list>
 		</property>
 	</bean>   
-       
+	<import resource="applicationContext-service-login.xml"/>
 
 	<!-- The IoHandler implementation -->
 	<bean id="serverHandler" class="com.krakentouch.server.handler.ServerHandler">
@@ -36,12 +36,13 @@
 
 	<bean id="codecFilter" class="org.apache.mina.filter.codec.ProtocolCodecFilter">
 		<constructor-arg>
-			<!-- <bean class="org.apache.mina.filter.codec.textline.TextLineCodecFactory" 
-				/> -->
+			<bean class="org.apache.mina.filter.codec.textline.TextLineCodecFactory"></bean>
+			
 			<!-- 处理对象流时候用ObjectSerializationCodecFactory -->
-			<!-- <bean class="org.apache.mina.filter.codec.serialization.ObjectSerializationCodecFactory" 
-				/> -->
+			<!-- 
+			<bean class="org.apache.mina.filter.codec.serialization.ObjectSerializationCodecFactory"/>
 			<bean class="com.krakentouch.server.filter.ServerCodeFactory" />
+			 -->
 		</constructor-arg>
 	</bean>
 

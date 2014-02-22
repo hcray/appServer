@@ -1,20 +1,30 @@
 package com.krakentouch.server.handler;
 
-import org.apache.mina.core.buffer.IoBuffer;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
+import org.apache.mina.filter.logging.MdcInjectionFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.krakentouch.server.domain.User;
+import com.krakentouch.server.action.MainAction;
 import com.krakentouch.server.service.UserService;
 
 public class ServerHandler extends IoHandlerAdapter {
 	// 日志
 	private static final Logger LOG = LoggerFactory.getLogger(ServerHandler.class);
+	//session集合
+    private final Set<IoSession> sessions = Collections.synchronizedSet(new HashSet<IoSession>());
+    //用户集合
+    private final Set<String> users = Collections.synchronizedSet(new HashSet<String>());
 	
 	private UserService userService;
+	
+	private MainAction mainAction;
 
 	public UserService getUserService() {
 		return userService;
@@ -24,10 +34,18 @@ public class ServerHandler extends IoHandlerAdapter {
 		this.userService = userService;
 	}
 
+	public MainAction getMainAction() {
+		return mainAction;
+	}
+
+	public void setMainAction(MainAction mainAction) {
+		this.mainAction = mainAction;
+	}
+
 	@Override
 	public void exceptionCaught(IoSession session, Throwable cause)
 			throws Exception {
-		LOG.debug(cause.getMessage());
+		LOG.warn(cause.getMessage());
 		cause.printStackTrace();
 		session.close(true);
 	}
@@ -36,13 +54,16 @@ public class ServerHandler extends IoHandlerAdapter {
 	public void messageReceived(IoSession session, Object message)
 			throws Exception {
 		LOG.debug("messageReceived: " + message.toString());
+		String user = "";
+        sessions.add(session);
+        session.setAttribute("user", user);
+        MdcInjectionFilter.setProperty(session, "user", user);
+		System.out.println("Message : " + message);
 		
-		System.out.println("Message : " + ((IoBuffer) message).getInt());
-
-		((IoBuffer) message).flip();
-
+		mainAction.doCommand((String)message);
+		session.write("LOGIN OK");
 		// If we want to test the write operation, uncomment this line
-		session.write(message);
+		//session.write(message);
 
 	}
 
@@ -54,16 +75,12 @@ public class ServerHandler extends IoHandlerAdapter {
 	@Override
 	public void sessionClosed(IoSession session) throws Exception {
 		LOG.debug("session Closed");
+		
 	}
 
 	@Override
 	public void sessionCreated(IoSession session) throws Exception {
-		LOG.debug("session Created start...");
-		User user = new User();
-		user.setName("handler");
-		user.setAge(12);
-		userService.insertUser(user);
-		LOG.debug("session Created end...");
+		LOG.debug("session Created...");
 		
 	}
 

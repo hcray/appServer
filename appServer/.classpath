@@ -41,5 +41,6 @@
 	<classpathentry kind="lib" path="lib/com.springsource.org.apache.commons.pool-1.5.3.jar"/>
 	<classpathentry kind="lib" path="lib/mybatis-spring-1.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/spring-aop-3.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
