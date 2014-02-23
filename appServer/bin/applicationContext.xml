@@ -25,6 +25,7 @@
 	<!-- The IoHandler implementation -->
 	<bean id="serverHandler" class="com.krakentouch.server.handler.ServerHandler">
 		<property name="userService" ref="userService"></property>
+		<property name="mainAction" ref="mainAction"></property>
 	</bean>
 
 	<!-- executorFilter多线程处理 -->

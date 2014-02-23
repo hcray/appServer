@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.krakentouch.server.mapper.DeskMapMapper">
-	<insert id="insertUser" parameterType="DeskMap">
+	<insert id="insertDeskMap" parameterType="DeskMap">
 		INSERT INTO DESKMAP
 			(DESKID,MODE,STATUS) 
 		VALUES
