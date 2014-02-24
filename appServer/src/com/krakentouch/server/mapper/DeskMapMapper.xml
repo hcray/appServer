@@ -10,5 +10,10 @@
 		VALUES
 			(#{DeskID},#{Mode},#{Status}) 
     </insert>
+    
+    <delete id="deleteDeskMap" parameterType="DeskMap">
+    	DELETE FROM DESKMAP WHERE DESKID = #{DeskID} 
+    </delete>
+    
 	<!-- 当使用该Mybatis与Spring整合的时候，该文件必须和相应的Mapper接口文件同名，并在同一路径下 -->
 </mapper> 

@@ -1,2 +1,5 @@
-/com
 /applicationContext-service-login.xml
+/applicationContext.xml
+/com
+/jdbc.properties
+/logback.xml

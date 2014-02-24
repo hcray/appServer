@@ -13,6 +13,14 @@ public class LoginService {
 	public void insertDeskMap(DeskMap deskMap){
 		deskMapMapper.insertDeskMap(deskMap);
 	}
+	
+	/***
+	 * 删除登陆记录
+	 * @param deskMap
+	 */
+	public void deleteDeskMap(DeskMap deskMap){
+		deskMapMapper.deleteDeskMap(deskMap);
+	}
 
 
 	public DeskMapMapper getDeskMapMapper() {
