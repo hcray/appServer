@@ -8,10 +8,16 @@
  	
  	<bean name="loginService" class="com.krakentouch.server.service.LoginService">
 		<property name="deskMapMapper" ref="deskMapMapper"/>
+		<property name="playerMapMapper" ref="playerMapMapper"/>
 	</bean>
 	
 	<bean id="deskMapMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"> 
       <property name="mapperInterface" value="com.krakentouch.server.mapper.DeskMapMapper" />
+      <property name="sqlSessionFactory" ref="sqlSessionFactory" /> 
+    </bean>
+    
+	<bean id="playerMapMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"> 
+      <property name="mapperInterface" value="com.krakentouch.server.mapper.PlayerMapMapper" />
       <property name="sqlSessionFactory" ref="sqlSessionFactory" /> 
     </bean>
 	
