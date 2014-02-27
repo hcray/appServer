@@ -6,10 +6,10 @@ package com.krakentouch.server.domain;
  */
 public class GameInfo {
 	private String GameID;		// char(6) primary key comment '串号',
-	private String Nickname;	// char(12) comment '昵称',
-	private boolean Interdesk;	// boolean comment '是否可以跨终端',
-	private int Mode;			// int(1) comment '工作模式（0~5分别表示单人、双人、三人、四人、六人、多人）',
-	private boolean Valid;		// boolean comment '当前是否有效'
+	private String nickName;	// char(12) comment '昵称',
+	private boolean interDesk;	// boolean comment '是否可以跨终端',
+	private int mode;			// int(1) comment '工作模式（0~5分别表示单人、双人、三人、四人、六人、多人）',
+	private boolean valid;		// boolean comment '当前是否有效'
 	
 	public String getGameID() {
 		return GameID;
@@ -17,29 +17,30 @@ public class GameInfo {
 	public void setGameID(String gameID) {
 		GameID = gameID;
 	}
-	public String getNickname() {
-		return Nickname;
+	public String getNickName() {
+		return nickName;
 	}
-	public void setNickname(String nickname) {
-		Nickname = nickname;
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
-	public boolean isInterdesk() {
-		return Interdesk;
+	public boolean isInterDesk() {
+		return interDesk;
 	}
-	public void setInterdesk(boolean interdesk) {
-		Interdesk = interdesk;
+	public void setInterDesk(boolean interDesk) {
+		this.interDesk = interDesk;
 	}
 	public int getMode() {
-		return Mode;
+		return mode;
 	}
 	public void setMode(int mode) {
-		Mode = mode;
+		this.mode = mode;
 	}
 	public boolean isValid() {
-		return Valid;
+		return valid;
 	}
 	public void setValid(boolean valid) {
-		Valid = valid;
+		this.valid = valid;
 	}
+
 	
 }

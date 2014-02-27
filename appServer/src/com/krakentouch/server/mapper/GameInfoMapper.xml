@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+    <!DOCTYPE mapper 
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.krakentouch.server.mapper.GameInfoMapper">
+    <select id="queryAllGame" resultType="com.krakentouch.server.domain.GameInfo">
+    	SELECT 
+    		GAMEID as GameID,
+	    	NICKNAME as nickName,
+	    	INTERDESK as interDesk,
+	    	MODE as mode,
+	    	VALID as valid
+    	FROM GAMEINFO
+    	WHERE
+    		1=1
+    </select>
+	<!-- 当使用该Mybatis与Spring整合的时候，该文件必须和相应的Mapper接口文件同名，并在同一路径下 -->
+</mapper> 

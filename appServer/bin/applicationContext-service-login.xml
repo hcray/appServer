@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>		
+ 	<bean name="mainAction" class="com.krakentouch.server.action.MainAction">
+		<property name="loginService" ref="loginService"/>
+	</bean>
+ 	
+ 	<bean name="loginService" class="com.krakentouch.server.service.LoginService">
+		<property name="deskMapMapper" ref="deskMapMapper"/>
+		<property name="playerMapMapper" ref="playerMapMapper"/>
+	</bean>
+	
+	<bean id="deskMapMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"> 
+      <property name="mapperInterface" value="com.krakentouch.server.mapper.DeskMapMapper" />
+      <property name="sqlSessionFactory" ref="sqlSessionFactory" /> 
+    </bean>
+    
+	<bean id="playerMapMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"> 
+      <property name="mapperInterface" value="com.krakentouch.server.mapper.PlayerMapMapper" />
+      <property name="sqlSessionFactory" ref="sqlSessionFactory" /> 
+    </bean>
+	
+</beans>

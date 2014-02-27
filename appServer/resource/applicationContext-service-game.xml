@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>		
+ 	<bean name="gameService" class="com.krakentouch.server.service.GameService">
+		<property name="gameInfoMapper" ref="gameInfoMapper"/>
+	</bean>
+	
+	<bean id="gameInfoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"> 
+      <property name="mapperInterface" value="com.krakentouch.server.mapper.GameInfoMapper" />
+      <property name="sqlSessionFactory" ref="sqlSessionFactory" /> 
+    </bean>
+</beans>
