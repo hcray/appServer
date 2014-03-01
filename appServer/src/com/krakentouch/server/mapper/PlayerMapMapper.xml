@@ -3,20 +3,28 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.krakentouch.server.mapper.PlayerMapper">
+<mapper namespace="com.krakentouch.server.mapper.PlayerMapMapper">
 	<insert id="insertPlayer" parameterType="PlayerMap">
 		INSERT INTO PLAYERMAP
-			(PlayerID, DeskID, Status, GameID) 
+			(PLAYERID, DESKID, STATUS, GAMEID)
 		VALUES
-			(#{PlayerID},#{DeskID},#{Status},#{GameID}) 
+			(#{PlayerID}, #{DeskID}, #{Status}, #{GameID}) 
     </insert>
     
     <delete id="deletePlayer" parameterType="PlayerMap">
-    	DELETE FROM PLAYERMAP WHERE PlayerID = #{PlayerID}# 
+    	DELETE FROM PLAYERMAP WHERE PLAYERID = #{PlayerID}# 
     </delete>
     
     <select id="queryScore" parameterType="java.lang.String" resultType="int">
-    	SELECT SCORE FROM PLAYERSCORE WHERE PlayerID = #{PlayerID}#
+    	SELECT SCORE FROM PLAYERSCORE WHERE PLAYERID = #{PlayerID}#
     </select>
+    
+    <update id="updatePlayerStatus" parameterType="PlayerMap">
+    	UPDATE PLAYERMAP SET STATUS = #{Status} WHERE PLAYERID = #{PlayerID}#
+    </update>
+    
+    <update id="updatePlayerScore" parameterType="PlayerScore">
+    	UPDATE PLAYERSCORE SET SCORE = #{score} WHERE PLAYERID = #{PlayerID}#
+    </update>
 	<!-- 当使用该Mybatis与Spring整合的时候，该文件必须和相应的Mapper接口文件同名，并在同一路径下 -->
 </mapper> 

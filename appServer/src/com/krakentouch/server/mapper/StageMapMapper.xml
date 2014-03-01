@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+    <!DOCTYPE mapper 
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.krakentouch.server.mapper.StageMapMapper">
+	<insert id="insertStageMap" parameterType="StageMap">
+		INSERT INTO STAGEMAP
+			(STAGESN, STATUS, HOSTINDEX, GAMEID)
+		VALUES
+			(#{StageSN}, #{Status}, #{HostIndex}, #{GameID}) 
+    </insert>
+    
+    <select id="queryStageMapByGameId" resultType="SeatMapMapper" parameterType="java.lang.String">
+    	SELECT (STAGESN, STATUS, HOSTINDEX, GAMEID)
+    		FROM STAGEMAP 
+    	WHERE GAMEID = #{gameId}
+    </select>
+    
+    <delete id="deleteStageMap" parameterType="StageMap">
+    	DELETE FROM STAGEMAP WHERE STAGESN = #{StageSN}
+    </delete>
+</mapper> 
