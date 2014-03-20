@@ -20,7 +20,6 @@
 			</list>
 		</property>
 	</bean>   
-	<import resource="applicationContext-service-login.xml"/>
 
 	<!-- The IoHandler implementation -->
 	<bean id="serverHandler" class="com.krakentouch.server.handler.ServerHandler">
@@ -115,9 +114,11 @@
 		name="sqlSessionFactory" ref="sqlSessionFactory"/> </bean> -->
 
 	<!-- 注册Mapper方式二：也可不指定特定mapper，而使用自动扫描包的方式来注册各种Mapper ，配置如下： -->
+	<!-- 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.krakentouch.server.mapper" />
 	</bean>
+	  -->
 	 
 	<!-- 事务管理器 -->
 	<bean id="transactionManager"
@@ -133,4 +134,8 @@
       <property name="mapperInterface" value="com.krakentouch.server.mapper.UserMapper" />
       <property name="sqlSessionFactory" ref="sqlSessionFactory" /> 
     </bean>
+    
+    <import resource="applicationContext-service-login.xml"/>
+	<import resource="applicationContext-service-game.xml"/>
+     
 </beans>

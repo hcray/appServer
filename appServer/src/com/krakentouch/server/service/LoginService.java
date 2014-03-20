@@ -11,6 +11,14 @@ public class LoginService {
 	private PlayerMapMapper PlayerMapMapper;
 	
 	
+	public PlayerMapMapper getPlayerMapMapper() {
+		return PlayerMapMapper;
+	}
+
+	public void setPlayerMapMapper(PlayerMapMapper playerMapMapper) {
+		PlayerMapMapper = playerMapMapper;
+	}
+
 	/**
 	 * 物理端登录
 	 * @param deskMap

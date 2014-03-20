@@ -11,7 +11,7 @@
 			(#{StageSN}, #{Status}, #{HostIndex}, #{GameID}) 
     </insert>
     
-    <select id="queryStageMapByGameId" resultType="SeatMapMapper" parameterType="java.lang.String">
+    <select id="queryStageMapByGameId" resultType="StageMap" parameterType="java.lang.String">
     	SELECT (STAGESN, STATUS, HOSTINDEX, GAMEID)
     		FROM STAGEMAP 
     	WHERE GAMEID = #{gameId}

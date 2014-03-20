@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.krakentouch.server.mapper.GameInfoMapper">
-    <select id="queryAllGame" resultType="com.krakentouch.server.domain.GameInfo">
+    <select id="queryAllGame" resultType="GameInfo">
     	SELECT 
     		GAMEID as GameID,
 	    	NICKNAME as nickName,
