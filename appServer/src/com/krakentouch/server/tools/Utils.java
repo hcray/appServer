@@ -97,11 +97,11 @@ public class Utils {
 		try {
 			doc = DocumentHelper.parseText(commandStr); // 将字符串转为XML
 			Element rootElt = doc.getRootElement(); // 获取根节点
-			Iterator<?> it = rootElt.attributeIterator();
+			Iterator<?> it = rootElt.elementIterator();
 			while(it.hasNext()){
-				Attribute attribute = (Attribute) it.next();
-				String name = attribute.getName();
-				String value = attribute.getValue();
+				Element element = (Element) it.next();
+				String name = element.getName();
+				String value = element.getText();
 				retMap.put(name, value);
 			}
 		} catch (DocumentException e) {

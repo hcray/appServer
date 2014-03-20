@@ -83,6 +83,7 @@ create table SeatMap(
 
 drop table if EXISTS PlayerMap;
 create table PlayerMap(
+	ID int(11) zerofill auto_increment primary key comment'主键',
 	PlayerID char(10) comment '串号',
 	DeskID char(8) comment '串号',
 	Status int(1) comment '工作状态（0~3分别表示待机、询人、查桌、游戏）',
