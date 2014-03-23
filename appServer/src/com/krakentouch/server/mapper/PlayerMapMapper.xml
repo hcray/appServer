@@ -6,9 +6,9 @@
 <mapper namespace="com.krakentouch.server.mapper.PlayerMapMapper">
 	<insert id="insertPlayer" parameterType="PlayerMap">
 		INSERT INTO PLAYERMAP
-			(PLAYERID, DESKID, STATUS, GAMEID)
+			(PLAYERID, DESKID, STATUS, GAMEID, LOGINTIME)
 		VALUES
-			(#{PlayerID}, #{DeskID}, #{Status}, #{GameID}) 
+			(#{PlayerID}, #{DeskID}, #{Status}, #{GameID}, #{LoginTime}) 
     </insert>
     
     <delete id="deletePlayer" parameterType="PlayerMap">
@@ -20,7 +20,16 @@
     </select>
     
     <update id="updatePlayerStatus" parameterType="PlayerMap">
-    	UPDATE PLAYERMAP SET STATUS = #{Status} WHERE PLAYERID = #{PlayerID}#
+    	UPDATE PLAYERMAP
+    	<set>
+	      <if test="Status != null">STATUS = #{Status},</if>
+	      <if test="DeskID != null">DESKID=#{DeskID},</if>
+	      <if test="Status != null">STATUS=#{Status},</if>
+	      <if test="GameID != null">GAMEID=#{GameID},</if>
+	      <if test="LogoutTime != null">LOGOUTTIME=#{LogoutTime},</if>
+	      <if test="DelFlag != null">DELFLAG=#{DelFlag}</if>
+    	</set>
+    	WHERE PLAYERID = #{PlayerID}#
     </update>
     
     <update id="updatePlayerScore" parameterType="PlayerScore">

@@ -83,11 +83,14 @@ create table SeatMap(
 
 drop table if EXISTS PlayerMap;
 create table PlayerMap(
-	ID int(11) zerofill auto_increment primary key comment'主键',
+	ID int(11) zerofill auto_increment primary key comment'主键ID',
 	PlayerID char(10) comment '串号',
 	DeskID char(8) comment '串号',
 	Status int(1) comment '工作状态（0~3分别表示待机、询人、查桌、游戏）',
-	GameID char(6) comment '串号'
+	GameID char(6) comment '串号',
+	LoginTime datetime comment '登录时间',
+	LogoutTime datetime comment '注销时间',
+	DelFlag int(1) default 0 comment '删除标志（0：没有删除；1：删除）'
 )comment '玩家映射表';
 
 drop table if EXISTS DeskMap;

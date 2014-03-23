@@ -24,8 +24,10 @@ public class MainAction {
 		Map<String, String> commandMap = Utils.parseCommand(commandStr);
 		LOG.debug("commandMap: " + commandMap);
 		String command = commandMap.get("Command");
-		if("login".equals(command)){
+		if("login".equals(command)){//登录
 			retStr = doLogin(commandMap);
+		}else if("logout".equals(command)){//注销
+			retStr = doLogout(commandMap);
 		}
 		LOG.debug("doCommand(String commandStr) out... ");
 		return retStr;
@@ -53,21 +55,19 @@ public class MainAction {
 	 * 
 	 */
 	public String doLogin(Map<String,String> commandMap){
-		//TODO 判断是否已经登陆 如果已经登陆的返回已经登陆 其他做的处理
-		String retStr = null;
-		PlayerMap playerMap = new PlayerMap();
-		String playerID = commandMap.get("PlayerID");
-		String deskID = commandMap.get("DeskID");
-		playerMap.setPlayerID(playerID);
-		playerMap.setDeskID(deskID);
-		playerMap.setStatus(0);
-		loginService.insertPlayerMap(playerMap);
-		//返回
-		CommandBean commandBean = new CommandBean();
-		commandBean.setResult("1");
-		commandBean.setCommand("login");
-		retStr = JaxbUtil.convertToXml(commandBean, "utf-8");
+		String retStr = loginService.login(commandMap);
 		return retStr;
+	}
+	
+	/**
+	 * 注销
+	 * @param commandMap
+	 * @return
+	 */
+	public String doLogout(Map<String,String> commandMap){
+		String retStr = loginService.logout(commandMap);
+		return retStr;
+		
 	}
 	
 	public LoginService getLoginService() {
