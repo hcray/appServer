@@ -5,9 +5,10 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.krakentouch.server.domain.DeskMap;
+import com.krakentouch.server.bean.CommandBean;
 import com.krakentouch.server.domain.PlayerMap;
 import com.krakentouch.server.service.LoginService;
+import com.krakentouch.server.tools.JaxbUtil;
 import com.krakentouch.server.tools.Utils;
 
 
@@ -61,12 +62,13 @@ public class MainAction {
 		playerMap.setDeskID(deskID);
 		playerMap.setStatus(0);
 		loginService.insertPlayerMap(playerMap);
+		//返回
+		CommandBean commandBean = new CommandBean();
+		commandBean.setResult("1");
+		commandBean.setCommand("login");
+		retStr = JaxbUtil.convertToXml(commandBean, "utf-8");
 		return retStr;
 	}
-
-	
-	
-	
 	
 	public LoginService getLoginService() {
 		return loginService;

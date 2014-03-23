@@ -60,8 +60,8 @@ public class ServerHandler extends IoHandlerAdapter {
         MdcInjectionFilter.setProperty(session, "user", user);
 		System.out.println("Message : " + message);
 		
-		mainAction.doCommand((String)message);
-		session.write("LOGIN OK");
+		String retString = mainAction.doCommand((String)message);
+		session.write(retString);
 		// If we want to test the write operation, uncomment this line
 		//session.write(message);
 
