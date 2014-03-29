@@ -62,7 +62,7 @@ public class LoginService {
 	 *	</TCP>
 	 * 
 	 */
-	public String login(Map<String, String> commandMap){
+	public String login(Map<String, String> commandMap) throws Exception{
 		String retStr = null;
 		PlayerMap playerMap = new PlayerMap();
 		String playerID = commandMap.get("PlayerID");
@@ -87,7 +87,7 @@ public class LoginService {
 	
 	
 	
-	public String logout(Map<String, String> commandMap){
+	public String logout(Map<String, String> commandMap) throws Exception{
 		String retStr = null;
 		PlayerMap playerMap = new PlayerMap();
 		String playerID = commandMap.get("PlayerID");

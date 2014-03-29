@@ -22,7 +22,7 @@
 		<encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
 			<charset>UTF-8</charset>
 		</encoder>
-		<File>${log.base}_appServer.log</File>
+		<File>${log.base}_server.log</File>
 		<!-- 保存日记最大数量30 -->
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<FileNamePattern>${log.base}.%d{yyyy-MM-dd}_action.log

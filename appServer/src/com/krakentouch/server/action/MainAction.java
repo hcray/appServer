@@ -21,15 +21,22 @@ public class MainAction {
 	public String doCommand(String commandStr){
 		LOG.debug("doCommand(String commandStr) in... " + commandStr);
 		String retStr=null;
-		Map<String, String> commandMap = Utils.parseCommand(commandStr);
-		LOG.debug("commandMap: " + commandMap);
-		String command = commandMap.get("Command");
-		if("login".equals(command)){//登录
-			retStr = doLogin(commandMap);
-		}else if("logout".equals(command)){//注销
-			retStr = doLogout(commandMap);
+		try{
+			Map<String, String> commandMap = Utils.parseCommand(commandStr);
+			LOG.debug("commandMap: " + commandMap);
+			String command = commandMap.get("Command");
+			if("login".equals(command)){//登录
+				retStr = doLogin(commandMap);
+			}else if("logout".equals(command)){//注销
+				retStr = doLogout(commandMap);
+			}else{
+				retStr="error,not find command.";
+			}
+			LOG.debug("doCommand(String commandStr) out... ");
+		}catch(Exception e){
+			LOG.error(e.getMessage() + e.getCause());
+			retStr = "error,"+e.getMessage();
 		}
-		LOG.debug("doCommand(String commandStr) out... ");
 		return retStr;
 	}
 	
@@ -52,9 +59,10 @@ public class MainAction {
 	 *   <Status>0</Status>
 	 *   <GameID></GameID>
 	 *	</TCP>
+	 * @throws Exception 
 	 * 
 	 */
-	public String doLogin(Map<String,String> commandMap){
+	public String doLogin(Map<String,String> commandMap) throws Exception{
 		String retStr = loginService.login(commandMap);
 		return retStr;
 	}
@@ -63,8 +71,9 @@ public class MainAction {
 	 * 注销
 	 * @param commandMap
 	 * @return
+	 * @throws Exception 
 	 */
-	public String doLogout(Map<String,String> commandMap){
+	public String doLogout(Map<String,String> commandMap) throws Exception{
 		String retStr = loginService.logout(commandMap);
 		return retStr;
 		

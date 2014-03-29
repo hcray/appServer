@@ -5,13 +5,16 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.mina.core.buffer.IoBuffer;
-import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Utils {
+	// 日志
+	private static final Logger LOG = LoggerFactory.getLogger(Utils.class);
 	/**  
 	* 将byte[]转换成string    
 	* @param butBuffer  
@@ -90,13 +93,19 @@ public class Utils {
 	 * 解析XML格式的命令
 	 * @param commandStr
 	 * @return 包含命令的map
+	 * @throws DocumentException 
 	 */
-	public static Map<String,String> parseCommand(String commandStr){
+	public static Map<String,String> parseCommand(String commandStr) throws DocumentException{
+		LOG.debug("parseCommand(String commandStr) " + commandStr);
 		Map<String,String> retMap = new HashMap<String,String>();
 		Document doc = null;
 		try {
+			//去除首尾的空格
+			commandStr = commandStr.trim();
 			doc = DocumentHelper.parseText(commandStr); // 将字符串转为XML
+			LOG.debug("doc: " + doc);
 			Element rootElt = doc.getRootElement(); // 获取根节点
+			LOG.debug("rootElt: " + rootElt);
 			Iterator<?> it = rootElt.elementIterator();
 			while(it.hasNext()){
 				Element element = (Element) it.next();
@@ -106,15 +115,10 @@ public class Utils {
 			}
 		} catch (DocumentException e) {
 			e.printStackTrace();
+			LOG.error(e.getMessage());
+			throw e;
 		}
 		return retMap;
-	}
-	
-	
-	public static void main(String[] args) {
-		String commandStr = "<TCP address=\"DB\" command=\"new\" table=\"DeskMap\" value=\"DeskID=00000000\" ></TCP>";
-		Map<String,String> retMap = parseCommand(commandStr);
-		System.out.println("retMap: " + retMap);
 	}
 
 }
