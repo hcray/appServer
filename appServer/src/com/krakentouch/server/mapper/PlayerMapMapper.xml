@@ -8,7 +8,10 @@
 		INSERT INTO PLAYERMAP
 			(PLAYERID, DESKID, STATUS, GAMEID, LOGINTIME)
 		VALUES
-			(#{PlayerID}, #{DeskID}, #{Status}, #{GameID}, #{LoginTime}) 
+			(#{PlayerID}, #{DeskID}, #{Status}, #{GameID}, #{LoginTime})
+		<selectKey resultType="java.lang.Integer"  order="AFTER" keyProperty="ID" >
+        	SELECT LAST_INSERT_ID() AS ID   
+      	</selectKey>	
     </insert>
     
     <delete id="deletePlayer" parameterType="PlayerMap">
@@ -29,7 +32,7 @@
 	      <if test="LogoutTime != null">LOGOUTTIME=#{LogoutTime},</if>
 	      <if test="DelFlag != null">DELFLAG=#{DelFlag}</if>
     	</set>
-    	WHERE PLAYERID = #{PlayerID}#
+    	WHERE PLAYERID = #{PlayerID}# and DELFLAG = 0
     </update>
     
     <update id="updatePlayerScore" parameterType="PlayerScore">

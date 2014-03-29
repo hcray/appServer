@@ -72,6 +72,8 @@ public class LoginService {
 		playerMap.setStatus(0);
 		playerMap.setLoginTime(new Date());
 		PlayerMapMapper.insertPlayer(playerMap);
+		int id = playerMap.getID(); 
+		System.out.println("id:"+id);
 		//返回
 		CommandBean commandBean = new CommandBean();
 		commandBean.setResult("1");
