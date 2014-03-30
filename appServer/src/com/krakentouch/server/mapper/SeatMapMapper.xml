@@ -12,7 +12,9 @@
     </insert>
     
     <select id="querySeatMapByStageSN" parameterType="java.lang.String" resultType="SeatMap">
-    	SELECT (STAGESN, PLAYERID, SEATINDEX) 
+    	SELECT STAGESN as StageSN,
+    		   PLAYERID as PlayerID,
+    		   SEATINDEX as SeatIndex 
     		FROM SEATMAP
     	WHERE STAGESN = #{StageSN}
     </select>

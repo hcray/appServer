@@ -1,11 +1,16 @@
 package com.krakentouch.server.action;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.krakentouch.server.bean.OpenStageCommand;
+import com.krakentouch.server.bean.RefreshStageCommand;
+import com.krakentouch.server.bean.StageBean;
+import com.krakentouch.server.bean.StageBeans;
 import com.krakentouch.server.domain.PlayerMap;
 import com.krakentouch.server.domain.SeatMap;
 import com.krakentouch.server.domain.StageMap;
@@ -45,6 +50,9 @@ public class MainAction {
 			}else if("openStage".equals(command)){//开桌
 				retStr = doOpenStage(commandMap);
 			
+			}else if("refreshStage".equals(command)){
+				retStr = doRefreshStage(commandMap);
+				
 			}else{
 				retStr="error,not find command.";
 			}
@@ -161,6 +169,32 @@ public class MainAction {
 		openStageCommand.setStatus(3);
 		
 		retStr = JaxbUtil.convertToXml(openStageCommand, "utf-8");
+		return retStr;
+	}
+	
+	public String doRefreshStage(Map<String,String> commandMap){
+		String retStr = null;
+		//座位号
+		String stageSN = commandMap.get("StageSN");
+		List<SeatMap> seatList = gameService.querySeatMapByStageSN(stageSN);
+		
+		RefreshStageCommand refreshStageCommand = new RefreshStageCommand();
+		refreshStageCommand.setCommand(commandMap.get("Command"));
+		refreshStageCommand.setResult("1");
+		refreshStageCommand.setNote("success");
+		StageBeans stageBeans = new StageBeans();
+		List<StageBean> stages = new ArrayList<StageBean>();
+		for(SeatMap seatMap : seatList){
+			StageBean stageBean = new StageBean();
+			stageBean.setPlayerID(seatMap.getPlayerID());
+			stageBean.setStageSN(seatMap.getStageSN());
+			stageBean.setSeatIndex(seatMap.getSeatIndex());
+			stages.add(stageBean);
+		}
+		stageBeans.setStages(stages);
+		refreshStageCommand.setStageBeans(stageBeans);
+		
+		retStr = JaxbUtil.convertToXml(refreshStageCommand, "utf-8");
 		return retStr;
 	}
 	

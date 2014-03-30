@@ -83,6 +83,15 @@ public class GameService {
 		return seatMap;
 	}
 	
+	/**
+	 * 查询座位
+	 * @param StageSN
+	 * @return
+	 */
+	public List<SeatMap> querySeatMapByStageSN(String StageSN){
+		return seatMapMapper.querySeatMapByStageSN(StageSN);
+	}
+	
 	
 	public GameInfoMapper getGameInfoMapper() {
 		return gameInfoMapper;
