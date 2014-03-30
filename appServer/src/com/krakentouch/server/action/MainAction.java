@@ -5,18 +5,18 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.krakentouch.server.bean.CommandBean;
-import com.krakentouch.server.domain.PlayerMap;
+import com.krakentouch.server.service.GameService;
 import com.krakentouch.server.service.LoginService;
-import com.krakentouch.server.tools.JaxbUtil;
 import com.krakentouch.server.tools.Utils;
 
 
 public class MainAction {
 	//日志
 	private static final Logger LOG = LoggerFactory.getLogger(MainAction.class);
-	
+	//登录
 	private LoginService loginService;
+	
+	private GameService gameService;
 	
 	public String doCommand(String commandStr){
 		LOG.debug("doCommand(String commandStr) in... " + commandStr);
@@ -31,6 +31,8 @@ public class MainAction {
 				retStr = doLogout(commandMap);
 			}else if("queryScore".equals(command)){//查分
 				retStr = doQueryScore(commandMap);
+			}else if("queryGames".equals(command)){//查游
+				retStr = doQueryGames(commandMap);
 			}else{
 				retStr="error,not find command.";
 			}
@@ -92,6 +94,17 @@ public class MainAction {
 		return retStr;
 	}
 	
+	/**
+	 * 查游
+	 * @param commandMap
+	 * @return
+	 * @throws Exception
+	 */
+	public String doQueryGames(Map<String,String> commandMap) throws Exception{
+		String retStr = gameService.queryGames(commandMap);
+		return retStr;
+	}
+	
 	public LoginService getLoginService() {
 		return loginService;
 	}
@@ -99,4 +112,13 @@ public class MainAction {
 	public void setLoginService(LoginService loginService) {
 		this.loginService = loginService;
 	}
+
+	public GameService getGameService() {
+		return gameService;
+	}
+
+	public void setGameService(GameService gameService) {
+		this.gameService = gameService;
+	}
+	
 }
