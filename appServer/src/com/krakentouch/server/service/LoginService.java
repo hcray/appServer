@@ -4,8 +4,10 @@ import java.util.Date;
 import java.util.Map;
 
 import com.krakentouch.server.bean.CommandBean;
+import com.krakentouch.server.bean.QueryScoreCommand;
 import com.krakentouch.server.domain.DeskMap;
 import com.krakentouch.server.domain.PlayerMap;
+import com.krakentouch.server.domain.PlayerScore;
 import com.krakentouch.server.mapper.DeskMapMapper;
 import com.krakentouch.server.mapper.PlayerMapMapper;
 import com.krakentouch.server.tools.JaxbUtil;
@@ -88,7 +90,12 @@ public class LoginService {
 	}
 	
 	
-	
+	/***
+	 * 签出
+	 * @param commandMap
+	 * @return
+	 * @throws Exception
+	 */
 	public String logout(Map<String, String> commandMap) throws Exception{
 		String retStr = null;
 		PlayerMap playerMap = new PlayerMap();
@@ -105,6 +112,31 @@ public class LoginService {
 		commandBean.setPlayerID(playerID);
 		retStr = JaxbUtil.convertToXml(commandBean, "utf-8");
 		
+		return retStr;
+	}
+	
+	
+	/**
+	 * 查分
+	 * @param commandMap
+	 * @return
+	 * @throws Exception
+	 */
+	public String queryScore(Map<String, String> commandMap) throws Exception{
+		String retStr = null;
+		String playerID = commandMap.get("PlayerID");
+		
+		PlayerScore playerScore = PlayerMapMapper.queryScore(playerID);
+		
+		QueryScoreCommand queryScoreCommand = new QueryScoreCommand();
+		queryScoreCommand.setCommand(commandMap.get("Command"));
+		queryScoreCommand.setResult("1");
+		queryScoreCommand.setNote("success");
+		queryScoreCommand.setPlayerID(playerScore.getPlayerID());
+		queryScoreCommand.setScore(String.valueOf(playerScore.getScore()));
+		queryScoreCommand.setMoney(String.valueOf(playerScore.getMoney()));
+		queryScoreCommand.setProp0(String.valueOf(playerScore.getProp0()));
+		retStr = JaxbUtil.convertToXml(queryScoreCommand, "utf-8");
 		return retStr;
 	}
 	
@@ -131,7 +163,7 @@ public class LoginService {
 	 * @param playerID
 	 * @return 用户积分
 	 */
-	public int queryScoreByPlayerID(String playerID){
+	public PlayerScore queryScoreByPlayerID(String playerID){
 		return PlayerMapMapper.queryScore(playerID);
 	}
 

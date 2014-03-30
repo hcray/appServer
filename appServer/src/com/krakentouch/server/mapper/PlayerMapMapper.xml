@@ -18,8 +18,13 @@
     	DELETE FROM PLAYERMAP WHERE PLAYERID = #{PlayerID}# 
     </delete>
     
-    <select id="queryScore" parameterType="java.lang.String" resultType="int">
-    	SELECT SCORE FROM PLAYERSCORE WHERE PLAYERID = #{PlayerID}#
+    <select id="queryScore" parameterType="String" resultType="PlayerScore">
+    	SELECT 
+	    	PLAYERID as PlayerID,
+			SCORE as Score,
+			MONEY as Money,
+			PROP0 as Prop0
+    	FROM PLAYERSCORE WHERE PLAYERID = #{PlayerID}#
     </select>
     
     <update id="updatePlayerStatus" parameterType="PlayerMap">

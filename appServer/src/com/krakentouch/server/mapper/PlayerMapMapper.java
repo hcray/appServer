@@ -9,7 +9,7 @@ public interface PlayerMapMapper {
 	
 	public void deletePlayer(PlayerMap playerMap);
 	
-	public int 	queryScore(String playerID);
+	public PlayerScore queryScore(String playerID);
 	
 	public void updatePlayerStatus(PlayerMap playerMap);
 	

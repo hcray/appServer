@@ -29,6 +29,8 @@ public class MainAction {
 				retStr = doLogin(commandMap);
 			}else if("logout".equals(command)){//注销
 				retStr = doLogout(commandMap);
+			}else if("queryScore".equals(command)){//查分
+				retStr = doQueryScore(commandMap);
 			}else{
 				retStr="error,not find command.";
 			}
@@ -77,6 +79,17 @@ public class MainAction {
 		String retStr = loginService.logout(commandMap);
 		return retStr;
 		
+	}
+	
+	/**
+	 * 查分
+	 * @param commandMap
+	 * @return
+	 * @throws Exception
+	 */
+	public String doQueryScore(Map<String,String> commandMap) throws Exception{
+		String retStr = loginService.queryScore(commandMap);
+		return retStr;
 	}
 	
 	public LoginService getLoginService() {
