@@ -7,9 +7,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name="Stage")
-@XmlType(name = "StageBean", propOrder = { "stageSN", "playerID", "seatIndex"})
-public class StageBean {
+@XmlRootElement(name="Seat")
+@XmlType(name = "SeatBean", propOrder = { "stageSN", "playerID", "seatIndex"})
+public class SeatBean {
 	
 	@XmlElement(name="StageSN", required = true)
 	private int stageSN;//<StageSN>1</StageSN>

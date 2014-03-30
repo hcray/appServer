@@ -92,6 +92,14 @@ public class GameService {
 		return seatMapMapper.querySeatMapByStageSN(StageSN);
 	}
 	
+	/**
+	 * 查询桌
+	 * @param gameID
+	 * @return
+	 */
+	public List<StageMap> queryStageMapByGameId(String gameID){
+		return stageMapMapper.queryStageMapByGameId(gameID);
+	}
 	
 	public GameInfoMapper getGameInfoMapper() {
 		return gameInfoMapper;

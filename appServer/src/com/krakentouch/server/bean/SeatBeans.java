@@ -9,19 +9,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name="Stages")
-@XmlType(name = "StageBeans", propOrder = {"stages" })
-public class StageBeans {
+@XmlRootElement(name="Seats")
+@XmlType(name = "SeatBeans", propOrder = {"seats" })
+public class SeatBeans {
 	
-	@XmlElement(name="Stage", required = true)
-	private List<StageBean> stages;
+	@XmlElement(name="Seat", required = true)
+	private List<SeatBean> seats;
 
-	public List<StageBean> getStages() {
-		return stages;
+	public List<SeatBean> getSeats() {
+		return seats;
 	}
 
-	public void setStages(List<StageBean> stages) {
-		this.stages = stages;
+	public void setSeats(List<SeatBean> seats) {
+		this.seats = seats;
 	}
+
 	
 }

@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 
 import com.krakentouch.server.bean.OpenStageCommand;
 import com.krakentouch.server.bean.RefreshStageCommand;
-import com.krakentouch.server.bean.StageBean;
-import com.krakentouch.server.bean.StageBeans;
+import com.krakentouch.server.bean.SeatBean;
+import com.krakentouch.server.bean.SeatBeans;
 import com.krakentouch.server.domain.PlayerMap;
 import com.krakentouch.server.domain.SeatMap;
 import com.krakentouch.server.domain.StageMap;
@@ -50,8 +50,11 @@ public class MainAction {
 			}else if("openStage".equals(command)){//开桌
 				retStr = doOpenStage(commandMap);
 			
-			}else if("refreshStage".equals(command)){
+			}else if("refreshStage".equals(command)){//刷座
 				retStr = doRefreshStage(commandMap);
+				
+			}else if("queryStage".equals(command)){//查座
+				retStr = doQueryStage(commandMap);
 				
 			}else{
 				retStr="error,not find command.";
@@ -172,6 +175,11 @@ public class MainAction {
 		return retStr;
 	}
 	
+	/**
+	 * 刷座
+	 * @param commandMap
+	 * @return
+	 */
 	public String doRefreshStage(Map<String,String> commandMap){
 		String retStr = null;
 		//座位号
@@ -182,19 +190,30 @@ public class MainAction {
 		refreshStageCommand.setCommand(commandMap.get("Command"));
 		refreshStageCommand.setResult("1");
 		refreshStageCommand.setNote("success");
-		StageBeans stageBeans = new StageBeans();
-		List<StageBean> stages = new ArrayList<StageBean>();
+		SeatBeans stageBeans = new SeatBeans();
+		List<SeatBean> seats = new ArrayList<SeatBean>();
 		for(SeatMap seatMap : seatList){
-			StageBean stageBean = new StageBean();
+			SeatBean stageBean = new SeatBean();
 			stageBean.setPlayerID(seatMap.getPlayerID());
 			stageBean.setStageSN(seatMap.getStageSN());
 			stageBean.setSeatIndex(seatMap.getSeatIndex());
-			stages.add(stageBean);
+			seats.add(stageBean);
 		}
-		stageBeans.setStages(stages);
-		refreshStageCommand.setStageBeans(stageBeans);
+		stageBeans.setSeats(seats);
+		refreshStageCommand.setSeatBeans(stageBeans);
 		
 		retStr = JaxbUtil.convertToXml(refreshStageCommand, "utf-8");
+		return retStr;
+	}
+	
+	/**
+	 * 查座
+	 * @param commandMap
+	 * @return
+	 */
+	public String doQueryStage(Map<String,String> commandMap){
+		String retStr = null;
+		
 		return retStr;
 	}
 	
