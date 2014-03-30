@@ -68,7 +68,7 @@ create table TerminalLog(
 
 drop table if EXISTS StageMap;
 create table StageMap(
-	StageSN int(10) primary key comment '流水号',
+	StageSN int(11) zerofill auto_increment primary key comment '流水号',
 	Status int(1) comment'工作状态（0~1分别表示待机、游戏）',
 	HostIndex int(20) comment'桌主座位序号',
 	GameID char(6) comment'串号'
@@ -76,7 +76,7 @@ create table StageMap(
 
 drop table if EXISTS SeatMap;
 create table SeatMap(
-	StageSN int(20) comment '流水号',
+	StageSN int(11) zerofill comment '流水号',
 	PlayerID char(10) comment '串号',
 	SeatIndex int(20) comment '座位序号'
 )comment '游戏座位映射表';

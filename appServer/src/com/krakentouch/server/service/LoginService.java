@@ -166,6 +166,14 @@ public class LoginService {
 	public PlayerScore queryScoreByPlayerID(String playerID){
 		return PlayerMapMapper.queryScore(playerID);
 	}
+	
+	/**
+	 * 更新玩家状态
+	 * @param playerMap
+	 */
+	public void updatePlayerStatus(PlayerMap playerMap){
+		PlayerMapMapper.updatePlayerStatus(playerMap);
+	}
 
 	public DeskMapMapper getDeskMapMapper() {
 		return deskMapMapper;

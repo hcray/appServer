@@ -4,10 +4,24 @@
 <beans>		
  	<bean name="gameService" class="com.krakentouch.server.service.GameService">
 		<property name="gameInfoMapper" ref="gameInfoMapper"/>
+		<property name="stageMapMapper" ref="stageMapMapper"/>
+		<property name="seatMapMapper" ref="seatMapMapper"/>
 	</bean>
 	
 	<bean id="gameInfoMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"> 
       <property name="mapperInterface" value="com.krakentouch.server.mapper.GameInfoMapper" />
       <property name="sqlSessionFactory" ref="sqlSessionFactory" /> 
     </bean>
+	
+	<bean id="stageMapMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"> 
+      <property name="mapperInterface" value="com.krakentouch.server.mapper.StageMapMapper" />
+      <property name="sqlSessionFactory" ref="sqlSessionFactory" /> 
+    </bean>
+	
+	<bean id="seatMapMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"> 
+      <property name="mapperInterface" value="com.krakentouch.server.mapper.SeatMapMapper" />
+      <property name="sqlSessionFactory" ref="sqlSessionFactory" /> 
+    </bean>
+    
+    
 </beans>

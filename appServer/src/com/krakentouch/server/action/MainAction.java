@@ -5,8 +5,13 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.krakentouch.server.bean.OpenStageCommand;
+import com.krakentouch.server.domain.PlayerMap;
+import com.krakentouch.server.domain.SeatMap;
+import com.krakentouch.server.domain.StageMap;
 import com.krakentouch.server.service.GameService;
 import com.krakentouch.server.service.LoginService;
+import com.krakentouch.server.tools.JaxbUtil;
 import com.krakentouch.server.tools.Utils;
 
 
@@ -27,19 +32,26 @@ public class MainAction {
 			String command = commandMap.get("Command");
 			if("login".equals(command)){//登录
 				retStr = doLogin(commandMap);
+			
 			}else if("logout".equals(command)){//注销
 				retStr = doLogout(commandMap);
+			
 			}else if("queryScore".equals(command)){//查分
 				retStr = doQueryScore(commandMap);
+			
 			}else if("queryGames".equals(command)){//查游
 				retStr = doQueryGames(commandMap);
+			
+			}else if("openStage".equals(command)){//开桌
+				retStr = doOpenStage(commandMap);
+			
 			}else{
 				retStr="error,not find command.";
 			}
 			LOG.debug("doCommand(String commandStr) out... ");
 		}catch(Exception e){
 			LOG.error(e.getMessage() + e.getCause());
-			retStr = "error,"+e.getMessage();
+			retStr = "error, messsage:"+e.getMessage() + " ,cause: " + e.getCause();
 		}
 		return retStr;
 	}
@@ -102,6 +114,53 @@ public class MainAction {
 	 */
 	public String doQueryGames(Map<String,String> commandMap) throws Exception{
 		String retStr = gameService.queryGames(commandMap);
+		return retStr;
+	}
+	
+	
+	/**
+	 * 开桌
+	 * @param commandMap
+	 * @return
+	 */
+	public String doOpenStage(Map<String,String> commandMap){
+		String retStr = null;
+		String gameID = commandMap.get("GameID");
+		String hostIndex = commandMap.get("HostIndex");
+		String playerID = commandMap.get("PlayerID");
+		
+		//加入桌子
+		StageMap stageMap = new StageMap();
+		stageMap.setGameID(gameID);
+		stageMap.setHostIndex(Integer.parseInt(hostIndex));
+		stageMap.setStatus(0);//0:待机 1：游戏
+		gameService.insertStageMap(stageMap);
+		
+		//加入位子
+		SeatMap seatMap = new SeatMap();
+		seatMap.setPlayerID(playerID);
+		seatMap.setSeatIndex(0);//座位序号 为 0 开桌的默认的设置为第一个座位 0
+		int stageSN = stageMap.getStageSN();
+		seatMap.setStageSN(stageSN);
+		gameService.insertSeatMap(seatMap);
+
+		//更新玩家状态
+		PlayerMap playerMap = new PlayerMap();
+		playerMap.setPlayerID(playerID);
+		playerMap.setStatus(3); //游戏状态 ???? 在位子上，没有开始游戏
+		loginService.updatePlayerStatus(playerMap);
+		
+		//返回的字符串
+		OpenStageCommand openStageCommand = new OpenStageCommand();
+		openStageCommand.setCommand(commandMap.get("Command"));
+		openStageCommand.setResult("1");
+		openStageCommand.setNote("success");
+		openStageCommand.setStageSN(String.valueOf(stageSN));
+		openStageCommand.setHostIndex(Integer.parseInt(hostIndex));
+		openStageCommand.setSeatIndex(0);
+		openStageCommand.setStatus(3);
+		
+		retStr = JaxbUtil.convertToXml(openStageCommand, "utf-8");
 		return retStr;
 	}
 	

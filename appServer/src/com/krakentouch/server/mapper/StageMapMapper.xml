@@ -6,9 +6,12 @@
 <mapper namespace="com.krakentouch.server.mapper.StageMapMapper">
 	<insert id="insertStageMap" parameterType="StageMap">
 		INSERT INTO STAGEMAP
-			(STAGESN, STATUS, HOSTINDEX, GAMEID)
+			(STATUS, HOSTINDEX, GAMEID)
 		VALUES
-			(#{StageSN}, #{Status}, #{HostIndex}, #{GameID}) 
+			(#{Status}, #{HostIndex}, #{GameID}) 
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="StageSN" >
+        	SELECT LAST_INSERT_ID() AS StageSN   
+      	</selectKey>	
     </insert>
     
     <select id="queryStageMapByGameId" resultType="StageMap" parameterType="java.lang.String">
