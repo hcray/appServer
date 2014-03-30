@@ -14,3 +14,6 @@
 
 
 <TCP><Command>refreshStage</Command><StageSN>1</StageSN></TCP>
+
+
+<TCP><Command>queryStage</Command><GameID>abcdef</GameID><PlayerID>user4</PlayerID></TCP>

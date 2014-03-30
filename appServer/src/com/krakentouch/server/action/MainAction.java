@@ -8,9 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.krakentouch.server.bean.OpenStageCommand;
+import com.krakentouch.server.bean.QueryStageCommand;
 import com.krakentouch.server.bean.RefreshStageCommand;
 import com.krakentouch.server.bean.SeatBean;
 import com.krakentouch.server.bean.SeatBeans;
+import com.krakentouch.server.bean.StageBean;
+import com.krakentouch.server.bean.StageBeans;
 import com.krakentouch.server.domain.PlayerMap;
 import com.krakentouch.server.domain.SeatMap;
 import com.krakentouch.server.domain.StageMap;
@@ -213,7 +216,40 @@ public class MainAction {
 	 */
 	public String doQueryStage(Map<String,String> commandMap){
 		String retStr = null;
+		//命令
+		String command = commandMap.get("Command");
+		String gameID = commandMap.get("GameID");
+		String playerID = commandMap.get("PlayerID");
 		
+		//更新玩家状态
+		PlayerMap playerMap = new PlayerMap();
+		playerMap.setPlayerID(playerID);
+		playerMap.setStatus(2);//工作状态（0~3分别表示待机、询人、查桌、游戏）
+		loginService.updatePlayerStatus(playerMap);
+		
+		//查座
+		List<StageMap> stageList = gameService.queryStageMapByGameId(gameID);
+		List<StageBean> stageBeanList = new ArrayList<StageBean>();
+		QueryStageCommand queryStageCommand = new QueryStageCommand();
+		queryStageCommand.setCommand(command);
+		queryStageCommand.setResult("1");
+		queryStageCommand.setNote("success");
+		for(StageMap stageMap : stageList){
+			StageBean stageBean = new StageBean();
+			stageBean.setGameID(stageMap.getGameID());
+			stageBean.setHostIndex(String.valueOf(stageMap.getHostIndex()));
+			stageBean.setStageSN(String.valueOf(stageMap.getStageSN()));
+			stageBean.setStatus(String.valueOf(stageMap.getStatus()));
+			
+			stageBeanList.add(stageBean);
+		}
+		
+		StageBeans stageBeans = new StageBeans();
+		stageBeans.setStageBeans(stageBeanList);
+
+		queryStageCommand.setStageBeans(stageBeans);
+		
+		retStr = JaxbUtil.convertToXml(queryStageCommand, "utf-8");
 		return retStr;
 	}
 	
