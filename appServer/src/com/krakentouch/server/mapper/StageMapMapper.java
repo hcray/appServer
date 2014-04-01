@@ -11,4 +11,6 @@ public interface StageMapMapper {
 	public List<StageMap> queryStageMapByGameId(String gameId);
 	
 	public void deleteStageMap(StageMap stageMap);
+	
+	public void updateStageMap(StageMap stageMap);
 }

@@ -27,4 +27,14 @@
     <delete id="deleteStageMap" parameterType="StageMap">
     	DELETE FROM STAGEMAP WHERE STAGESN = #{StageSN}
     </delete>
+    
+   <update id="updateStageMap" parameterType="StageMap">
+   		UPDATE STAGEMAP
+    	<set>
+	      <if test="Status != null">STATUS = #{Status},</if>
+	      <if test="HostIndex != null">HOSTINDEX = #{HostIndex},</if>
+	      <if test="GameID != null">GAMEID = #{GameID}</if>
+    	</set>
+    	WHERE STAGESN = #{StageSN}#
+    </update>
 </mapper> 

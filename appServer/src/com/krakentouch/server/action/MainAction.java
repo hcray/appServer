@@ -7,6 +7,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.krakentouch.server.bean.JoinStageCommand;
 import com.krakentouch.server.bean.OpenStageCommand;
 import com.krakentouch.server.bean.QueryStageCommand;
 import com.krakentouch.server.bean.RefreshStageCommand;
@@ -14,6 +15,7 @@ import com.krakentouch.server.bean.SeatBean;
 import com.krakentouch.server.bean.SeatBeans;
 import com.krakentouch.server.bean.StageBean;
 import com.krakentouch.server.bean.StageBeans;
+import com.krakentouch.server.bean.StartStageCommand;
 import com.krakentouch.server.domain.PlayerMap;
 import com.krakentouch.server.domain.SeatMap;
 import com.krakentouch.server.domain.StageMap;
@@ -56,8 +58,14 @@ public class MainAction {
 			}else if("refreshStage".equals(command)){//刷座
 				retStr = doRefreshStage(commandMap);
 				
-			}else if("queryStage".equals(command)){//查座
+			}else if("queryStage".equals(command)){//查桌
 				retStr = doQueryStage(commandMap);
+				
+			}else if("joinStage".equals(command)){//加入
+				retStr = doJoinStage(commandMap);
+				
+			}else if("startStage".equals(command)){//开玩
+				retStr = doStartStage(commandMap);
 				
 			}else{
 				retStr="error,not find command.";
@@ -250,6 +258,85 @@ public class MainAction {
 		queryStageCommand.setStageBeans(stageBeans);
 		
 		retStr = JaxbUtil.convertToXml(queryStageCommand, "utf-8");
+		return retStr;
+	}
+	
+	/**
+	 * 加入
+	 * @param commandMap
+	 * <TCP>
+	 *      <Command>joinStage</Command>
+	 *      <StageSN>abcdef</StageSN>
+	 *      <PlayerID>CDEFGHIJKL</PlayerID>
+	 *      <SeatIndex>CDEFGHIJKL</SeatIndex>
+	 * </TCP>
+	 *
+	 * @return
+	 */
+	public String doJoinStage(Map<String,String> commandMap){
+		String retStr = null;
+		String command = commandMap.get("Command");
+		String stageSN = commandMap.get("StageSN");
+		String playerID = commandMap.get("PlayerID");
+		String seatIndex = commandMap.get("SeatIndex");
+		
+		SeatMap seatMap = new SeatMap();
+		seatMap.setPlayerID(playerID);
+		seatMap .setSeatIndex(Integer.parseInt(seatIndex));
+		seatMap .setStageSN(Integer.parseInt(stageSN));
+		gameService.insertSeatMap(seatMap);
+		
+		JoinStageCommand joinStageCommand = new JoinStageCommand();
+		joinStageCommand.setCommand(command);
+		joinStageCommand.setResult("1");
+		joinStageCommand.setNote("success");
+		joinStageCommand.setPlayerID(playerID);
+		joinStageCommand.setStageSN(stageSN);
+		joinStageCommand.setSeatIndex(seatIndex);
+		
+		retStr = JaxbUtil.convertToXml(joinStageCommand, "utf-8");
+		return retStr;
+	}
+	/**
+	 * 开玩
+	 * @param commandMap
+	 * <TCP>
+	 * 	<Command>startStage</Command>
+	 * 	<StageSN>1</StageSN>
+	 * 	<Status>1</Status>
+	 * 	<PlayerID>CDEFGHIJKL</PlayerID>
+	 * </TCP>
+	 *
+	 * @return
+	 */
+	public String doStartStage(Map<String,String> commandMap){
+		String retStr = null;
+		String command = commandMap.get("Command");
+		String stageSN = commandMap.get("StageSN");
+		String status = commandMap.get("Status");
+		String playerID = commandMap.get("PlayerID");
+		
+		//更新座位状态
+		StageMap stageMap = new StageMap();
+		stageMap.setStageSN(Integer.parseInt(stageSN));
+		stageMap.setStatus(Integer.parseInt(status));
+		gameService.updateStageMap(stageMap);
+		
+		//更新玩家状态
+		PlayerMap playerMap = new PlayerMap();
+		playerMap.setPlayerID(playerID);
+		playerMap.setStatus(3);//玩家游戏状态
+		loginService.updatePlayerStatus(playerMap);
+		
+		StartStageCommand startStageCommand = new StartStageCommand();
+		startStageCommand.setCommand(command);
+		startStageCommand.setResult("1");
+		startStageCommand.setNote("success");
+		startStageCommand.setStageSN(stageSN);
+		startStageCommand.setStatus(status);
+		startStageCommand.setPlayerID(playerID);
+
+		retStr = JaxbUtil.convertToXml(startStageCommand, "utf-8");
 		return retStr;
 	}
 	

@@ -101,6 +101,15 @@ public class GameService {
 		return stageMapMapper.queryStageMapByGameId(gameID);
 	}
 	
+	/***
+	 * 更新桌的状态
+	 * @param stageMap
+	 * 
+	 */
+	public void updateStageMap(StageMap stageMap){
+		stageMapMapper.updateStageMap(stageMap);
+	}
+	
 	public GameInfoMapper getGameInfoMapper() {
 		return gameInfoMapper;
 	}
