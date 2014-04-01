@@ -7,6 +7,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.krakentouch.server.bean.EndStageCommand;
 import com.krakentouch.server.bean.JoinStageCommand;
 import com.krakentouch.server.bean.OpenStageCommand;
 import com.krakentouch.server.bean.QueryStageCommand;
@@ -66,6 +67,12 @@ public class MainAction {
 				
 			}else if("startStage".equals(command)){//开玩
 				retStr = doStartStage(commandMap);
+				
+			}else if("checkoutScore".equals(command)){//结分
+				retStr = doCheckoutScore(commandMap);
+				
+			}else if("endStage".equals(command)){//玩闭
+				retStr = doEndStage(commandMap);
 				
 			}else{
 				retStr="error,not find command.";
@@ -339,6 +346,74 @@ public class MainAction {
 		retStr = JaxbUtil.convertToXml(startStageCommand, "utf-8");
 		return retStr;
 	}
+	
+	/**
+	 * 结分
+	 * @param commandMap
+	 * @return
+	 */
+	public String doCheckoutScore(Map<String,String> commandMap){
+		String retStr = null;
+		
+		
+		return retStr;
+	}
+	
+	
+	/**
+	 * 玩闭
+	 * @param commandMap
+	 * 	<TCP>
+     *		<Command>endStage</Command>
+     *		<StageSN>abcdef</StageSN>
+     *		<PlayerID>CDEFGHIJKL</PlayerID>
+	 * 	</TCP>
+     *
+	 * @return
+	 */
+	public String doEndStage(Map<String,String> commandMap){
+		String retStr = null;
+		//删除座位
+		String command = commandMap.get("Command");
+		String stageSN = commandMap.get("StageSN");
+		String playerID = commandMap.get("PlayerID");
+		
+		
+		SeatMap seatMap = new SeatMap();
+		seatMap.setStageSN(Integer.parseInt(stageSN));
+		gameService.deleteSeatMap(seatMap);
+		//查询当前桌的数据
+		StageMap retStageMap = gameService.queryStageMapByStageSN(stageSN);
+		
+		StageMap stageMap = new StageMap();
+		stageMap.setStageSN(Integer.parseInt(stageSN));
+		gameService.deleteStageMap(stageMap);
+		
+		//更新同桌的玩家状态
+		List<SeatMap> seatList = gameService.querySeatMapByStageSN(stageSN);
+		for(SeatMap sm : seatList){
+			String pId = sm.getPlayerID();
+			PlayerMap playerMap = new PlayerMap();
+			playerMap.setPlayerID(pId);
+			playerMap.setStatus(2);//玩家查桌状态
+			loginService.updatePlayerStatus(playerMap);
+		}
+		
+		EndStageCommand endStageCommand = new EndStageCommand();
+		endStageCommand.setCommand(command);
+		endStageCommand.setResult("1");
+		endStageCommand.setNote("success");
+		endStageCommand.setGameID(retStageMap.getGameID());
+		endStageCommand.setHostIndex(retStageMap.getHostIndex());
+		endStageCommand.setPlayerID(playerID);
+		endStageCommand.setStageSN(retStageMap.getStageSN());
+		endStageCommand.setStatus(String.valueOf(retStageMap.getStatus()));
+		
+		retStr = JaxbUtil.convertToXml(endStageCommand, "utf-8");
+		return retStr;
+	}
+	
+	
 	
 	public LoginService getLoginService() {
 		return loginService;

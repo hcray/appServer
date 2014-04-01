@@ -93,12 +93,21 @@ public class GameService {
 	}
 	
 	/**
-	 * 查询桌
+	 * 根据游戏查询桌
 	 * @param gameID
 	 * @return
 	 */
 	public List<StageMap> queryStageMapByGameId(String gameID){
 		return stageMapMapper.queryStageMapByGameId(gameID);
+	}
+	
+	/***
+	 * 根据stageSN查询桌
+	 * @param stageSN
+	 * @return
+	 */
+	public StageMap queryStageMapByStageSN(String stageSN){
+		return stageMapMapper.queryStageMapByStageSN(stageSN);
 	}
 	
 	/***
@@ -109,6 +118,24 @@ public class GameService {
 	public void updateStageMap(StageMap stageMap){
 		stageMapMapper.updateStageMap(stageMap);
 	}
+	
+	/**
+	 * 删除
+	 * @param stageMap
+	 */
+	public void deleteStageMap(StageMap stageMap){
+		stageMapMapper.deleteStageMap(stageMap);
+	}
+	
+	
+	/**
+	 * 删除
+	 * @param seatMap
+	 */
+	public void deleteSeatMap(SeatMap seatMap){
+		seatMapMapper.deleteSeatMap(seatMap);
+	}
+	
 	
 	public GameInfoMapper getGameInfoMapper() {
 		return gameInfoMapper;

@@ -24,6 +24,16 @@
     	WHERE GAMEID = #{gameId}
     </select>
     
+    <select id="queryStageMapByStageSN" resultType="StageMap" parameterType="java.lang.String">
+    	SELECT 
+    		STAGESN as StageSN, 
+    		STATUS Status, 
+    		HOSTINDEX as HostIndex, 
+    		GAMEID as GameID
+    		FROM STAGEMAP 
+    	WHERE STAGESN = #{StageSN}
+    </select>
+    
     <delete id="deleteStageMap" parameterType="StageMap">
     	DELETE FROM STAGEMAP WHERE STAGESN = #{StageSN}
     </delete>
