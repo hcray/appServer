@@ -74,6 +74,9 @@ public class MainAction {
 			}else if("endStage".equals(command)){//玩闭
 				retStr = doEndStage(commandMap);
 				
+			}else if("searchPlayer".equals(command)){//寻人
+				retStr = doSearchPlayer(commandMap);
+				
 			}else{
 				retStr="error,not find command.";
 			}
@@ -412,6 +415,20 @@ public class MainAction {
 		retStr = JaxbUtil.convertToXml(endStageCommand, "utf-8");
 		return retStr;
 	}
+	
+	/***
+	 * 询人
+	 * @param commandMap
+	 * @return
+	 */
+	public String doSearchPlayer(Map<String,String> commandMap){
+		String retStr = null;
+		
+		
+		return retStr;
+	}
+	
+	
 	
 	
 	
