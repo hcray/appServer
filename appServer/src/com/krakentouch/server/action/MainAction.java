@@ -10,13 +10,17 @@ import org.slf4j.LoggerFactory;
 import com.krakentouch.server.bean.EndStageCommand;
 import com.krakentouch.server.bean.JoinStageCommand;
 import com.krakentouch.server.bean.OpenStageCommand;
+import com.krakentouch.server.bean.PlayerBean;
+import com.krakentouch.server.bean.Players;
 import com.krakentouch.server.bean.QueryStageCommand;
 import com.krakentouch.server.bean.RefreshStageCommand;
+import com.krakentouch.server.bean.SearchPlayerCommand;
 import com.krakentouch.server.bean.SeatBean;
 import com.krakentouch.server.bean.SeatBeans;
 import com.krakentouch.server.bean.StageBean;
 import com.krakentouch.server.bean.StageBeans;
 import com.krakentouch.server.bean.StartStageCommand;
+import com.krakentouch.server.domain.Player;
 import com.krakentouch.server.domain.PlayerMap;
 import com.krakentouch.server.domain.SeatMap;
 import com.krakentouch.server.domain.StageMap;
@@ -74,7 +78,7 @@ public class MainAction {
 			}else if("endStage".equals(command)){//玩闭
 				retStr = doEndStage(commandMap);
 				
-			}else if("searchPlayer".equals(command)){//寻人
+			}else if("searchPlayer".equals(command)){//询人
 				retStr = doSearchPlayer(commandMap);
 				
 			}else{
@@ -423,8 +427,31 @@ public class MainAction {
 	 */
 	public String doSearchPlayer(Map<String,String> commandMap){
 		String retStr = null;
+		String command = commandMap.get("Command");
 		
+		List<Player> playerlist = loginService.queryAllOnlinePlayer();
+		List<PlayerBean> playerBeans = new ArrayList<PlayerBean>();
+		for(Player p : playerlist){
+			PlayerBean playerBean = new PlayerBean();
+			playerBean.setPlayerID(p.getPlayerID());
+			playerBean.setDeskID(p.getDeskID());
+			playerBean.setGender(p.getGender());
+			playerBean.setGrade(p.getGrade());
+			playerBean.setIcon(p.getIcon());
+			playerBean.setNickName(p.getNickName());
+			playerBeans.add(playerBean);
+		}
 		
+		Players players =  new Players();
+		players.setPlayers(playerBeans);
+		
+		SearchPlayerCommand searchPlayerCommand = new SearchPlayerCommand();
+		searchPlayerCommand.setCommand(command);
+		searchPlayerCommand.setResult("1");
+		searchPlayerCommand.setNote("success");
+		searchPlayerCommand.setPlayers(players);
+		
+		retStr = JaxbUtil.convertToXml(searchPlayerCommand, "utf-8");
 		return retStr;
 	}
 	

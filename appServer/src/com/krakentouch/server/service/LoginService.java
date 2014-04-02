@@ -1,11 +1,13 @@
 package com.krakentouch.server.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import com.krakentouch.server.bean.CommandBean;
 import com.krakentouch.server.bean.QueryScoreCommand;
 import com.krakentouch.server.domain.DeskMap;
+import com.krakentouch.server.domain.Player;
 import com.krakentouch.server.domain.PlayerMap;
 import com.krakentouch.server.domain.PlayerScore;
 import com.krakentouch.server.mapper.DeskMapMapper;
@@ -173,6 +175,14 @@ public class LoginService {
 	 */
 	public void updatePlayerStatus(PlayerMap playerMap){
 		PlayerMapMapper.updatePlayerStatus(playerMap);
+	}
+	
+	/**
+	 * 查询所有的在线用户
+	 * @return
+	 */
+	public List<Player> queryAllOnlinePlayer(){
+		return PlayerMapMapper.queryAllOnlinePlayer();
 	}
 
 	public DeskMapMapper getDeskMapMapper() {

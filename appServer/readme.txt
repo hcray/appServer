@@ -1,9 +1,6 @@
 1、登陆，登出的用户id的保存
 
 
-
-
-
 <TCP><Command>queryScore</Command><PlayerID>user7</PlayerID></TCP>
 
 
@@ -17,3 +14,6 @@
 
 
 <TCP><Command>queryStage</Command><GameID>abcdef</GameID><PlayerID>user4</PlayerID></TCP>
+
+
+<TCP><Command>searchPlayer</Command></TCP>

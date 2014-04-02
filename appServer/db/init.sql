@@ -99,3 +99,15 @@ create table DeskMap(
 	Mode int(1) comment '工作模式（0~2分别表示单人独占、多人独占、多人分占）',
 	Status int(1) comment '工作状态（保留）'
 )comment '终端映射表';
+
+--视图
+CREATE OR REPLACE VIEW playerView as
+       select p.playerid as playerid,
+              p.gender as gender, 
+              p.nickname as nickname, 
+              p.icon as icon,
+              p.grade as grade,
+              m.deskid as deskid
+       from playerinfo p ,
+            playermap m 
+       where p.PlayerID = m.PlayerID;

@@ -43,5 +43,17 @@
     <update id="updatePlayerScore" parameterType="PlayerScore">
     	UPDATE PLAYERSCORE SET SCORE = #{score} WHERE PLAYERID = #{PlayerID}#
     </update>
+    
+    <select id="queryAllOnlinePlayer" resultType="Player">
+    	SELECT
+    		PLAYERID as playerID,
+			GENDER as gender,
+			NICKNAME as nickName,
+			ICON as icon,
+			GRADE as grade,
+			DESKID as deskID
+    	FROM PLAYERVIEW
+    </select>
+    
 	<!-- 当使用该Mybatis与Spring整合的时候，该文件必须和相应的Mapper接口文件同名，并在同一路径下 -->
 </mapper> 

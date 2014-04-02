@@ -1,4 +1,6 @@
-/com
-/Copy of applicationContext-service-game.xml
 /applicationContext-service-game.xml
-/applicationContext.out.xml
+/applicationContext-service-login.xml
+/applicationContext.xml
+/com
+/jdbc.properties
+/logback.xml
