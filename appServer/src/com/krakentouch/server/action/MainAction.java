@@ -3,6 +3,7 @@ package com.krakentouch.server.action;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import com.krakentouch.server.bean.OpenStageCommand;
 import com.krakentouch.server.bean.PlayerBean;
 import com.krakentouch.server.bean.Players;
 import com.krakentouch.server.bean.QueryStageCommand;
+import com.krakentouch.server.bean.ReceiveMessageBean;
 import com.krakentouch.server.bean.RefreshStageCommand;
 import com.krakentouch.server.bean.SearchPlayerCommand;
 import com.krakentouch.server.bean.SeatBean;
@@ -45,8 +47,9 @@ public class MainAction {
 	
 	private ChatService chatService;
 	
-	public String doCommand(String commandStr){
+	public Map<String, String> doCommand(String commandStr){
 		LOG.debug("doCommand(String commandStr) in... " + commandStr);
+		Map<String, String> retMap = new HashMap<String, String>();
 		String retStr=null;
 		try{
 			Map<String, String> commandMap = Utils.parseCommand(commandStr);
@@ -54,6 +57,8 @@ public class MainAction {
 			String command = commandMap.get("Command");
 			if("login".equals(command)){//登录
 				retStr = doLogin(commandMap);
+				String playerID = commandMap.get("PlayerID");
+				retMap.put("playerID", playerID);
 			
 			}else if("logout".equals(command)){//注销
 				retStr = doLogout(commandMap);
@@ -89,16 +94,25 @@ public class MainAction {
 				retStr = doSearchPlayer(commandMap);
 				
 			}else if("sendMessage".equals(command)){//聊天
-				retStr = doSendMessage(commandMap);
+				String[] ret = doSendMessage(commandMap); 
+				retStr = ret[0];
+				String receiveMessage = ret[1];
+				retMap.put("receiveMessage", receiveMessage);
+				
+				String receiveId = commandMap.get("RecoverID");//接收者
+				retMap.put("receiveId", receiveId);
+				
 			}else{
 				retStr="error,not find command.";
 			}
+			retMap.put("command",command);
+			retMap.put("result",retStr);
 			LOG.debug("doCommand(String commandStr) out... ");
 		}catch(Exception e){
 			LOG.error(e.getMessage() + e.getCause());
 			retStr = "error, messsage:"+e.getMessage() + " ,cause: " + e.getCause();
 		}
-		return retStr;
+		return retMap;
 	}
 	
 	/***
@@ -468,8 +482,18 @@ public class MainAction {
 	 * 聊天
 	 * @param commandMap
 	 * @return
+	 * 推送给接收方
+	 * <TCP>
+	 * 		<Command>receiveMessage</Command>
+	 * 		<SN>0</SN>
+	 * 		<Time>xxxxxxxx</Time>
+	 * 		<SenderID>ABCDEFGHIJ</SenderID>
+	 * 		<RecverID>CDEFGHIJKL</RecverID>
+	 * 		<Memo>哈喽</Memo> 
+	 * </TCP>
+	 *
 	 */
-	public String doSendMessage(Map<String,String> commandMap){
+	public String[] doSendMessage(Map<String,String> commandMap){
 		String retStr = null;
 		String command = commandMap.get("Command"); //命令
 		String senderID = commandMap.get("SenderID");//发送者
@@ -491,7 +515,18 @@ public class MainAction {
 		commandBean.setResult("1");
 		commandBean.setNote("success");
 		retStr = JaxbUtil.convertToXml(commandBean, "utf-8");
-		return retStr;
+		
+		ReceiveMessageBean receiveMessageBean = new ReceiveMessageBean();
+		receiveMessageBean.setCommand("receiveMessage");
+		receiveMessageBean.setSn(chatLog.getSN());
+		receiveMessageBean.setTime(chatTime);
+		receiveMessageBean.setRecoverId(recoverID);
+		receiveMessageBean.setSenderId(senderID);
+		receiveMessageBean.setMemo(memo);
+		
+		String receiveMessage = JaxbUtil.convertToXml(receiveMessageBean, "utf-8");
+		
+		return new String[]{retStr,receiveMessage};
 	}
 	
 	

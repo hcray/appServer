@@ -2,6 +2,7 @@ package com.krakentouch.server.handler;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.mina.core.service.IoHandlerAdapter;
@@ -54,18 +55,56 @@ public class ServerHandler extends IoHandlerAdapter {
 	public void messageReceived(IoSession session, Object message)
 			throws Exception {
 		LOG.debug("messageReceived: " + message.toString());
-		String user = "";
-        sessions.add(session);
-        session.setAttribute("user", user);
-        MdcInjectionFilter.setProperty(session, "user", user);
-		System.out.println("Message : " + message);
 		
-		String retString = mainAction.doCommand((String)message);
+		
+		Map<String, String> retMap = mainAction.doCommand((String)message);
+		String command = retMap.get("command");
+		String retString = retMap.get("result");
+		if("login".equals(command)){ //登陆
+			String user = retMap.get("playerID");
+			sessions.add(session);
+			session.setAttribute("user", user);
+			MdcInjectionFilter.setProperty(session, "user", user);
+			System.out.println("Message : " + message);
+			broadcast(user + " login....");
+		}else if("sendMessage".equals(command)){//聊天
+			String receiveMessage = retMap.get("receiveMessage");
+			String receiveId = retMap.get("receiveId");
+			sendMessage(receiveId, receiveMessage);
+			
+		}
+		//最后写反馈结果
 		session.write(retString);
 		// If we want to test the write operation, uncomment this line
 		//session.write(message);
 
 	}
+	
+	public boolean sendMessage(String rescoveId, String message){
+		boolean sendRet = false;
+		synchronized (sessions) {
+			for (IoSession session : sessions) {
+				if (session.isConnected()) {
+					String user = (String) session.getAttribute("user");
+					if(rescoveId.equals(user)){
+						session.write(message);
+						sendRet = true;
+					}
+				}
+			}
+		}
+		return sendRet;
+	}
+	
+    public void broadcast(String message) {
+        synchronized (sessions) {
+            for (IoSession session : sessions) {
+                if (session.isConnected()) {
+                    session.write(message);
+                }
+            }
+        }
+    }
 
 	@Override
 	public void messageSent(IoSession session, Object message) throws Exception {
@@ -75,6 +114,10 @@ public class ServerHandler extends IoHandlerAdapter {
 	@Override
 	public void sessionClosed(IoSession session) throws Exception {
 		LOG.debug("session Closed");
+		String user = (String) session.getAttribute("user");
+        users.remove(user);
+        sessions.remove(session);
+        broadcast("The user " + user + " has left the chat session.");
 		
 	}
 

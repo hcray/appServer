@@ -1,5 +1,5 @@
 1、登陆，登出的用户id的保存
-
+2、跨JVM的乱码问题
 
 <TCP><Command>queryScore</Command><PlayerID>user7</PlayerID></TCP>
 
