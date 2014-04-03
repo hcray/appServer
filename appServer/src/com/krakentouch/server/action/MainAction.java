@@ -26,6 +26,7 @@ import com.krakentouch.server.bean.StageBean;
 import com.krakentouch.server.bean.StageBeans;
 import com.krakentouch.server.bean.StartStageCommand;
 import com.krakentouch.server.domain.ChatLog;
+import com.krakentouch.server.domain.DeskMap;
 import com.krakentouch.server.domain.Player;
 import com.krakentouch.server.domain.PlayerMap;
 import com.krakentouch.server.domain.SeatMap;
@@ -55,7 +56,14 @@ public class MainAction {
 			Map<String, String> commandMap = Utils.parseCommand(commandStr);
 			LOG.debug("commandMap: " + commandMap);
 			String command = commandMap.get("Command");
-			if("login".equals(command)){//登录
+			
+			if("startup".equals(command)){//物理端登陆
+				retStr = doStartup(commandMap);
+				
+			}else if("shutdown".equals(command)){//物理端签出
+				retStr = doShutdown(commandMap);
+				
+			}else if("login".equals(command)){//登录
 				retStr = doLogin(commandMap);
 				String playerID = commandMap.get("PlayerID");
 				retMap.put("playerID", playerID);
@@ -114,6 +122,36 @@ public class MainAction {
 		}
 		return retMap;
 	}
+	
+	
+	//开机
+	public String doStartup(Map<String,String> commandMap) throws Exception{
+		String retStr = null;
+		String command = commandMap.get("Command");
+		String deskId = commandMap.get("DeskID");
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		String startTime = sdf.format(new Date());
+		DeskMap deskMap = new DeskMap();
+		deskMap.setDeskId(deskId);
+		deskMap.setStartTime(startTime);
+		deskMap.setDelFlag(0); //删除标志（0：没有删除；1：删除）
+		deskMap.setMode(0); //工作模式（0~2分别表示单人独占、多人独占、多人分占）
+		deskMap.setStatus(0);//工作状态（保留）
+		loginService.insertDeskMap(deskMap);
+		
+		return retStr;
+	}
+
+	
+	//关机
+	public String doShutdown(Map<String,String> commandMap) throws Exception{
+		String retStr = null;
+		
+		
+		return retStr;
+	}
+	
 	
 	/***
 	 * 玩家登入

@@ -7,4 +7,6 @@ public interface DeskMapMapper {
 	public void insertDeskMap(DeskMap deskMap);
 	
 	public void deleteDeskMap(DeskMap deskMap);
+	
+	public void updateDeskMap(DeskMap deskMap);
 }

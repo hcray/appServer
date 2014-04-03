@@ -95,9 +95,13 @@ create table PlayerMap(
 
 drop table if EXISTS DeskMap;
 create table DeskMap(
-	DeskID char(8) comment '串号',
-	Mode int(1) comment '工作模式（0~2分别表示单人独占、多人独占、多人分占）',
-	Status int(1) comment '工作状态（保留）'
+	ID int(11) zerofill auto_increment primary key comment'主键ID',
+	deskID char(8) comment '串号',
+	mode int(1) comment '工作模式（0~2分别表示单人独占、多人独占、多人分占）',
+	status int(1) comment '工作状态（保留）',
+	startTime datetime comment '开机时间',
+	shutdownTime datetime comment '关机时间',
+	delFlag int(1) default 0 comment '删除标志（0：没有删除；1：删除）'
 )comment '终端映射表';
 
 --视图

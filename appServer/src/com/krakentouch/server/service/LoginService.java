@@ -43,6 +43,14 @@ public class LoginService {
 	public void deleteDeskMap(DeskMap deskMap){
 		deskMapMapper.deleteDeskMap(deskMap);
 	}
+	
+	/**
+	 * 更新
+	 * @param deskMap
+	 */
+	public void updateDeskMap(DeskMap deskMap){
+		deskMapMapper.updateDeskMap(deskMap);
+	}
 
 	
 	/***

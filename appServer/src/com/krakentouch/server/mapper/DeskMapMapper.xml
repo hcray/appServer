@@ -6,14 +6,28 @@
 <mapper namespace="com.krakentouch.server.mapper.DeskMapMapper">
 	<insert id="insertDeskMap" parameterType="DeskMap">
 		INSERT INTO DESKMAP
-			(DESKID,MODE,STATUS) 
+			(DESKID, MODE, STATUS, STARTTIME, DELFLAG) 
 		VALUES
-			(#{DeskID},#{Mode},#{Status}) 
+			(#{deskId}, #{mode}, #{status}, #{startTime}, #{delFlag})
+		<selectKey resultType="java.lang.Integer"  order="AFTER" keyProperty="ID" >
+        	SELECT LAST_INSERT_ID() AS ID   
+      	</selectKey>	
     </insert>
     
     <delete id="deleteDeskMap" parameterType="DeskMap">
-    	DELETE FROM DESKMAP WHERE DESKID = #{DeskID} 
+    	DELETE FROM DESKMAP WHERE DESKID = #{deskId} 
     </delete>
+    
+    <update id="updateDeskMap" parameterType="DeskMap">
+    	UPDATE DESKMAP
+    	<set>
+	      <if test="Status != null">STATUS = #{Status},</if>
+	      <if test="shutdownTime != null">SHUTDOWNTIME=#{shutdownTime},</if>
+	      <if test="DelFlag != null">DELFLAG=#{DelFlag}</if>
+    	</set>
+    	WHERE DESKID = #{deskId}# and DELFLAG = 0
+    </update>
+    
     
 	<!-- 当使用该Mybatis与Spring整合的时候，该文件必须和相应的Mapper接口文件同名，并在同一路径下 -->
 </mapper> 
