@@ -137,10 +137,12 @@
     
     <import resource="applicationContext-service-login.xml"/>
 	<import resource="applicationContext-service-game.xml"/>
+	<import resource="applicationContext-service-chatLog.xml"/>
 	
 	<bean name="mainAction" class="com.krakentouch.server.action.MainAction">
 		<property name="loginService" ref="loginService"/>
 		<property name="gameService" ref="gameService"/>
+		<property name="chatService" ref="chatService"/>
 	</bean>
      
 </beans>

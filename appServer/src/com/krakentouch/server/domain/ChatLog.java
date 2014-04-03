@@ -8,7 +8,7 @@ public class ChatLog {
 	private int SN;			// int(10) primary key comment '流水号',
 	private String chatTime;// timestamp comment '时间戳',
 	private String SenderID;// char(10) comment '发送者串号',
-	private String RecverID;// char(10) comment '接收者串号',
+	private String RecoverID;// char(10) comment '接收者串号',
 	private String Memo;	// varchar(256) comment '聊天内容'
 	
 	public int getSN() {
@@ -29,11 +29,11 @@ public class ChatLog {
 	public void setSenderID(String senderID) {
 		SenderID = senderID;
 	}
-	public String getRecverID() {
-		return RecverID;
+	public String getRecoverID() {
+		return RecoverID;
 	}
-	public void setRecverID(String recverID) {
-		RecverID = recverID;
+	public void setRecoverID(String recoverID) {
+		RecoverID = recoverID;
 	}
 	public String getMemo() {
 		return Memo;

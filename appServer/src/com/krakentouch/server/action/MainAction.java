@@ -1,12 +1,15 @@
 package com.krakentouch.server.action;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.krakentouch.server.bean.CommandBean;
 import com.krakentouch.server.bean.EndStageCommand;
 import com.krakentouch.server.bean.JoinStageCommand;
 import com.krakentouch.server.bean.OpenStageCommand;
@@ -20,10 +23,12 @@ import com.krakentouch.server.bean.SeatBeans;
 import com.krakentouch.server.bean.StageBean;
 import com.krakentouch.server.bean.StageBeans;
 import com.krakentouch.server.bean.StartStageCommand;
+import com.krakentouch.server.domain.ChatLog;
 import com.krakentouch.server.domain.Player;
 import com.krakentouch.server.domain.PlayerMap;
 import com.krakentouch.server.domain.SeatMap;
 import com.krakentouch.server.domain.StageMap;
+import com.krakentouch.server.service.ChatService;
 import com.krakentouch.server.service.GameService;
 import com.krakentouch.server.service.LoginService;
 import com.krakentouch.server.tools.JaxbUtil;
@@ -37,6 +42,8 @@ public class MainAction {
 	private LoginService loginService;
 	
 	private GameService gameService;
+	
+	private ChatService chatService;
 	
 	public String doCommand(String commandStr){
 		LOG.debug("doCommand(String commandStr) in... " + commandStr);
@@ -81,6 +88,8 @@ public class MainAction {
 			}else if("searchPlayer".equals(command)){//询人
 				retStr = doSearchPlayer(commandMap);
 				
+			}else if("sendMessage".equals(command)){//聊天
+				retStr = doSendMessage(commandMap);
 			}else{
 				retStr="error,not find command.";
 			}
@@ -455,8 +464,35 @@ public class MainAction {
 		return retStr;
 	}
 	
-	
-	
+	/**
+	 * 聊天
+	 * @param commandMap
+	 * @return
+	 */
+	public String doSendMessage(Map<String,String> commandMap){
+		String retStr = null;
+		String command = commandMap.get("Command"); //命令
+		String senderID = commandMap.get("SenderID");//发送者
+		String recoverID = commandMap.get("RecoverID");//接收者
+		String memo = commandMap.get("Memo");//发送内容
+		//chatTime
+		
+		ChatLog chatLog = new ChatLog();
+		chatLog.setRecoverID(recoverID);
+		chatLog.setSenderID(senderID);
+		chatLog.setMemo(memo);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		String chatTime = sdf.format(new Date());
+		chatLog.setChatTime(chatTime );
+		chatService.insertChatLog(chatLog );
+		
+		CommandBean commandBean = new CommandBean();
+		commandBean.setCommand(command);
+		commandBean.setResult("1");
+		commandBean.setNote("success");
+		retStr = JaxbUtil.convertToXml(commandBean, "utf-8");
+		return retStr;
+	}
 	
 	
 	public LoginService getLoginService() {
@@ -473,6 +509,14 @@ public class MainAction {
 
 	public void setGameService(GameService gameService) {
 		this.gameService = gameService;
+	}
+
+	public ChatService getChatService() {
+		return chatService;
+	}
+
+	public void setChatService(ChatService chatService) {
+		this.chatService = chatService;
 	}
 	
 }

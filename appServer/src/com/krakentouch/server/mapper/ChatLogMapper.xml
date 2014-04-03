@@ -6,8 +6,11 @@
 <mapper namespace="com.krakentouch.server.mapper.ChatLogMapper">
 	<insert id="insertChatLog" parameterType="ChatLog">
 		INSERT INTO CHATLOG
-			(CHATTIME, SENDERID, RECVERID, MEMO) 
+			(CHATTIME, SENDERID, RECOVERID, MEMO) 
 		VALUES
-			(#{chatTime}, #{SenderID}, #{RecverID}, #{Memo}) 
+			(#{chatTime}, #{SenderID}, #{RecoverID}, #{Memo}) 
+		<selectKey resultType="java.lang.Integer"  order="AFTER" keyProperty="SN" >
+        	SELECT LAST_INSERT_ID() AS SN   
+      	</selectKey>
     </insert>
 </mapper> 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+    "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>		
+ 	<bean name="chatService" class="com.krakentouch.server.service.ChatService">
+		<property name="chatLogMapper" ref="chatLogMapper"/>
+	</bean>
+	
+	<bean id="chatLogMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"> 
+      <property name="mapperInterface" value="com.krakentouch.server.mapper.ChatLogMapper" />
+      <property name="sqlSessionFactory" ref="sqlSessionFactory" /> 
+    </bean>
+</beans>

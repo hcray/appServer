@@ -43,10 +43,10 @@ create table GameInfo(
 
 drop table if EXISTS ChatLog;
 create table ChatLog(
-	SN int(10) primary key comment '流水号',
+	SN int(11) zerofill auto_increment primary key comment '流水号',
 	chatTime timestamp comment '时间戳',
 	SenderID char(10) comment '发送者串号',
-	RecverID char(10) comment '接收者串号',
+	RecoverID char(10) comment '接收者串号',
 	Memo varchar(256) comment '聊天内容'
 )comment '聊天数据';
 

@@ -17,3 +17,6 @@
 
 
 <TCP><Command>searchPlayer</Command></TCP>
+
+
+<TCP><Command>sendMessage</Command><SenderID>user7</SenderID><RecoverID>user5</RecoverID><Memo>哈喽</Memo></TCP>
