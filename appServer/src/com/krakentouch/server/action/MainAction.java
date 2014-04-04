@@ -25,6 +25,7 @@ import com.krakentouch.server.bean.SeatBeans;
 import com.krakentouch.server.bean.StageBean;
 import com.krakentouch.server.bean.StageBeans;
 import com.krakentouch.server.bean.StartStageCommand;
+import com.krakentouch.server.bean.StartupBean;
 import com.krakentouch.server.domain.ChatLog;
 import com.krakentouch.server.domain.DeskMap;
 import com.krakentouch.server.domain.Player;
@@ -140,15 +141,42 @@ public class MainAction {
 		deskMap.setStatus(0);//工作状态（保留）
 		loginService.insertDeskMap(deskMap);
 		
+		StartupBean startupBean = new StartupBean();
+		startupBean.setCommand(command);
+		startupBean.setResult("1");
+		startupBean.setNote("success");
+		startupBean.setDeskId(deskId);
+		startupBean.setMode(0);
+		startupBean.setStatus(0);
+		
+		retStr = JaxbUtil.convertToXml(startupBean, "utf-8");
 		return retStr;
 	}
-
 	
 	//关机
 	public String doShutdown(Map<String,String> commandMap) throws Exception{
 		String retStr = null;
+		String command = commandMap.get("Command");
+		String deskId = commandMap.get("DeskID");
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		String shutdownTime = sdf.format(new Date());
+		DeskMap deskMap = new DeskMap();
+		deskMap.setDeskId(deskId);
+		deskMap.setShutdownTime(shutdownTime);
+		deskMap.setDelFlag(1); //删除标志（0：没有删除；1：删除）
+		deskMap.setStatus(0);//工作状态（保留）
+		loginService.updateDeskMap(deskMap);
 		
+		StartupBean startupBean = new StartupBean();
+		startupBean.setCommand(command);
+		startupBean.setResult("1");
+		startupBean.setNote("success");
+		startupBean.setDeskId(deskId);
+		startupBean.setMode(0);
+		startupBean.setStatus(0);
+
+		retStr = JaxbUtil.convertToXml(startupBean, "utf-8");
 		return retStr;
 	}
 	

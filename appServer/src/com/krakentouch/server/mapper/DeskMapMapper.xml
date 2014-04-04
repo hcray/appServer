@@ -21,9 +21,9 @@
     <update id="updateDeskMap" parameterType="DeskMap">
     	UPDATE DESKMAP
     	<set>
-	      <if test="Status != null">STATUS = #{Status},</if>
-	      <if test="shutdownTime != null">SHUTDOWNTIME=#{shutdownTime},</if>
-	      <if test="DelFlag != null">DELFLAG=#{DelFlag}</if>
+	      <if test="Status != null">STATUS = #{status},</if>
+	      <if test="shutdownTime != null">SHUTDOWNTIME = #{shutdownTime},</if>
+	      <if test="DelFlag != null">DELFLAG =# {delFlag}</if>
     	</set>
     	WHERE DESKID = #{deskId}# and DELFLAG = 0
     </update>
