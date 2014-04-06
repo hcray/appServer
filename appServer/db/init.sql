@@ -104,7 +104,7 @@ create table DeskMap(
 	delFlag int(1) default 0 comment '删除标志（0：没有删除；1：删除）'
 )comment '终端映射表';
 
---视图
+/**视图**/
 CREATE OR REPLACE VIEW playerView as
        select p.playerid as playerid,
               p.gender as gender, 
