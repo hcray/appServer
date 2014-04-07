@@ -30,6 +30,7 @@ import com.krakentouch.server.domain.ChatLog;
 import com.krakentouch.server.domain.DeskMap;
 import com.krakentouch.server.domain.Player;
 import com.krakentouch.server.domain.PlayerMap;
+import com.krakentouch.server.domain.PlayerScore;
 import com.krakentouch.server.domain.SeatMap;
 import com.krakentouch.server.domain.StageMap;
 import com.krakentouch.server.service.ChatService;
@@ -110,6 +111,9 @@ public class MainAction {
 				
 				String receiveId = commandMap.get("RecoverID");//接收者
 				retMap.put("receiveId", receiveId);
+				
+			}else if("present".equals(command)){
+				String[] ret = doPresent(commandMap);
 				
 			}else{
 				retStr="error,not find command.";
@@ -595,6 +599,75 @@ public class MainAction {
 		return new String[]{retStr,receiveMessage};
 	}
 	
+	
+	public String[] doPresent(Map<String,String> commandMap) throws Exception{
+		//String command = commandMap.get("Command"); //命令
+		String senderID = commandMap.get("SenderID");//发送者
+		String recoverID = commandMap.get("RecoverID");//接收者
+		int score = Integer.parseInt(commandMap.get("Score"));//分数
+		int money = Integer.parseInt(commandMap.get("Money"));//金钱
+		int prop0 = Integer.parseInt(commandMap.get("Prop0"));//道具
+		
+		PlayerScore playerScore = loginService.queryScoreBean(senderID);
+		PlayerScore recoverScore = loginService.queryScoreBean(recoverID);
+		if(playerScore.getScore() < score || playerScore.getMoney() < money || playerScore.getProp0() < prop0){
+			return new String[]{"score or money or prop0 is not enough"};
+		}else{
+			//发送者减少
+			playerScore.setScore(playerScore.getScore() - score);
+			playerScore.setMoney(playerScore.getMoney() - money);
+			playerScore.setProp0(playerScore.getProp0() - prop0);
+			loginService.updatePlayerScore(playerScore);
+			
+			ChatLog chatLog = new ChatLog();
+			chatLog.setSenderID("0000000000"); //系统发送
+			chatLog.setRecoverID(senderID);
+			StringBuffer memoBuffer = new StringBuffer();
+			memoBuffer.append("您赠送 ").append(recoverID);
+			if(score != 0) memoBuffer.append(" score:").append(score);
+			if(money != 0) memoBuffer.append(" money:").append(money);
+			if(prop0 != 0) memoBuffer.append(" prop0:").append(prop0);
+			chatLog.setMemo(memoBuffer.toString());
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			String chatTime = sdf.format(new Date());
+			chatLog.setChatTime(chatTime);
+			chatService.insertChatLog(chatLog );
+			
+			ReceiveMessageBean senderPresentBean = new ReceiveMessageBean();
+			senderPresentBean.setCommand("sendPresent");
+			senderPresentBean.setSn(chatLog.getSN());
+			senderPresentBean.setTime(chatLog.getChatTime());
+			senderPresentBean.setRecoverId(chatLog.getRecoverID());
+			senderPresentBean.setSenderId(chatLog.getSenderID());
+			senderPresentBean.setMemo(chatLog.getMemo());
+			String senderPresent = JaxbUtil.convertToXml(senderPresentBean, "utf-8");
+			
+			//接受者增加
+			recoverScore.setScore(recoverScore.getScore() + score);
+			recoverScore.setMoney(recoverScore.getMoney() + money);
+			recoverScore.setProp0(recoverScore.getProp0() + prop0);
+			loginService.updatePlayerScore(recoverScore);
+			chatLog.setRecoverID(recoverID);
+			StringBuffer rMemoBuffer = new StringBuffer();
+			rMemoBuffer.append(senderID).append("赠送您 ");
+			if(score != 0) rMemoBuffer.append(" score:").append(score);
+			if(money != 0) rMemoBuffer.append(" money:").append(money);
+			if(prop0 != 0) rMemoBuffer.append(" prop0:").append(prop0);
+			chatLog.setMemo(rMemoBuffer.toString());
+			chatService.insertChatLog(chatLog);
+			
+			ReceiveMessageBean receivePresentBean = new ReceiveMessageBean();
+			receivePresentBean.setCommand("receivePresent");
+			receivePresentBean.setSn(chatLog.getSN());
+			receivePresentBean.setTime(chatLog.getChatTime());
+			receivePresentBean.setRecoverId(chatLog.getRecoverID());
+			receivePresentBean.setSenderId(chatLog.getSenderID());
+			receivePresentBean.setMemo(chatLog.getMemo());
+			String receivePresent = JaxbUtil.convertToXml(receivePresentBean, "utf-8");
+			return new String[]{senderPresent, receivePresent};
+		}
+		
+	}
 	
 	public LoginService getLoginService() {
 		return loginService;

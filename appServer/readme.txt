@@ -25,3 +25,6 @@
 
 <TCP><Command>shutdown</Command><DeskID>00000000</DeskID></TCP>
 
+<TCP><Command>present</Command><SenderID>user4</SenderID><RecverID>user10</RecverID><Score>1</Score><Money>2</Money><Prop0>0</Prop0></TCP>
+
+

@@ -129,7 +129,7 @@ public class LoginService {
 	/**
 	 * 查分
 	 * @param commandMap
-	 * @return
+	 * @return String
 	 * @throws Exception
 	 */
 	public String queryScore(Map<String, String> commandMap) throws Exception{
@@ -148,6 +148,38 @@ public class LoginService {
 		queryScoreCommand.setProp0(String.valueOf(playerScore.getProp0()));
 		retStr = JaxbUtil.convertToXml(queryScoreCommand, "utf-8");
 		return retStr;
+	}
+	
+	/**
+	 * 查分
+	 * @param commandMap
+	 * @return PlayerScore
+	 * @throws Exception
+	 */
+	public PlayerScore queryScoreBean(Map<String, String> commandMap) throws Exception{
+		String playerID = commandMap.get("PlayerID");
+		PlayerScore playerScore = PlayerMapMapper.queryScore(playerID);
+		return playerScore;
+	}
+	
+	/**
+	 * 查分
+	 * @param commandMap
+	 * @return PlayerScore
+	 * @throws Exception
+	 */
+	public PlayerScore queryScoreBean(String playerID) throws Exception{
+		PlayerScore playerScore = PlayerMapMapper.queryScore(playerID);
+		return playerScore;
+	}
+	
+	
+	/**
+	 * 更新分数
+	 * @param playerScore
+	 */
+	public void updatePlayerScore(PlayerScore playerScore){
+		PlayerMapMapper.updatePlayerScore(playerScore);
 	}
 	
 	/***
