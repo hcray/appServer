@@ -9,10 +9,9 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name="TCP")
-@XmlType(name = "StartupBean", propOrder = { "command", "result", "note", "deskId",
-		"mode", "status"})
+@XmlType(name = "StartupBean", propOrder = { "command", "result", "note", "value", "address", "category"})
 public class StartupBean {
-	@XmlElement(name = "Command", required = true)
+	@XmlElement(name = "action", required = true)
 	private String command; // <Command>login</Command>
 	
 	@XmlElement(name = "Result", required = true)
@@ -20,15 +19,39 @@ public class StartupBean {
 	
 	@XmlElement(name="Note", required = true)
 	private String note; // <Note>....</Note> ----备注
-    
-	@XmlElement(name="DeskID", required = true)
-	private String deskId;//<DeskID>00000000</DeskID>
-    
-	@XmlElement(name="Mode", required = true)
-	private int mode;//<Mode>1</Mode>
-    
-	@XmlElement(name="Status", required = true)
-	private int status;//<Status>0</Status>
+	
+	@XmlElement(name="address", required = true)
+	private String address;
+	 
+	@XmlElement(name="category", required = true)
+	private String category;
+
+	@XmlElement(name="value", required = true)
+	private StartupBeanValue value;
+	
+	public StartupBeanValue getValue() {
+		return value;
+	}
+
+	public void setValue(StartupBeanValue value) {
+		this.value = value;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
 
 	public String getCommand() {
 		return command;
@@ -52,30 +75,6 @@ public class StartupBean {
 
 	public void setNote(String note) {
 		this.note = note;
-	}
-
-	public String getDeskId() {
-		return deskId;
-	}
-
-	public void setDeskId(String deskId) {
-		this.deskId = deskId;
-	}
-
-	public int getMode() {
-		return mode;
-	}
-
-	public void setMode(int mode) {
-		this.mode = mode;
-	}
-
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
 	}
 	
 }

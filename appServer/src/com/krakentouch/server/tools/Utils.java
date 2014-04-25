@@ -109,9 +109,23 @@ public class Utils {
 			Iterator<?> it = rootElt.elementIterator();
 			while(it.hasNext()){
 				Element element = (Element) it.next();
-				String name = element.getName();
-				String value = element.getText();
-				retMap.put(name, value);
+				//是否该元素只含有text或是空元素
+				if(element.isTextOnly()){
+					String name = element.getName();
+					String value = element.getText();
+					retMap.put(name, value);
+				}else{
+					Iterator<?> elementIt = element.elementIterator();
+					while(elementIt.hasNext()){
+						Element element2 = (Element) elementIt.next();
+						//是否该元素只含有text或是空元素
+						if(element2.isTextOnly()){
+							String name = element2.getName();
+							String value = element2.getText();
+							retMap.put(name, value);
+						}
+					}
+				}
 			}
 		} catch (DocumentException e) {
 			e.printStackTrace();

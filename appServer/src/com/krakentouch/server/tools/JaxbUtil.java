@@ -33,7 +33,7 @@ public class JaxbUtil {
 		try {
 			JAXBContext context = JAXBContext.newInstance(obj.getClass());
 			Marshaller marshaller = context.createMarshaller();
-			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);//决定是否在转换成xml时同时进行格式化（即按标签自动换行，否则即是一行的xml）
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, false);//决定是否在转换成xml时同时进行格式化（即按标签自动换行，否则即是一行的xml）
 			marshaller.setProperty(Marshaller.JAXB_ENCODING, encoding);//xml的编码方式
 
 			StringWriter writer = new StringWriter();
