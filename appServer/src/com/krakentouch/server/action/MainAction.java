@@ -14,6 +14,7 @@ import com.krakentouch.server.bean.CommandBean;
 import com.krakentouch.server.bean.EndStageCommand;
 import com.krakentouch.server.bean.JoinStageCommand;
 import com.krakentouch.server.bean.OpenStageCommand;
+import com.krakentouch.server.bean.OpenStageCommandValue;
 import com.krakentouch.server.bean.PlayerBean;
 import com.krakentouch.server.bean.Players;
 import com.krakentouch.server.bean.QueryStageCommand;
@@ -63,24 +64,24 @@ public class MainAction {
 			if("TerminalLogin".equals(command)){//物理端登陆
 				retStr = doStartup(commandMap);
 				
-			}else if("shutdown".equals(command)){//物理端签出
+			}else if("TerminalLogout".equals(command)){//物理端签出
 				retStr = doShutdown(commandMap);
 				
-			}else if("login".equals(command)){//登录
+			}else if("PlayerLogin".equals(command)){//登录
 				retStr = doLogin(commandMap);
 				String playerID = commandMap.get("PlayerID");
 				retMap.put("playerID", playerID);
 			
-			}else if("logout".equals(command)){//注销
+			}else if("PlayerLogout".equals(command)){//注销
 				retStr = doLogout(commandMap);
 			
-			}else if("queryScore".equals(command)){//查分
+			}else if("QueryScore".equals(command)){//查分
 				retStr = doQueryScore(commandMap);
 			
-			}else if("queryGames".equals(command)){//查游
+			}else if("QueryGame".equals(command)){//查游
 				retStr = doQueryGames(commandMap);
 			
-			}else if("openStage".equals(command)){//开桌
+			}else if("NewStage".equals(command)){//开桌
 				retStr = doOpenStage(commandMap);
 			
 			}else if("refreshStage".equals(command)){//刷座
@@ -167,11 +168,13 @@ public class MainAction {
 		return retStr;
 	}
 	
-	//关机
+	//物理端登出
 	public String doShutdown(Map<String,String> commandMap) throws Exception{
 		String retStr = null;
-		String command = commandMap.get("Command");
+		String command = commandMap.get("action");
 		String deskId = commandMap.get("DeskID");
+		String address = commandMap.get("address");
+		String category = commandMap.get("category");;
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		String shutdownTime = sdf.format(new Date());
@@ -190,8 +193,10 @@ public class MainAction {
 		value.setDeskId(deskId);
 		value.setMode(0);
 		value.setStatus(0);
-		startupBean.setValue(value);;
-
+		startupBean.setValue(value);
+		startupBean.setAddress(address);
+		startupBean.setCategory(category);
+		
 		retStr = JaxbUtil.convertToXml(startupBean, "utf-8");
 		return retStr;
 	}
@@ -293,13 +298,18 @@ public class MainAction {
 		
 		//返回的字符串
 		OpenStageCommand openStageCommand = new OpenStageCommand();
+		OpenStageCommandValue openStageCommandValue = new OpenStageCommandValue(); 
+		
 		openStageCommand.setCommand(commandMap.get("Command"));
 		openStageCommand.setResult("1");
 		openStageCommand.setNote("success");
-		openStageCommand.setStageSN(String.valueOf(stageSN));
-		openStageCommand.setHostIndex(Integer.parseInt(hostIndex));
-		openStageCommand.setSeatIndex(0);
-		openStageCommand.setStatus(3);
+		
+		openStageCommandValue.setStageSN(String.valueOf(stageSN));
+		openStageCommandValue.setHostIndex(Integer.parseInt(hostIndex));
+		openStageCommandValue.setSeatIndex(0);
+		openStageCommandValue.setStatus(3);
+		
+		openStageCommand.setOpenStageCommand(openStageCommand);
 		
 		retStr = JaxbUtil.convertToXml(openStageCommand, "utf-8");
 		return retStr;

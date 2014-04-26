@@ -8,8 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name="TCP")
-@XmlType(name = "OpenStageCommand", propOrder = { "command", "result", "note", "stageSN",
-		"status", "hostIndex", "seatIndex" })
+@XmlType(name = "OpenStageCommand", propOrder = { "command", "result", "note","openStageCommand"})
 public class OpenStageCommand {
 	@XmlElement(name = "Command", required = true)
 	private String command; // <Command>login</Command>
@@ -20,18 +19,9 @@ public class OpenStageCommand {
 	@XmlElement(name="Note", required = true)
 	private String note; // <Note>....</Note> ----备注
 	
-	@XmlElement(name="StageSN", required = true)
-	private String stageSN;// <StageSN>1</StageSN>
+	@XmlElement(name="Value", required = true)
+	private OpenStageCommand openStageCommand;
 	
-	@XmlElement(name="Status", required = true)
-	private int status;// <Status>0</Status>
-	
-	@XmlElement(name="HostIndex", required = true)
-	private int hostIndex;// <HostIndex>2</HostIndex>
-	
-	@XmlElement(name="SeatIndex", required = true)
-	private int seatIndex;// <SeatIndex>0</SeatIndex>
-
 	public String getCommand() {
 		return command;
 	}
@@ -56,36 +46,11 @@ public class OpenStageCommand {
 		this.note = note;
 	}
 
-	public String getStageSN() {
-		return stageSN;
+	public OpenStageCommand getOpenStageCommand() {
+		return openStageCommand;
 	}
 
-	public void setStageSN(String stageSN) {
-		this.stageSN = stageSN;
+	public void setOpenStageCommand(OpenStageCommand openStageCommand) {
+		this.openStageCommand = openStageCommand;
 	}
-
-	public int getStatus() {
-		return status;
-	}
-
-	public void setStatus(int status) {
-		this.status = status;
-	}
-
-	public int getHostIndex() {
-		return hostIndex;
-	}
-
-	public void setHostIndex(int hostIndex) {
-		this.hostIndex = hostIndex;
-	}
-
-	public int getSeatIndex() {
-		return seatIndex;
-	}
-
-	public void setSeatIndex(int seatIndex) {
-		this.seatIndex = seatIndex;
-	}
-
 }

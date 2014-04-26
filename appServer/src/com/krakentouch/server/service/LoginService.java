@@ -5,7 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.krakentouch.server.bean.CommandBean;
+import com.krakentouch.server.bean.CommandBeanValue;
 import com.krakentouch.server.bean.QueryScoreCommand;
+import com.krakentouch.server.bean.QueryScoreCommandValue;
 import com.krakentouch.server.domain.DeskMap;
 import com.krakentouch.server.domain.Player;
 import com.krakentouch.server.domain.PlayerMap;
@@ -88,13 +90,18 @@ public class LoginService {
 		System.out.println("id:"+id);
 		//返回
 		CommandBean commandBean = new CommandBean();
+		CommandBeanValue commandBeanValue = new CommandBeanValue();
+		
 		commandBean.setResult("1");
 		commandBean.setCommand("login");
 		commandBean.setNote("登陆成功");
-		commandBean.setPlayerID(playerID);
-		commandBean.setDeskID(deskID);
-		commandBean.setStatus("0");
-		commandBean.setGameID("");
+		
+		commandBeanValue.setPlayerID(playerID);
+		commandBeanValue.setDeskID(deskID);
+		commandBeanValue.setStatus("0");
+		commandBeanValue.setGameID("");
+		
+		commandBean.setCommandBeanValue(commandBeanValue);
 		retStr = JaxbUtil.convertToXml(commandBean, "utf-8");
 		return retStr;
 	}
@@ -115,11 +122,18 @@ public class LoginService {
 		playerMap.setDelFlag(1);//删除标志
 		
 		PlayerMapMapper.updatePlayerStatus(playerMap);
+		
 		CommandBean commandBean = new CommandBean();
+		CommandBeanValue commandBeanValue = new CommandBeanValue();
+		
 		commandBean.setResult("1");
 		commandBean.setCommand("logout");
 		commandBean.setNote("登出成功");
-		commandBean.setPlayerID(playerID);
+		
+		commandBeanValue.setPlayerID(playerID);
+		
+		commandBean.setCommandBeanValue(commandBeanValue);
+		
 		retStr = JaxbUtil.convertToXml(commandBean, "utf-8");
 		
 		return retStr;
@@ -139,13 +153,19 @@ public class LoginService {
 		PlayerScore playerScore = PlayerMapMapper.queryScore(playerID);
 		
 		QueryScoreCommand queryScoreCommand = new QueryScoreCommand();
+		QueryScoreCommandValue queryScoreCommandValue = new QueryScoreCommandValue();
+		
 		queryScoreCommand.setCommand(commandMap.get("Command"));
 		queryScoreCommand.setResult("1");
 		queryScoreCommand.setNote("success");
-		queryScoreCommand.setPlayerID(playerScore.getPlayerID());
-		queryScoreCommand.setScore(String.valueOf(playerScore.getScore()));
-		queryScoreCommand.setMoney(String.valueOf(playerScore.getMoney()));
-		queryScoreCommand.setProp0(String.valueOf(playerScore.getProp0()));
+		
+		queryScoreCommandValue.setPlayerID(playerScore.getPlayerID());
+		queryScoreCommandValue.setScore(String.valueOf(playerScore.getScore()));
+		queryScoreCommandValue.setMoney(String.valueOf(playerScore.getMoney()));
+		queryScoreCommandValue.setProp0(String.valueOf(playerScore.getProp0()));
+		
+		queryScoreCommand.setQueryScoreCommandValue(queryScoreCommandValue);
+		
 		retStr = JaxbUtil.convertToXml(queryScoreCommand, "utf-8");
 		return retStr;
 	}

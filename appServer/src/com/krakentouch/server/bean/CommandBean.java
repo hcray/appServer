@@ -8,8 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name="TCP")
-@XmlType(name = "CommandBean", propOrder = { "command", "result", "note", "playerID",
-		"deskID", "status", "gameID" })
+@XmlType(name = "CommandBean", propOrder = { "command", "result", "note", "commandBeanValue"})
 public class CommandBean {
 	@XmlElement(name = "Command", required = true)
 	private String command; // <Command>login</Command>
@@ -20,18 +19,9 @@ public class CommandBean {
 	@XmlElement(name="Note", required = true)
 	private String note; // <Note>....</Note> ----备注
 	
-	@XmlElement(name="PlayerID", required = true)
-	private String playerID; // <PlayerID>ABCDEFGHIJ</PlayerID>
+	@XmlElement(name="value", required = true)
+	private CommandBeanValue commandBeanValue;
 	
-	@XmlElement(name="DeskID", required = true)
-	private String deskID; // <DeskID>00000000</DeskID>
-	
-	@XmlElement(name="Status", required = true)
-	private String status; // <Status>0</Status>
-	
-	@XmlElement(name="GameID", required = true)
-	private String gameID; // <GameID></GameID>
-
 	public String getCommand() {
 		return command;
 	}
@@ -56,35 +46,12 @@ public class CommandBean {
 		this.note = note;
 	}
 
-	public String getPlayerID() {
-		return playerID;
+	public CommandBeanValue getCommandBeanValue() {
+		return commandBeanValue;
 	}
 
-	public void setPlayerID(String playerID) {
-		this.playerID = playerID;
+	public void setCommandBeanValue(CommandBeanValue commandBeanValue) {
+		this.commandBeanValue = commandBeanValue;
 	}
-
-	public String getDeskID() {
-		return deskID;
-	}
-
-	public void setDeskID(String deskID) {
-		this.deskID = deskID;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public String getGameID() {
-		return gameID;
-	}
-
-	public void setGameID(String gameID) {
-		this.gameID = gameID;
-	}
+	
 }

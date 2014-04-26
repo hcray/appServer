@@ -8,8 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name="TCP")
-@XmlType(name = "QueryScoreCommand", propOrder = { "command", "result", "note", "playerID",
-		"score", "money", "prop0" })
+@XmlType(name = "QueryScoreCommand", propOrder = { "command", "result", "note", "queryScoreCommandValue"})
 public class QueryScoreCommand {
 	@XmlElement(name = "Command", required = true)
 	private String command; // <Command>login</Command>
@@ -20,17 +19,8 @@ public class QueryScoreCommand {
 	@XmlElement(name="Note", required = true)
 	private String note; // <Note>....</Note> ----备注
 	
-	@XmlElement(name="PlayerID", required = true)
-	private String playerID; // <PlayerID>ABCDEFGHIJ</PlayerID>
-    
-	@XmlElement(name="Score", required = true)
-	private String score;//<Score>....</Score> ----分数
-	
-	@XmlElement(name="Money", required = true)
-	private String money;//<Money>....</Money> ----金钱
-	
-	@XmlElement(name="Prop0", required = true)
-	private String prop0;//<Prop0>....</Prop0> ----备用1
+	@XmlElement(name="Value", required = true)
+	private QueryScoreCommandValue queryScoreCommandValue;
 
 	public String getCommand() {
 		return command;
@@ -56,36 +46,13 @@ public class QueryScoreCommand {
 		this.note = note;
 	}
 
-	public String getPlayerID() {
-		return playerID;
+	public QueryScoreCommandValue getQueryScoreCommandValue() {
+		return queryScoreCommandValue;
 	}
 
-	public void setPlayerID(String playerID) {
-		this.playerID = playerID;
-	}
-
-	public String getScore() {
-		return score;
-	}
-
-	public void setScore(String score) {
-		this.score = score;
-	}
-
-	public String getMoney() {
-		return money;
-	}
-
-	public void setMoney(String money) {
-		this.money = money;
-	}
-
-	public String getProp0() {
-		return prop0;
-	}
-
-	public void setProp0(String prop0) {
-		this.prop0 = prop0;
+	public void setQueryScoreCommandValue(
+			QueryScoreCommandValue queryScoreCommandValue) {
+		this.queryScoreCommandValue = queryScoreCommandValue;
 	}
 
 }
