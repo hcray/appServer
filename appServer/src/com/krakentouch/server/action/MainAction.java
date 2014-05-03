@@ -52,6 +52,26 @@ public class MainAction {
 	
 	private ChatService chatService;
 	
+	/**
+	 * 物理端登录
+	 */
+	private TerminalLoginAction terminalLoginAction;
+
+	/**
+	 * 物理端登出 
+	 */
+	private TerminalLogoutAction terminalLogoutAction;
+	
+	/**
+	 * 用户登录
+	 */
+	private PlayerLoginAction playerLoginAction;
+	
+	/**
+	 * 用户登出
+	 */
+	private PlayerLogoutAction playerLogoutAction;
+	
 	public Map<String, String> doCommand(String commandStr){
 		LOG.debug("doCommand(String commandStr) in... " + commandStr);
 		Map<String, String> retMap = new HashMap<String, String>();
@@ -62,18 +82,23 @@ public class MainAction {
 			String command = commandMap.get("action");
 			
 			if("TerminalLogin".equals(command)){//物理端登陆
-				retStr = doStartup(commandMap);
+				retStr = terminalLoginAction.doCommand(commandMap);
+				//retStr = doStartup(commandMap);
 				
 			}else if("TerminalLogout".equals(command)){//物理端签出
-				retStr = doShutdown(commandMap);
+				retStr = terminalLogoutAction.doCommand(commandMap);
 				
 			}else if("PlayerLogin".equals(command)){//登录
+				
+				retStr = playerLoginAction.doCommand(commandMap);
+				/*
 				retStr = doLogin(commandMap);
 				String playerID = commandMap.get("PlayerID");
 				retMap.put("playerID", playerID);
-			
+				*/
 			}else if("PlayerLogout".equals(command)){//注销
-				retStr = doLogout(commandMap);
+				//retStr = doLogout(commandMap);
+				retStr = playerLogoutAction.doCommand(commandMap);
 			
 			}else if("QueryScore".equals(command)){//查分
 				retStr = doQueryScore(commandMap);
@@ -713,6 +738,46 @@ public class MainAction {
 
 	public void setChatService(ChatService chatService) {
 		this.chatService = chatService;
+	}
+
+
+	public TerminalLoginAction getTerminalLoginAction() {
+		return terminalLoginAction;
+	}
+
+
+	public void setTerminalLoginAction(TerminalLoginAction terminalLoginAction) {
+		this.terminalLoginAction = terminalLoginAction;
+	}
+
+
+	public TerminalLogoutAction getTerminalLogoutAction() {
+		return terminalLogoutAction;
+	}
+
+
+	public void setTerminalLogoutAction(TerminalLogoutAction terminalLogoutAction) {
+		this.terminalLogoutAction = terminalLogoutAction;
+	}
+
+
+	public PlayerLoginAction getPlayerLoginAction() {
+		return playerLoginAction;
+	}
+
+
+	public void setPlayerLoginAction(PlayerLoginAction playerLoginAction) {
+		this.playerLoginAction = playerLoginAction;
+	}
+
+
+	public PlayerLogoutAction getPlayerLogoutAction() {
+		return playerLogoutAction;
+	}
+
+
+	public void setPlayerLogoutAction(PlayerLogoutAction playerLogoutAction) {
+		this.playerLogoutAction = playerLogoutAction;
 	}
 	
 }

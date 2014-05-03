@@ -143,6 +143,34 @@
 		<property name="loginService" ref="loginService"/>
 		<property name="gameService" ref="gameService"/>
 		<property name="chatService" ref="chatService"/>
+		
+		<property name="terminalLoginAction" ref="terminalLoginAction"/>
+		
+		<property name="terminalLogoutAction" ref="terminalLogoutAction"/>
+
+		<property name="playerLoginAction" ref="playerLoginAction"/>
+
+		<property name="playerLogoutAction" ref="playerLogoutAction"/>
+		
+	</bean>
+	
+	<!-- 物理端登录 -->
+	<bean name="terminalLoginAction" class="com.krakentouch.server.action.TerminalLoginAction">
+		<property name="loginService" ref="loginService"/>
+	</bean>
+	
+	<!-- 物理端登出 -->
+	<bean name="terminalLogoutAction" class="com.krakentouch.server.action.TerminalLogoutAction">
+		<property name="loginService" ref="loginService"/>
+	</bean>
+	
+	<!-- 用户登录 -->
+	<bean name="playerLoginAction" class="com.krakentouch.server.action.PlayerLoginAction">
+		<property name="loginService" ref="loginService"/>
 	</bean>
      
+     <!-- 用户登出 -->
+     <bean name="playerLogoutAction" class="com.krakentouch.server.action.PlayerLogoutAction">
+     	<property name="loginService" ref="loginService"/>
+     </bean>
 </beans>
