@@ -72,6 +72,11 @@ public class MainAction {
 	 */
 	private PlayerLogoutAction playerLogoutAction;
 	
+	/**
+	 * 查分
+	 */
+	private QueryScoreAction queryScoreAction;
+	
 	public Map<String, String> doCommand(String commandStr){
 		LOG.debug("doCommand(String commandStr) in... " + commandStr);
 		Map<String, String> retMap = new HashMap<String, String>();
@@ -99,10 +104,11 @@ public class MainAction {
 			}else if("PlayerLogout".equals(command)){//注销
 				//retStr = doLogout(commandMap);
 				retStr = playerLogoutAction.doCommand(commandMap);
-			
+				
 			}else if("QueryScore".equals(command)){//查分
-				retStr = doQueryScore(commandMap);
-			
+				//retStr = doQueryScore(commandMap);
+				retStr = queryScoreAction.doCommand(commandMap);
+				
 			}else if("QueryGame".equals(command)){//查游
 				retStr = doQueryGames(commandMap);
 			

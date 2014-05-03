@@ -151,6 +151,8 @@
 		<property name="playerLoginAction" ref="playerLoginAction"/>
 
 		<property name="playerLogoutAction" ref="playerLogoutAction"/>
+
+		<property name="queryScoreAction" ref="queryScoreAction"/>
 		
 	</bean>
 	
@@ -171,6 +173,11 @@
      
      <!-- 用户登出 -->
      <bean name="playerLogoutAction" class="com.krakentouch.server.action.PlayerLogoutAction">
+     	<property name="loginService" ref="loginService"/>
+     </bean>
+     
+     <!-- 查分 -->
+     <bean name="queryScoreAction" class="com.krakentouch.server.action.QueryScoreAction">
      	<property name="loginService" ref="loginService"/>
      </bean>
 </beans>
