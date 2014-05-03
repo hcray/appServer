@@ -153,6 +153,10 @@
 		<property name="playerLogoutAction" ref="playerLogoutAction"/>
 
 		<property name="queryScoreAction" ref="queryScoreAction"/>
+
+		<property name="queryGameAction" ref="queryGameAction"/>
+
+		<property name="newStageAction" ref="newStageAction"/>
 		
 	</bean>
 	
@@ -179,5 +183,16 @@
      <!-- 查分 -->
      <bean name="queryScoreAction" class="com.krakentouch.server.action.QueryScoreAction">
      	<property name="loginService" ref="loginService"/>
+     </bean>
+     
+     <!-- 查游 -->
+     <bean name="queryGameAction" class="com.krakentouch.server.action.QueryGameAction">
+     	<property name="gameService" ref="gameService"/>
+     </bean>
+     
+     <!-- 开桌 -->
+     <bean name="newStageAction" class="com.krakentouch.server.action.NewStageAction">
+     	<property name="loginService" ref="loginService"/>
+     	<property name="gameService" ref="gameService"/>
      </bean>
 </beans>

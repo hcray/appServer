@@ -77,6 +77,13 @@ public class MainAction {
 	 */
 	private QueryScoreAction queryScoreAction;
 	
+	/**
+	 * 查游
+	 */
+	private QueryGameAction queryGameAction;
+	
+	private NewStageAction newStageAction;
+	
 	public Map<String, String> doCommand(String commandStr){
 		LOG.debug("doCommand(String commandStr) in... " + commandStr);
 		Map<String, String> retMap = new HashMap<String, String>();
@@ -110,11 +117,13 @@ public class MainAction {
 				retStr = queryScoreAction.doCommand(commandMap);
 				
 			}else if("QueryGame".equals(command)){//查游
-				retStr = doQueryGames(commandMap);
+				//retStr = doQueryGames(commandMap);
+				retStr = queryGameAction.doCommand(commandMap);
 			
 			}else if("NewStage".equals(command)){//开桌
-				retStr = doOpenStage(commandMap);
-			
+				//retStr = doOpenStage(commandMap);
+				retStr = newStageAction.doCommand(commandMap);
+				
 			}else if("refreshStage".equals(command)){//刷座
 				retStr = doRefreshStage(commandMap);
 				
