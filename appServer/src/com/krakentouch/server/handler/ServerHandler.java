@@ -56,8 +56,9 @@ public class ServerHandler extends IoHandlerAdapter {
 			throws Exception {
 		LOG.debug("messageReceived: " + message.toString());
 		
-		
-		Map<String, String> retMap = mainAction.doCommand((String)message);
+		mainAction.doCommand(session, (String)message);
+		/*
+		Map<String, String> retMap = mainAction.doCommand(session, (String)message);
 		String command = retMap.get("command");
 		String retString = retMap.get("result");
 		if("login".equals(command)){ //登陆
@@ -75,6 +76,7 @@ public class ServerHandler extends IoHandlerAdapter {
 		}
 		//最后写反馈结果
 		session.write(retString);
+		*/
 		// If we want to test the write operation, uncomment this line
 		//session.write(message);
 

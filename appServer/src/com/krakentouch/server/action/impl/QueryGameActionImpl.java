@@ -2,6 +2,8 @@ package com.krakentouch.server.action.impl;
 
 import java.util.Map;
 
+import org.apache.mina.core.session.IoSession;
+
 import com.krakentouch.server.action.QueryGameAction;
 import com.krakentouch.server.service.GameService;
 
@@ -10,13 +12,14 @@ public class QueryGameActionImpl implements QueryGameAction {
 	private GameService gameService;
 
 	@Override
-	public String doCommand(Map<String,String> commandMap) {
+	public String doCommand(IoSession session, Map<String,String> commandMap) {
 		String retStr = "";
 		try{
 			retStr = gameService.queryGames(commandMap);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		session.write(retStr);
 		return retStr;
 	}
 

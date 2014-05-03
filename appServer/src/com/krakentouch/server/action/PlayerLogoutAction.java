@@ -2,6 +2,8 @@ package com.krakentouch.server.action;
 
 import java.util.Map;
 
+import org.apache.mina.core.session.IoSession;
+
 public interface PlayerLogoutAction {
-	public String doCommand(Map<String,String> commandMap);
+	public String doCommand(IoSession session, Map<String,String> commandMap);
 }

@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
+import org.apache.mina.core.session.IoSession;
+
 import com.krakentouch.server.action.TerminalLoginAction;
 import com.krakentouch.server.bean.StartupBean;
 import com.krakentouch.server.bean.StartupBeanValue;
@@ -16,7 +18,7 @@ public class TerminalLoginActionImpl implements TerminalLoginAction {
 	private LoginService loginService;
 
 	@Override
-	public String doCommand(Map<String,String> commandMap) {
+	public String doCommand(IoSession session, Map<String,String> commandMap) {
 		String retStr = null;
 		String command = commandMap.get("action");
 		//String value = commandMap.get("value");
@@ -49,6 +51,7 @@ public class TerminalLoginActionImpl implements TerminalLoginAction {
 		startupBean.setCategory(category);
 		
 		retStr = JaxbUtil.convertToXml(startupBean, "utf-8");
+		session.write(retStr);
 		return retStr;
 	}
 

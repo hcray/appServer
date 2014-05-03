@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -94,7 +95,7 @@ public class MainAction {
 	 */
 	private NewStageAction newStageAction;
 	
-	public Map<String, String> doCommand(String commandStr){
+	public Map<String, String> doCommand(IoSession session, String commandStr){
 		LOG.debug("doCommand(String commandStr) in... " + commandStr);
 		Map<String, String> retMap = new HashMap<String, String>();
 		String retStr=null;
@@ -104,15 +105,15 @@ public class MainAction {
 			String command = commandMap.get("action");
 			
 			if("TerminalLogin".equals(command)){//物理端登陆
-				retStr = terminalLoginAction.doCommand(commandMap);
+				retStr = terminalLoginAction.doCommand(session, commandMap);
 				//retStr = doStartup(commandMap);
 				
 			}else if("TerminalLogout".equals(command)){//物理端签出
-				retStr = terminalLogoutAction.doCommand(commandMap);
+				retStr = terminalLogoutAction.doCommand(session, commandMap);
 				
 			}else if("PlayerLogin".equals(command)){//登录
 				
-				retStr = playerLoginAction.doCommand(commandMap);
+				retStr = playerLoginAction.doCommand(session, commandMap);
 				/*
 				retStr = doLogin(commandMap);
 				String playerID = commandMap.get("PlayerID");
@@ -120,19 +121,19 @@ public class MainAction {
 				*/
 			}else if("PlayerLogout".equals(command)){//注销
 				//retStr = doLogout(commandMap);
-				retStr = playerLogoutAction.doCommand(commandMap);
+				retStr = playerLogoutAction.doCommand(session, commandMap);
 				
 			}else if("QueryScore".equals(command)){//查分
 				//retStr = doQueryScore(commandMap);
-				retStr = queryScoreAction.doCommand(commandMap);
+				retStr = queryScoreAction.doCommand(session, commandMap);
 				
 			}else if("QueryGame".equals(command)){//查游
 				//retStr = doQueryGames(commandMap);
-				retStr = queryGameAction.doCommand(commandMap);
+				retStr = queryGameAction.doCommand(session, commandMap);
 			
 			}else if("NewStage".equals(command)){//开桌
 				//retStr = doOpenStage(commandMap);
-				retStr = newStageAction.doCommand(commandMap);
+				retStr = newStageAction.doCommand(session, commandMap);
 				
 			}else if("refreshStage".equals(command)){//刷座
 				retStr = doRefreshStage(commandMap);
@@ -169,13 +170,16 @@ public class MainAction {
 				
 			}else{
 				retStr="error,not find command.";
+				session.write(retStr);
 			}
+			
 			retMap.put("command",command);
 			retMap.put("result",retStr);
 			LOG.debug("doCommand(String commandStr) out... ");
 		}catch(Exception e){
 			LOG.error(e.getMessage() + e.getCause());
 			retStr = "error, messsage:"+e.getMessage() + " ,cause: " + e.getCause();
+			session.write(retStr);
 		}
 		return retMap;
 	}

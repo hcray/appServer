@@ -2,6 +2,8 @@ package com.krakentouch.server.action.impl;
 
 import java.util.Map;
 
+import org.apache.mina.core.session.IoSession;
+
 import com.krakentouch.server.action.NewStageAction;
 import com.krakentouch.server.bean.OpenStageCommand;
 import com.krakentouch.server.bean.OpenStageCommandValue;
@@ -19,7 +21,7 @@ public class NewStageActionImpl implements NewStageAction {
 	private GameService gameService;
 
 	@Override
-	public String doCommand(Map<String,String> commandMap) {
+	public String doCommand(IoSession session, Map<String,String> commandMap) {
 		String retStr = null;
 		String gameID = commandMap.get("GameID");
 		String hostIndex = commandMap.get("HostIndex");
@@ -62,6 +64,7 @@ public class NewStageActionImpl implements NewStageAction {
 		openStageCommand.setOpenStageCommand(openStageCommand);
 		
 		retStr = JaxbUtil.convertToXml(openStageCommand, "utf-8");
+		session.write(retStr);
 		return retStr;
 	}
 
