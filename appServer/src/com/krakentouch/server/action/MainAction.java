@@ -10,6 +10,13 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.krakentouch.server.action.impl.NewStageActionImpl;
+import com.krakentouch.server.action.impl.PlayerLoginActionImpl;
+import com.krakentouch.server.action.impl.PlayerLogoutActionImpl;
+import com.krakentouch.server.action.impl.QueryGameActionImpl;
+import com.krakentouch.server.action.impl.QueryScoreActionImpl;
+import com.krakentouch.server.action.impl.TerminalLoginActionImpl;
+import com.krakentouch.server.action.impl.TerminalLogoutActionImpl;
 import com.krakentouch.server.bean.CommandBean;
 import com.krakentouch.server.bean.EndStageCommand;
 import com.krakentouch.server.bean.JoinStageCommand;
@@ -82,6 +89,9 @@ public class MainAction {
 	 */
 	private QueryGameAction queryGameAction;
 	
+	/**
+	 * 开桌
+	 */
 	private NewStageAction newStageAction;
 	
 	public Map<String, String> doCommand(String commandStr){
@@ -793,6 +803,36 @@ public class MainAction {
 
 	public void setPlayerLogoutAction(PlayerLogoutAction playerLogoutAction) {
 		this.playerLogoutAction = playerLogoutAction;
+	}
+
+
+	public QueryScoreAction getQueryScoreAction() {
+		return queryScoreAction;
+	}
+
+
+	public void setQueryScoreAction(QueryScoreAction queryScoreAction) {
+		this.queryScoreAction = queryScoreAction;
+	}
+
+
+	public QueryGameAction getQueryGameAction() {
+		return queryGameAction;
+	}
+
+
+	public void setQueryGameAction(QueryGameAction queryGameAction) {
+		this.queryGameAction = queryGameAction;
+	}
+
+
+	public NewStageAction getNewStageAction() {
+		return newStageAction;
+	}
+
+
+	public void setNewStageAction(NewStageAction newStageAction) {
+		this.newStageAction = newStageAction;
 	}
 	
 }

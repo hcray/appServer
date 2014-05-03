@@ -42,5 +42,11 @@
 	<classpathentry kind="lib" path="lib/mybatis-spring-1.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/spring-aop-3.0.2.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/aopalliance-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/asm-3.3.1.jar"/>
+	<classpathentry kind="lib" path="lib/aspectjrt.jar"/>
+	<classpathentry kind="lib" path="lib/aspectjweaver.jar"/>
+	<classpathentry kind="lib" path="lib/c3p0-0.9.1.jar"/>
+	<classpathentry kind="lib" path="lib/cglib-2.2.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

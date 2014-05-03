@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans  
        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd   
 	   http://www.springframework.org/schema/context 
@@ -12,14 +10,17 @@
        http://www.springframework.org/schema/aop/spring-aop-2.5.xsd   
        http://www.springframework.org/schema/tx   
        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
-    <bean id="propertyConfigurer"
+
+	<aop:aspectj-autoproxy/>
+       
+	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
 				<value>classpath:/jdbc.properties</value>
 			</list>
 		</property>
-	</bean>   
+	</bean>
 
 	<!-- The IoHandler implementation -->
 	<bean id="serverHandler" class="com.krakentouch.server.handler.ServerHandler">
@@ -37,12 +38,10 @@
 	<bean id="codecFilter" class="org.apache.mina.filter.codec.ProtocolCodecFilter">
 		<constructor-arg>
 			<bean class="org.apache.mina.filter.codec.textline.TextLineCodecFactory"></bean>
-			
+
 			<!-- 处理对象流时候用ObjectSerializationCodecFactory -->
-			<!-- 
-			<bean class="org.apache.mina.filter.codec.serialization.ObjectSerializationCodecFactory"/>
-			<bean class="com.krakentouch.server.filter.ServerCodeFactory" />
-			 -->
+			<!-- <bean class="org.apache.mina.filter.codec.serialization.ObjectSerializationCodecFactory"/> 
+				<bean class="com.krakentouch.server.filter.ServerCodeFactory" /> -->
 		</constructor-arg>
 	</bean>
 
@@ -83,16 +82,13 @@
 
 	<!-- 数据源 -->
 	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource">
-		<!-- 
-		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-		<property name="url" value="jdbc:mysql://127.0.0.1:3306/cyy"/>
-		<property name="username" value="root"/>
-		<property name="password" value="root"/>
-		 -->
-		<property name="driverClassName" value="${jdbc.driverClassName}"/>
-		<property name="url" value="${jdbc.url}"/>
-		<property name="username" value="${jdbc.username}"/>
-		<property name="password" value="${jdbc.password}"/>
+		<!-- <property name="driverClassName" value="com.mysql.jdbc.Driver"/> <property 
+			name="url" value="jdbc:mysql://127.0.0.1:3306/cyy"/> <property name="username" 
+			value="root"/> <property name="password" value="root"/> -->
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
 	</bean>
 
 	<context:component-scan base-package="com.krakentouch.server.service" />
@@ -114,85 +110,85 @@
 		name="sqlSessionFactory" ref="sqlSessionFactory"/> </bean> -->
 
 	<!-- 注册Mapper方式二：也可不指定特定mapper，而使用自动扫描包的方式来注册各种Mapper ，配置如下： -->
-	<!-- 
-	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.krakentouch.server.mapper" />
-	</bean>
-	  -->
-	 
+	<!-- <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> <property 
+		name="basePackage" value="com.krakentouch.server.mapper" /> </bean> -->
+
 	<!-- 事务管理器 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="myDataSource" />
 	</bean>
-	
+
 	<bean name="userService" class="com.krakentouch.server.service.UserService">
-		<property name="userMapper" ref="userMapper"/>
+		<property name="userMapper" ref="userMapper" />
 	</bean>
-	
-	<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean"> 
-      <property name="mapperInterface" value="com.krakentouch.server.mapper.UserMapper" />
-      <property name="sqlSessionFactory" ref="sqlSessionFactory" /> 
-    </bean>
-    
-    <import resource="applicationContext-service-login.xml"/>
-	<import resource="applicationContext-service-game.xml"/>
-	<import resource="applicationContext-service-chatLog.xml"/>
-	
+
+	<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.krakentouch.server.mapper.UserMapper" />
+		<property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+
+	<import resource="applicationContext-service-login.xml" />
+	<import resource="applicationContext-service-game.xml" />
+	<import resource="applicationContext-service-chatLog.xml" />
+
 	<bean name="mainAction" class="com.krakentouch.server.action.MainAction">
-		<property name="loginService" ref="loginService"/>
-		<property name="gameService" ref="gameService"/>
-		<property name="chatService" ref="chatService"/>
-		
-		<property name="terminalLoginAction" ref="terminalLoginAction"/>
-		
-		<property name="terminalLogoutAction" ref="terminalLogoutAction"/>
+		<property name="loginService" ref="loginService" />
+		<property name="gameService" ref="gameService" />
+		<property name="chatService" ref="chatService" />
 
-		<property name="playerLoginAction" ref="playerLoginAction"/>
+		<property name="terminalLoginAction" ref="terminalLoginAction" />
 
-		<property name="playerLogoutAction" ref="playerLogoutAction"/>
+		<property name="terminalLogoutAction" ref="terminalLogoutAction" />
 
-		<property name="queryScoreAction" ref="queryScoreAction"/>
+		<property name="playerLoginAction" ref="playerLoginAction" />
 
-		<property name="queryGameAction" ref="queryGameAction"/>
+		<property name="playerLogoutAction" ref="playerLogoutAction" />
 
-		<property name="newStageAction" ref="newStageAction"/>
-		
+		<property name="queryScoreAction" ref="queryScoreAction" />
+
+		<property name="queryGameAction" ref="queryGameAction" />
+
+		<property name="newStageAction" ref="newStageAction" />
+
 	</bean>
-	
+
 	<!-- 物理端登录 -->
-	<bean name="terminalLoginAction" class="com.krakentouch.server.action.TerminalLoginAction">
-		<property name="loginService" ref="loginService"/>
+	<bean name="terminalLoginAction" class="com.krakentouch.server.action.impl.TerminalLoginActionImpl">
+		<property name="loginService" ref="loginService" />
 	</bean>
-	
+
 	<!-- 物理端登出 -->
-	<bean name="terminalLogoutAction" class="com.krakentouch.server.action.TerminalLogoutAction">
-		<property name="loginService" ref="loginService"/>
+	<bean name="terminalLogoutAction" class="com.krakentouch.server.action.impl.TerminalLogoutActionImpl">
+		<property name="loginService" ref="loginService" />
 	</bean>
+
+	<bean name="afterPlayerLoginAction"
+		class="com.krakentouch.server.interceptor.AfterPlayerLoginAction" />
 	
 	<!-- 用户登录 -->
-	<bean name="playerLoginAction" class="com.krakentouch.server.action.PlayerLoginAction">
-		<property name="loginService" ref="loginService"/>
+	<bean name="playerLoginAction" class="com.krakentouch.server.action.impl.PlayerLoginActionImpl">
+		<property name="loginService" ref="loginService" />
 	</bean>
-     
-     <!-- 用户登出 -->
-     <bean name="playerLogoutAction" class="com.krakentouch.server.action.PlayerLogoutAction">
-     	<property name="loginService" ref="loginService"/>
-     </bean>
-     
-     <!-- 查分 -->
-     <bean name="queryScoreAction" class="com.krakentouch.server.action.QueryScoreAction">
-     	<property name="loginService" ref="loginService"/>
-     </bean>
-     
-     <!-- 查游 -->
-     <bean name="queryGameAction" class="com.krakentouch.server.action.QueryGameAction">
-     	<property name="gameService" ref="gameService"/>
-     </bean>
-     
-     <!-- 开桌 -->
-     <bean name="newStageAction" class="com.krakentouch.server.action.NewStageAction">
-     	<property name="loginService" ref="loginService"/>
-     	<property name="gameService" ref="gameService"/>
-     </bean>
+
+	<!-- 用户登出 -->
+	<bean name="playerLogoutAction" class="com.krakentouch.server.action.impl.PlayerLogoutActionImpl">
+		<property name="loginService" ref="loginService" />
+	</bean>
+
+	<!-- 查分 -->
+	<bean name="queryScoreAction" class="com.krakentouch.server.action.impl.QueryScoreActionImpl">
+		<property name="loginService" ref="loginService" />
+	</bean>
+
+	<!-- 查游 -->
+	<bean name="queryGameAction" class="com.krakentouch.server.action.impl.QueryGameActionImpl">
+		<property name="gameService" ref="gameService" />
+	</bean>
+
+	<!-- 开桌 -->
+	<bean name="newStageAction" class="com.krakentouch.server.action.impl.NewStageActionImpl">
+		<property name="loginService" ref="loginService" />
+		<property name="gameService" ref="gameService" />
+	</bean>
 </beans>
