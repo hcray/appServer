@@ -857,5 +857,45 @@ public class MainAction {
 	public void setNewStageAction(NewStageAction newStageAction) {
 		this.newStageAction = newStageAction;
 	}
+
+
+	public QueryAllStageAction getQueryAllStageAction() {
+		return queryAllStageAction;
+	}
+
+
+	public void setQueryAllStageAction(QueryAllStageAction queryAllStageAction) {
+		this.queryAllStageAction = queryAllStageAction;
+	}
+
+
+	public QuerySeatAction getQuerySeatAction() {
+		return querySeatAction;
+	}
+
+
+	public void setQuerySeatAction(QuerySeatAction querySeatAction) {
+		this.querySeatAction = querySeatAction;
+	}
+
+
+	public QueryStageAction getQueryStageAction() {
+		return queryStageAction;
+	}
+
+
+	public void setQueryStageAction(QueryStageAction queryStageAction) {
+		this.queryStageAction = queryStageAction;
+	}
+
+
+	public JoinStageAction getJoinStageAction() {
+		return joinStageAction;
+	}
+
+
+	public void setJoinStageAction(JoinStageAction joinStageAction) {
+		this.joinStageAction = joinStageAction;
+	}
 	
 }
