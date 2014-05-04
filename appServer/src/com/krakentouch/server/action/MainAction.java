@@ -109,9 +109,14 @@ public class MainAction {
 	private JoinStageAction joinStageAction;
 	
 	/**
-	 * 开玩
+	 * 开始游戏
 	 */
 	private BeginGameAction beginGameAction;
+	
+	/**
+	 * 结束游戏
+	 */
+	private ConcludeGameAction concludeGameAction;
 	
 	public Map<String, String> doCommand(IoSession session, String commandStr){
 		LOG.debug("doCommand(String commandStr) in... " + commandStr);
@@ -160,11 +165,11 @@ public class MainAction {
 				//retStr = doRefreshStage(commandMap);
 				querySeatAction.doCommand(session, commandMap);
 				
-			}else if("queryStage".equals(command)){//查桌
+			}else if("QueryStage".equals(command)){//查桌
 				//retStr = doQueryStage(commandMap);
 				queryStageAction.doCommand(session, commandMap);
 				
-			}else if("joinStage".equals(command)){//参桌
+			}else if("JoinStage".equals(command)){//参桌
 				//retStr = doJoinStage(commandMap);
 				joinStageAction.doCommand(session, commandMap);
 				
@@ -172,11 +177,12 @@ public class MainAction {
 				//retStr = doStartStage(commandMap);
 				beginGameAction.doCommand(session, commandMap);
 				
+			}else if("ConcludeGame".equals(command)){//玩闭
+				//retStr = doEndStage(commandMap);
+				concludeGameAction.doCommand(session, commandMap);
+				
 			}else if("checkoutScore".equals(command)){//结分
 				retStr = doCheckoutScore(commandMap);
-				
-			}else if("endStage".equals(command)){//玩闭
-				retStr = doEndStage(commandMap);
 				
 			}else if("searchPlayer".equals(command)){//询人
 				retStr = doSearchPlayer(commandMap);
@@ -912,6 +918,16 @@ public class MainAction {
 
 	public void setBeginGameAction(BeginGameAction beginGameAction) {
 		this.beginGameAction = beginGameAction;
+	}
+
+
+	public ConcludeGameAction getConcludeGameAction() {
+		return concludeGameAction;
+	}
+
+
+	public void setConcludeGameAction(ConcludeGameAction concludeGameAction) {
+		this.concludeGameAction = concludeGameAction;
 	}
 	
 }

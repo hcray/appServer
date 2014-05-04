@@ -161,6 +161,8 @@
 
 		<property name="beginGameAction" ref="beginGameAction"/>
 
+		<property name="concludeGameAction" ref="concludeGameAction"/>
+
 	</bean>
 
 	<!-- 物理端登录 -->
@@ -225,6 +227,12 @@
 
 	<!-- 开玩 -->
 	<bean name="beginGameAction" class="com.krakentouch.server.action.impl.BeginGameActionImpl">
+		<property name="gameService" ref="gameService" />
+		<property name="loginService" ref="loginService" />
+	</bean>
+
+	<!-- 结束游戏 -->
+	<bean name="concludeGameAction" class="com.krakentouch.server.action.impl.ConcludeGameActionImpl">
 		<property name="gameService" ref="gameService" />
 		<property name="loginService" ref="loginService" />
 	</bean>
