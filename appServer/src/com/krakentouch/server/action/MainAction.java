@@ -99,6 +99,11 @@ public class MainAction {
 	 * 查厅
 	 */
 	private QueryAllStageAction queryAllStageAction;
+
+	/**
+	 * 查座
+	 */
+	private QuerySeatAction querySeatAction;
 	
 	public Map<String, String> doCommand(IoSession session, String commandStr){
 		LOG.debug("doCommand(String commandStr) in... " + commandStr);
@@ -143,8 +148,9 @@ public class MainAction {
 			}else if("QueryAllStage".equals(command)){//查厅
 				queryAllStageAction.doCommand(session, commandMap);
 				
-			}else if("refreshStage".equals(command)){//刷座
-				retStr = doRefreshStage(commandMap);
+			}else if("QuerySeat".equals(command)){//查座
+				//retStr = doRefreshStage(commandMap);
+				querySeatAction.doCommand(session, commandMap);
 				
 			}else if("queryStage".equals(command)){//查桌
 				retStr = doQueryStage(commandMap);

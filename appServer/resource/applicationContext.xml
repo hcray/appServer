@@ -153,6 +153,8 @@
 		
 		<property name="queryAllStageAction" ref="queryAllStageAction"/>
 
+		<property name="querySeatAction" ref="querySeatAction"/>
+
 	</bean>
 
 	<!-- 物理端登录 -->
@@ -199,4 +201,11 @@
 		<property name="loginService" ref="loginService" />
 		<property name="gameService" ref="gameService" />
 	</bean>
+	
+	<!-- 查座 -->
+	<bean name="querySeatAction" class="com.krakentouch.server.action.impl.QuerySeatActionImpl">
+		<property name="gameService" ref="gameService" />
+	</bean>
+	
+	
 </beans>
