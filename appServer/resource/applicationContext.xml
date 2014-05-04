@@ -159,6 +159,8 @@
 
 		<property name="joinStageAction" ref="joinStageAction"/>
 
+		<property name="beginGameAction" ref="beginGameAction"/>
+
 	</bean>
 
 	<!-- 物理端登录 -->
@@ -220,6 +222,11 @@
 	<bean name="joinStageAction" class="com.krakentouch.server.action.impl.JoinStageActionImpl">
 		<property name="gameService" ref="gameService" />
 	</bean>
-	
+
+	<!-- 开玩 -->
+	<bean name="beginGameAction" class="com.krakentouch.server.action.impl.BeginGameActionImpl">
+		<property name="gameService" ref="gameService" />
+		<property name="loginService" ref="loginService" />
+	</bean>
 	
 </beans>

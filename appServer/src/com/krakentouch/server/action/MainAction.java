@@ -108,6 +108,11 @@ public class MainAction {
 	 */
 	private JoinStageAction joinStageAction;
 	
+	/**
+	 * 开玩
+	 */
+	private BeginGameAction beginGameAction;
+	
 	public Map<String, String> doCommand(IoSession session, String commandStr){
 		LOG.debug("doCommand(String commandStr) in... " + commandStr);
 		Map<String, String> retMap = new HashMap<String, String>();
@@ -163,8 +168,9 @@ public class MainAction {
 				//retStr = doJoinStage(commandMap);
 				joinStageAction.doCommand(session, commandMap);
 				
-			}else if("startStage".equals(command)){//开玩
-				retStr = doStartStage(commandMap);
+			}else if("BeginGame".equals(command)){//开玩
+				//retStr = doStartStage(commandMap);
+				beginGameAction.doCommand(session, commandMap);
 				
 			}else if("checkoutScore".equals(command)){//结分
 				retStr = doCheckoutScore(commandMap);
@@ -896,6 +902,16 @@ public class MainAction {
 
 	public void setJoinStageAction(JoinStageAction joinStageAction) {
 		this.joinStageAction = joinStageAction;
+	}
+
+
+	public BeginGameAction getBeginGameAction() {
+		return beginGameAction;
+	}
+
+
+	public void setBeginGameAction(BeginGameAction beginGameAction) {
+		this.beginGameAction = beginGameAction;
 	}
 	
 }
