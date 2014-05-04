@@ -102,6 +102,11 @@ public class MainAction {
 	 * 查桌
 	 */
 	private QueryStageAction queryStageAction;
+
+	/**
+	 * 参桌
+	 */
+	private JoinStageAction joinStageAction;
 	
 	public Map<String, String> doCommand(IoSession session, String commandStr){
 		LOG.debug("doCommand(String commandStr) in... " + commandStr);
@@ -154,8 +159,9 @@ public class MainAction {
 				//retStr = doQueryStage(commandMap);
 				queryStageAction.doCommand(session, commandMap);
 				
-			}else if("joinStage".equals(command)){//加入
-				retStr = doJoinStage(commandMap);
+			}else if("joinStage".equals(command)){//参桌
+				//retStr = doJoinStage(commandMap);
+				joinStageAction.doCommand(session, commandMap);
 				
 			}else if("startStage".equals(command)){//开玩
 				retStr = doStartStage(commandMap);

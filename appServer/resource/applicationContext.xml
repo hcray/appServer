@@ -157,6 +157,8 @@
 
 		<property name="queryStageAction" ref="queryStageAction"/>
 
+		<property name="joinStageAction" ref="joinStageAction"/>
+
 	</bean>
 
 	<!-- 物理端登录 -->
@@ -211,6 +213,11 @@
 	
 	<!-- 查桌 -->
 	<bean name="queryStageAction" class="com.krakentouch.server.action.impl.QueryStageActionImpl">
+		<property name="gameService" ref="gameService" />
+	</bean>
+	
+	<!-- 参桌 -->
+	<bean name="joinStageAction" class="com.krakentouch.server.action.impl.JoinStageActionImpl">
 		<property name="gameService" ref="gameService" />
 	</bean>
 	
