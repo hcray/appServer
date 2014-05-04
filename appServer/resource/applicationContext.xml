@@ -150,6 +150,8 @@
 		<property name="queryGameAction" ref="queryGameAction" />
 
 		<property name="newStageAction" ref="newStageAction" />
+		
+		<property name="queryAllStageAction" ref="queryAllStageAction"/>
 
 	</bean>
 
@@ -188,6 +190,12 @@
 
 	<!-- 开桌 -->
 	<bean name="newStageAction" class="com.krakentouch.server.action.impl.NewStageActionImpl">
+		<property name="loginService" ref="loginService" />
+		<property name="gameService" ref="gameService" />
+	</bean>
+	
+	<!-- 查厅 -->
+	<bean name="queryAllStageAction" class="com.krakentouch.server.action.impl.QueryAllStageActionImpl">
 		<property name="loginService" ref="loginService" />
 		<property name="gameService" ref="gameService" />
 	</bean>

@@ -95,6 +95,11 @@ public class MainAction {
 	 */
 	private NewStageAction newStageAction;
 	
+	/**
+	 * 查厅
+	 */
+	private QueryAllStageAction queryAllStageAction;
+	
 	public Map<String, String> doCommand(IoSession session, String commandStr){
 		LOG.debug("doCommand(String commandStr) in... " + commandStr);
 		Map<String, String> retMap = new HashMap<String, String>();
@@ -105,15 +110,15 @@ public class MainAction {
 			String command = commandMap.get("action");
 			
 			if("TerminalLogin".equals(command)){//物理端登陆
-				retStr = terminalLoginAction.doCommand(session, commandMap);
+				terminalLoginAction.doCommand(session, commandMap);
 				//retStr = doStartup(commandMap);
 				
 			}else if("TerminalLogout".equals(command)){//物理端签出
-				retStr = terminalLogoutAction.doCommand(session, commandMap);
+				terminalLogoutAction.doCommand(session, commandMap);
 				
 			}else if("PlayerLogin".equals(command)){//登录
 				
-				retStr = playerLoginAction.doCommand(session, commandMap);
+				playerLoginAction.doCommand(session, commandMap);
 				/*
 				retStr = doLogin(commandMap);
 				String playerID = commandMap.get("PlayerID");
@@ -121,19 +126,22 @@ public class MainAction {
 				*/
 			}else if("PlayerLogout".equals(command)){//注销
 				//retStr = doLogout(commandMap);
-				retStr = playerLogoutAction.doCommand(session, commandMap);
+				playerLogoutAction.doCommand(session, commandMap);
 				
 			}else if("QueryScore".equals(command)){//查分
 				//retStr = doQueryScore(commandMap);
-				retStr = queryScoreAction.doCommand(session, commandMap);
+				queryScoreAction.doCommand(session, commandMap);
 				
 			}else if("QueryGame".equals(command)){//查游
 				//retStr = doQueryGames(commandMap);
-				retStr = queryGameAction.doCommand(session, commandMap);
+				queryGameAction.doCommand(session, commandMap);
 			
 			}else if("NewStage".equals(command)){//开桌
 				//retStr = doOpenStage(commandMap);
-				retStr = newStageAction.doCommand(session, commandMap);
+				newStageAction.doCommand(session, commandMap);
+				
+			}else if("QueryAllStage".equals(command)){//查厅
+				queryAllStageAction.doCommand(session, commandMap);
 				
 			}else if("refreshStage".equals(command)){//刷座
 				retStr = doRefreshStage(commandMap);
