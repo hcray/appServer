@@ -118,7 +118,10 @@ public class MainAction {
 	 */
 	private ConcludeGameAction concludeGameAction;
 	
-	
+	/**
+	 * 算分
+	 */
+	private ComputeScoreAction computeScoreAction;
 	
 	public Map<String, String> doCommand(IoSession session, String commandStr){
 		LOG.debug("doCommand(String commandStr) in... " + commandStr);
@@ -185,6 +188,7 @@ public class MainAction {
 				
 			}else if("ComputeScore".equals(command)){//算分
 				//retStr = doCheckoutScore(commandMap);
+				computeScoreAction.doCommand(session, commandMap);
 				
 			}else if("searchPlayer".equals(command)){//询人
 				retStr = doSearchPlayer(commandMap);
@@ -931,5 +935,16 @@ public class MainAction {
 	public void setConcludeGameAction(ConcludeGameAction concludeGameAction) {
 		this.concludeGameAction = concludeGameAction;
 	}
+
+
+	public ComputeScoreAction getComputeScoreAction() {
+		return computeScoreAction;
+	}
+
+
+	public void setComputeScoreAction(ComputeScoreAction computeScoreAction) {
+		this.computeScoreAction = computeScoreAction;
+	}
+	
 	
 }

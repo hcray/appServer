@@ -163,6 +163,8 @@
 
 		<property name="concludeGameAction" ref="concludeGameAction"/>
 
+		<property name="computeScoreAction" ref="computeScoreAction"/>
+
 	</bean>
 
 	<!-- 物理端登录 -->
@@ -234,6 +236,11 @@
 	<!-- 结束游戏 -->
 	<bean name="concludeGameAction" class="com.krakentouch.server.action.impl.ConcludeGameActionImpl">
 		<property name="gameService" ref="gameService" />
+		<property name="loginService" ref="loginService" />
+	</bean>
+	
+	<!-- 算分 -->
+	<bean name="computeScoreAction" class="com.krakentouch.server.action.impl.ComputeScoreActionImpl">
 		<property name="loginService" ref="loginService" />
 	</bean>
 	

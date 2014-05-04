@@ -5,8 +5,11 @@ import java.util.Map;
 import org.apache.mina.core.session.IoSession;
 
 import com.krakentouch.server.action.ComputeScoreAction;
+import com.krakentouch.server.bean.ComputeScoreBean;
+import com.krakentouch.server.bean.ComputeScoreBeanValue;
 import com.krakentouch.server.domain.PlayerScore;
 import com.krakentouch.server.service.LoginService;
+import com.krakentouch.server.tools.JaxbUtil;
 /***
  * 算分：然后所有用户发出
  * <TCP action="ComputeScore" address="OP" category="Game" value="PlayerID=ABCDEFGHIJ;Score=0;Money=0;Prop0..."></TCP>等等，
@@ -36,6 +39,20 @@ public class ComputeScoreActionImpl implements ComputeScoreAction {
 			playerScore.setProp0(Integer.parseInt(prop0));
 			
 			loginService.updatePlayerScore(playerScore);
+			
+			ComputeScoreBean computeScoreBean = new ComputeScoreBean();
+			computeScoreBean.setCommand(command);
+			computeScoreBean.setResult("1");
+			computeScoreBean.setNote("success");
+			
+			ComputeScoreBeanValue computeScoreBeanValue = new ComputeScoreBeanValue();
+			computeScoreBeanValue.setMoney(money);
+			computeScoreBeanValue.setPlayerID(playerId);
+			computeScoreBeanValue.setScore(score);
+			computeScoreBeanValue.setProp0(prop0);
+			computeScoreBean.setComputeScoreBeanValue(computeScoreBeanValue);
+			
+			retStr = JaxbUtil.convertToXml(computeScoreBean, "utf-8");
 		}catch(Exception e){
 			e.printStackTrace();
 		}
