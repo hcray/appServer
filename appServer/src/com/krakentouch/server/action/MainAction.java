@@ -182,13 +182,17 @@ public class MainAction {
 				//retStr = doStartStage(commandMap);
 				beginGameAction.doCommand(session, commandMap);
 				
-			}else if("ConcludeGame".equals(command)){//玩闭
-				//retStr = doEndStage(commandMap);
-				concludeGameAction.doCommand(session, commandMap);
+			}else if("ConcludeGame".equals(command)){//结分
+				//retStr = doCheckoutScore(commandMap);
+				
 				
 			}else if("ComputeScore".equals(command)){//算分
 				//retStr = doCheckoutScore(commandMap);
 				computeScoreAction.doCommand(session, commandMap);
+				
+			}else if("ConcludeGame".equals(command)){//玩闭
+				//retStr = doEndStage(commandMap);
+				concludeGameAction.doCommand(session, commandMap);
 				
 			}else if("searchPlayer".equals(command)){//询人
 				retStr = doSearchPlayer(commandMap);

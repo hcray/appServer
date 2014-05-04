@@ -1,5 +1,9 @@
 1、登陆，登出的用户id的保存
 2、跨JVM的乱码问题
+3、分层
+4、返回值的value区分
+5、jvm内存大小的调整
+6、安装程序、注册成服务
 
 <TCP><Command>login</Command><PlayerID>user7</PlayerID><DeskID>00000000</DeskID></TCP>
 
