@@ -118,6 +118,8 @@ public class MainAction {
 	 */
 	private ConcludeGameAction concludeGameAction;
 	
+	
+	
 	public Map<String, String> doCommand(IoSession session, String commandStr){
 		LOG.debug("doCommand(String commandStr) in... " + commandStr);
 		Map<String, String> retMap = new HashMap<String, String>();
@@ -181,8 +183,8 @@ public class MainAction {
 				//retStr = doEndStage(commandMap);
 				concludeGameAction.doCommand(session, commandMap);
 				
-			}else if("checkoutScore".equals(command)){//结分
-				retStr = doCheckoutScore(commandMap);
+			}else if("ComputeScore".equals(command)){//算分
+				//retStr = doCheckoutScore(commandMap);
 				
 			}else if("searchPlayer".equals(command)){//询人
 				retStr = doSearchPlayer(commandMap);

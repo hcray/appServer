@@ -6,10 +6,7 @@ import org.apache.mina.core.session.IoSession;
 
 import com.krakentouch.server.action.JoinStageAction;
 import com.krakentouch.server.bean.JoinStageCommand;
-import com.krakentouch.server.bean.QueryStageCommand;
-import com.krakentouch.server.bean.StageBean;
 import com.krakentouch.server.domain.SeatMap;
-import com.krakentouch.server.domain.StageMap;
 import com.krakentouch.server.service.GameService;
 import com.krakentouch.server.tools.JaxbUtil;
 /**
