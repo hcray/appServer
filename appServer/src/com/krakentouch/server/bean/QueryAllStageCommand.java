@@ -8,8 +8,8 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name="TCP")
-@XmlType(name = "QueryStageCommand", propOrder = { "command", "result", "note", "stageBean" })
-public class QueryStageCommand {
+@XmlType(name = "QueryAllStageCommand", propOrder = { "command", "result", "note", "stageBeans" })
+public class QueryAllStageCommand {
 	@XmlElement(name = "Command", required = true)
 	private String command; // <Command>login</Command>
 	
@@ -19,8 +19,8 @@ public class QueryStageCommand {
 	@XmlElement(name="Note", required = true)
 	private String note; // <Note>....</Note> ----备注
 	
-	@XmlElement(name="value", required = true)
-	private StageBean stageBean;
+	@XmlElement(name="Stages", required = true)
+	private StageBeans stageBeans;
 
 	public String getCommand() {
 		return command;
@@ -46,11 +46,12 @@ public class QueryStageCommand {
 		this.note = note;
 	}
 
-	public StageBean getStageBean() {
-		return stageBean;
+	public StageBeans getStageBeans() {
+		return stageBeans;
 	}
 
-	public void setStageBean(StageBean stageBean) {
-		this.stageBean = stageBean;
+	public void setStageBeans(StageBeans stageBeans) {
+		this.stageBeans = stageBeans;
 	}
+	
 }

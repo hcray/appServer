@@ -7,7 +7,7 @@ import java.util.Map;
 import org.apache.mina.core.session.IoSession;
 
 import com.krakentouch.server.action.QueryAllStageAction;
-import com.krakentouch.server.bean.QueryStageCommand;
+import com.krakentouch.server.bean.QueryAllStageCommand;
 import com.krakentouch.server.bean.StageBean;
 import com.krakentouch.server.bean.StageBeans;
 import com.krakentouch.server.domain.PlayerMap;
@@ -47,10 +47,10 @@ public class QueryAllStageActionImpl implements QueryAllStageAction {
 		//查座
 		List<StageMap> stageList = gameService.queryStageMapByGameId(gameID);
 		List<StageBean> stageBeanList = new ArrayList<StageBean>();
-		QueryStageCommand queryStageCommand = new QueryStageCommand();
-		queryStageCommand.setCommand(command);
-		queryStageCommand.setResult("1");
-		queryStageCommand.setNote("success");
+		QueryAllStageCommand queryAllStageCommand = new QueryAllStageCommand();
+		queryAllStageCommand.setCommand(command);
+		queryAllStageCommand.setResult("1");
+		queryAllStageCommand.setNote("success");
 		for(StageMap stageMap : stageList){
 			StageBean stageBean = new StageBean();
 			stageBean.setGameID(stageMap.getGameID());
@@ -64,9 +64,9 @@ public class QueryAllStageActionImpl implements QueryAllStageAction {
 		StageBeans stageBeans = new StageBeans();
 		stageBeans.setStageBeans(stageBeanList);
 
-		queryStageCommand.setStageBeans(stageBeans);
+		queryAllStageCommand.setStageBeans(stageBeans);
 		
-		retStr = JaxbUtil.convertToXml(queryStageCommand, "utf-8");
+		retStr = JaxbUtil.convertToXml(queryAllStageCommand, "utf-8");
 		session.write(retStr);
 		return retStr;
 	}

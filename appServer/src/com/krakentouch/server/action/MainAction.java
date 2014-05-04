@@ -11,13 +11,6 @@ import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.krakentouch.server.action.impl.NewStageActionImpl;
-import com.krakentouch.server.action.impl.PlayerLoginActionImpl;
-import com.krakentouch.server.action.impl.PlayerLogoutActionImpl;
-import com.krakentouch.server.action.impl.QueryGameActionImpl;
-import com.krakentouch.server.action.impl.QueryScoreActionImpl;
-import com.krakentouch.server.action.impl.TerminalLoginActionImpl;
-import com.krakentouch.server.action.impl.TerminalLogoutActionImpl;
 import com.krakentouch.server.bean.CommandBean;
 import com.krakentouch.server.bean.EndStageCommand;
 import com.krakentouch.server.bean.JoinStageCommand;
@@ -25,7 +18,7 @@ import com.krakentouch.server.bean.OpenStageCommand;
 import com.krakentouch.server.bean.OpenStageCommandValue;
 import com.krakentouch.server.bean.PlayerBean;
 import com.krakentouch.server.bean.Players;
-import com.krakentouch.server.bean.QueryStageCommand;
+import com.krakentouch.server.bean.QueryAllStageCommand;
 import com.krakentouch.server.bean.ReceiveMessageBean;
 import com.krakentouch.server.bean.RefreshStageCommand;
 import com.krakentouch.server.bean.SearchPlayerCommand;
@@ -105,6 +98,11 @@ public class MainAction {
 	 */
 	private QuerySeatAction querySeatAction;
 	
+	/***
+	 * 查桌
+	 */
+	private QueryStageAction queryStageAction;
+	
 	public Map<String, String> doCommand(IoSession session, String commandStr){
 		LOG.debug("doCommand(String commandStr) in... " + commandStr);
 		Map<String, String> retMap = new HashMap<String, String>();
@@ -153,7 +151,8 @@ public class MainAction {
 				querySeatAction.doCommand(session, commandMap);
 				
 			}else if("queryStage".equals(command)){//查桌
-				retStr = doQueryStage(commandMap);
+				//retStr = doQueryStage(commandMap);
+				queryStageAction.doCommand(session, commandMap);
 				
 			}else if("joinStage".equals(command)){//加入
 				retStr = doJoinStage(commandMap);
@@ -435,10 +434,10 @@ public class MainAction {
 		//查座
 		List<StageMap> stageList = gameService.queryStageMapByGameId(gameID);
 		List<StageBean> stageBeanList = new ArrayList<StageBean>();
-		QueryStageCommand queryStageCommand = new QueryStageCommand();
-		queryStageCommand.setCommand(command);
-		queryStageCommand.setResult("1");
-		queryStageCommand.setNote("success");
+		QueryAllStageCommand queryAllStageCommand = new QueryAllStageCommand();
+		queryAllStageCommand.setCommand(command);
+		queryAllStageCommand.setResult("1");
+		queryAllStageCommand.setNote("success");
 		for(StageMap stageMap : stageList){
 			StageBean stageBean = new StageBean();
 			stageBean.setGameID(stageMap.getGameID());
@@ -452,9 +451,9 @@ public class MainAction {
 		StageBeans stageBeans = new StageBeans();
 		stageBeans.setStageBeans(stageBeanList);
 
-		queryStageCommand.setStageBeans(stageBeans);
+		queryAllStageCommand.setStageBeans(stageBeans);
 		
-		retStr = JaxbUtil.convertToXml(queryStageCommand, "utf-8");
+		retStr = JaxbUtil.convertToXml(queryAllStageCommand, "utf-8");
 		return retStr;
 	}
 	
