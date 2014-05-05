@@ -184,13 +184,13 @@ public class MainAction {
 				
 			}else if("ConcludeGame".equals(command)){//结分
 				//retStr = doCheckoutScore(commandMap);
-				
+				concludeGameAction.doCommand(session, commandMap);
 				
 			}else if("ComputeScore".equals(command)){//算分
 				//retStr = doCheckoutScore(commandMap);
 				computeScoreAction.doCommand(session, commandMap);
 				
-			}else if("ConcludeGame".equals(command)){//玩闭
+			}else if("CloseStage".equals(command)){//玩闭
 				//retStr = doEndStage(commandMap);
 				concludeGameAction.doCommand(session, commandMap);
 				

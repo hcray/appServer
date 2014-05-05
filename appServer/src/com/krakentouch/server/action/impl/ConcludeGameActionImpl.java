@@ -1,65 +1,49 @@
 package com.krakentouch.server.action.impl;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.mina.core.session.IoSession;
 
 import com.krakentouch.server.action.ConcludeGameAction;
-import com.krakentouch.server.bean.EndStageCommand;
-import com.krakentouch.server.domain.PlayerMap;
+import com.krakentouch.server.bean.CloseStageBean;
+import com.krakentouch.server.bean.CloseStageBeanValue;
 import com.krakentouch.server.domain.SeatMap;
-import com.krakentouch.server.domain.StageMap;
 import com.krakentouch.server.service.GameService;
 import com.krakentouch.server.service.LoginService;
 import com.krakentouch.server.tools.JaxbUtil;
 
 public class ConcludeGameActionImpl implements ConcludeGameAction {
 	
-	private LoginService loginService;
-	
 	private GameService gameService;
 
 	@Override
 	public String doCommand(IoSession session, Map<String,String> commandMap) {
 		String retStr = null;
-		//删除座位
+		//得到座位的上的用户
 		String command = commandMap.get("Command");
 		String stageSN = commandMap.get("StageSN");
 		String playerID = commandMap.get("PlayerID");
 		
-		
-		SeatMap seatMap = new SeatMap();
-		seatMap.setStageSN(Integer.parseInt(stageSN));
-		gameService.deleteSeatMap(seatMap);
-		//查询当前桌的数据
-		StageMap retStageMap = gameService.queryStageMapByStageSN(stageSN);
-		
-		StageMap stageMap = new StageMap();
-		stageMap.setStageSN(Integer.parseInt(stageSN));
-		gameService.deleteStageMap(stageMap);
-		
-		//更新同桌的玩家状态
+		//得到同桌的玩家
 		List<SeatMap> seatList = gameService.querySeatMapByStageSN(stageSN);
-		for(SeatMap sm : seatList){
-			String pId = sm.getPlayerID();
-			PlayerMap playerMap = new PlayerMap();
-			playerMap.setPlayerID(pId);
-			playerMap.setStatus(2);//玩家查桌状态
-			loginService.updatePlayerStatus(playerMap);
+		Collection<IoSession> sessions = session.getService().getManagedSessions().values();
+		for(IoSession s : sessions){
+			//session.getAttribute("playerId");
+			//TODO 把没个用户的用户id写到session中
 		}
 		
-		EndStageCommand endStageCommand = new EndStageCommand();
-		endStageCommand.setCommand(command);
-		endStageCommand.setResult("1");
-		endStageCommand.setNote("success");
-		endStageCommand.setGameID(retStageMap.getGameID());
-		endStageCommand.setHostIndex(retStageMap.getHostIndex());
-		endStageCommand.setPlayerID(playerID);
-		endStageCommand.setStageSN(retStageMap.getStageSN());
-		endStageCommand.setStatus(String.valueOf(retStageMap.getStatus()));
+		CloseStageBean closeStageBean = new CloseStageBean();
+		closeStageBean.setCommand(command);
+		closeStageBean.setNote("success");
+		closeStageBean.setResult("1");
 		
-		retStr = JaxbUtil.convertToXml(endStageCommand, "utf-8");
+		CloseStageBeanValue closeStageBeanValue = new CloseStageBeanValue();
+		closeStageBeanValue.setStageSN(stageSN);
+		closeStageBean.setCloseStageBeanValue(closeStageBeanValue );
+		
+		retStr = JaxbUtil.convertToXml(closeStageBean, "utf-8");
 		session.write(retStr);
 		return retStr;
 	}
@@ -72,11 +56,4 @@ public class ConcludeGameActionImpl implements ConcludeGameAction {
 		this.gameService = gameService;
 	}
 
-	public LoginService getLoginService() {
-		return loginService;
-	}
-
-	public void setLoginService(LoginService loginService) {
-		this.loginService = loginService;
-	}
 }
