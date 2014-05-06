@@ -167,6 +167,8 @@
 
 		<property name="closeStageAction" ref="closeStageAction"/>
 
+		<property name="queryPlayerAction" ref="queryPlayerAction"/>
+
 	</bean>
 
 	<!-- 物理端登录 -->
@@ -249,6 +251,11 @@
 	<bean name="closeStageAction" class="com.krakentouch.server.action.impl.CloseStageActionImpl">
 		<property name="loginService" ref="loginService" />
 		<property name="gameService" ref="gameService" />
+	</bean>
+	
+	<!--结分 -->
+	<bean name="queryPlayerAction" class="com.krakentouch.server.action.impl.QueryPlayerActionImpl">
+		<property name="loginService" ref="loginService" />
 	</bean>
 	
 </beans>

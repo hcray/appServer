@@ -123,6 +123,12 @@ public class MainAction {
 	 */
 	private ComputeScoreAction computeScoreAction;
 	
+	
+	/**
+	 * 询人
+	 */
+	private QueryPlayerAction queryPlayerAction; 
+	
 	public Map<String, String> doCommand(IoSession session, String commandStr){
 		LOG.debug("doCommand(String commandStr) in... " + commandStr);
 		Map<String, String> retMap = new HashMap<String, String>();
@@ -194,8 +200,9 @@ public class MainAction {
 				//retStr = doEndStage(commandMap);
 				concludeGameAction.doCommand(session, commandMap);
 				
-			}else if("searchPlayer".equals(command)){//询人
-				retStr = doSearchPlayer(commandMap);
+			}else if("QueryPlayer".equals(command)){//询人
+				//retStr = doSearchPlayer(commandMap);
+				queryPlayerAction.doCommand(session, commandMap);
 				
 			}else if("sendMessage".equals(command)){//聊天
 				String[] ret = doSendMessage(commandMap); 
@@ -948,6 +955,16 @@ public class MainAction {
 
 	public void setComputeScoreAction(ComputeScoreAction computeScoreAction) {
 		this.computeScoreAction = computeScoreAction;
+	}
+
+
+	public QueryPlayerAction getQueryPlayerAction() {
+		return queryPlayerAction;
+	}
+
+
+	public void setQueryPlayerAction(QueryPlayerAction queryPlayerAction) {
+		this.queryPlayerAction = queryPlayerAction;
 	}
 	
 	
