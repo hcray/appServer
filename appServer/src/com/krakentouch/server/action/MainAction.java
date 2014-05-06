@@ -138,6 +138,11 @@ public class MainAction {
 	 */
 	private ChatAction chatAction;
 	
+	/**
+	 * 赠送
+	 */
+	private GiveGiftAction giveGiftAction;
+	
 	public Map<String, String> doCommand(IoSession session, String commandStr){
 		LOG.debug("doCommand(String commandStr) in... " + commandStr);
 		Map<String, String> retMap = new HashMap<String, String>();
@@ -227,8 +232,9 @@ public class MainAction {
 				retMap.put("receiveId", receiveId);*/
 				chatAction.doCommand(session, commandMap);
 				
-			}else if("present".equals(command)){
-				String[] ret = doPresent(commandMap);
+			}else if("GiveGift".equals(command)){
+				//String[] ret = doPresent(commandMap);
+				giveGiftAction.doCommand(session, commandMap);
 				
 			}else{
 				retStr="error,not find command.";
@@ -999,6 +1005,16 @@ public class MainAction {
 
 	public void setChatAction(ChatAction chatAction) {
 		this.chatAction = chatAction;
+	}
+
+
+	public GiveGiftAction getGiveGiftAction() {
+		return giveGiftAction;
+	}
+
+
+	public void setGiveGiftAction(GiveGiftAction giveGiftAction) {
+		this.giveGiftAction = giveGiftAction;
 	}
 	
 }

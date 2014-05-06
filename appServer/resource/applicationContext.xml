@@ -172,6 +172,8 @@
 		<property name="queryPlayerAction" ref="queryPlayerAction"/>
 		
 		<property name="chatAction" ref="chatAction"/>
+		
+		<property name="giveGiftAction" ref="giveGiftAction"/>
 
 	</bean>
 
@@ -270,6 +272,12 @@
 	<!-- 聊天  -->
 	<bean name="chatAction" class="com.krakentouch.server.action.impl.ChatActionImpl">
 		<property name="chatService" ref="chatService" />
+	</bean>
+	
+	<!-- 赠送 -->
+	<bean name="giveGiftAction" class="com.krakentouch.server.action.impl.GiveGiftActionImpl">
+		<property name="chatService" ref="chatService" />
+		<property name="loginService" ref="loginService" />
 	</bean>
 	
 </beans>
