@@ -170,6 +170,8 @@
 		<property name="queryAllPlayerAction" ref="queryAllPlayerAction"/>
 		
 		<property name="queryPlayerAction" ref="queryPlayerAction"/>
+		
+		<property name="chatAction" ref="chatAction"/>
 
 	</bean>
 
@@ -263,6 +265,11 @@
 	<!--询人 -->
 	<bean name="queryPlayerAction" class="com.krakentouch.server.action.impl.QueryPlayerActionImpl">
 		<property name="loginService" ref="loginService" />
+	</bean>
+	
+	<!-- 聊天  -->
+	<bean name="chatAction" class="com.krakentouch.server.action.impl.ChatActionImpl">
+		<property name="chatService" ref="chatService" />
 	</bean>
 	
 </beans>

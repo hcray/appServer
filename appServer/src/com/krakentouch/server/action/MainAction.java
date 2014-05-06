@@ -133,6 +133,11 @@ public class MainAction {
 	 */
 	private QueryPlayerAction queryPlayerAction; 
 	
+	/**
+	 * 聊天
+	 */
+	private ChatAction chatAction;
+	
 	public Map<String, String> doCommand(IoSession session, String commandStr){
 		LOG.debug("doCommand(String commandStr) in... " + commandStr);
 		Map<String, String> retMap = new HashMap<String, String>();
@@ -212,14 +217,15 @@ public class MainAction {
 				//retStr = doSearchPlayer(commandMap);
 				queryPlayerAction.doCommand(session, commandMap);
 				
-			}else if("sendMessage".equals(command)){//聊天
-				String[] ret = doSendMessage(commandMap); 
+			}else if("Chat".equals(command)){//聊天
+				/*String[] ret = doSendMessage(commandMap); 
 				retStr = ret[0];
 				String receiveMessage = ret[1];
 				retMap.put("receiveMessage", receiveMessage);
 				
 				String receiveId = commandMap.get("RecoverID");//接收者
-				retMap.put("receiveId", receiveId);
+				retMap.put("receiveId", receiveId);*/
+				chatAction.doCommand(session, commandMap);
 				
 			}else if("present".equals(command)){
 				String[] ret = doPresent(commandMap);
@@ -974,6 +980,25 @@ public class MainAction {
 	public void setQueryPlayerAction(QueryPlayerAction queryPlayerAction) {
 		this.queryPlayerAction = queryPlayerAction;
 	}
-	
+
+
+	public QueryAllPlayerAction getQueryAllPlayerAction() {
+		return queryAllPlayerAction;
+	}
+
+
+	public void setQueryAllPlayerAction(QueryAllPlayerAction queryAllPlayerAction) {
+		this.queryAllPlayerAction = queryAllPlayerAction;
+	}
+
+
+	public ChatAction getChatAction() {
+		return chatAction;
+	}
+
+
+	public void setChatAction(ChatAction chatAction) {
+		this.chatAction = chatAction;
+	}
 	
 }
