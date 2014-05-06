@@ -1,9 +1,9 @@
 1、登陆，登出的用户id的保存
 2、跨JVM的乱码问题
-3、分层
-4、返回值的value区分
+3、分层 AOP的通知  ---- 周三
+4、返回值的value区分 ---- 周四
 5、jvm内存大小的调整
-6、安装程序、注册成服务
+6、安装程序、注册成服务、系统所有情况的跑通 ---- 周五
 
 <TCP><Command>login</Command><PlayerID>user7</PlayerID><DeskID>00000000</DeskID></TCP>
 
