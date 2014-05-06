@@ -167,6 +167,8 @@
 
 		<property name="closeStageAction" ref="closeStageAction"/>
 
+		<property name="queryAllPlayerAction" ref="queryAllPlayerAction"/>
+		
 		<property name="queryPlayerAction" ref="queryPlayerAction"/>
 
 	</bean>
@@ -253,7 +255,12 @@
 		<property name="gameService" ref="gameService" />
 	</bean>
 	
-	<!--结分 -->
+	<!--询众 -->
+	<bean name="queryAllPlayerAction" class="com.krakentouch.server.action.impl.QueryAllPlayerActionImpl">
+		<property name="loginService" ref="loginService" />
+	</bean>
+	
+	<!--询人 -->
 	<bean name="queryPlayerAction" class="com.krakentouch.server.action.impl.QueryPlayerActionImpl">
 		<property name="loginService" ref="loginService" />
 	</bean>

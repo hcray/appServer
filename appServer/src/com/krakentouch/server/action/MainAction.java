@@ -123,6 +123,10 @@ public class MainAction {
 	 */
 	private ComputeScoreAction computeScoreAction;
 	
+	/**
+	 * 询人
+	 */
+	private QueryAllPlayerAction queryAllPlayerAction; 
 	
 	/**
 	 * 询人
@@ -199,6 +203,10 @@ public class MainAction {
 			}else if("CloseStage".equals(command)){//玩闭
 				//retStr = doEndStage(commandMap);
 				concludeGameAction.doCommand(session, commandMap);
+				
+			}else if("QueryAllPlayer".equals(command)){//询众
+				//retStr = doSearchPlayer(commandMap);
+				queryAllPlayerAction.doCommand(session, commandMap);
 				
 			}else if("QueryPlayer".equals(command)){//询人
 				//retStr = doSearchPlayer(commandMap);
