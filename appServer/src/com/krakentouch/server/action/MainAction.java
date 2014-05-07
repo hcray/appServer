@@ -124,7 +124,7 @@ public class MainAction {
 	private ComputeScoreAction computeScoreAction;
 	
 	/**
-	 * 询人
+	 * 询众
 	 */
 	private QueryAllPlayerAction queryAllPlayerAction; 
 	

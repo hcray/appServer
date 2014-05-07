@@ -14,6 +14,8 @@ public class PlayerLoginActionImpl implements PlayerLoginAction {
 	@Override
 	public String doCommand(IoSession session, Map<String,String> commandMap) {
 		String retStr = "";
+		String playerId = commandMap.get("PlayerID");
+		session.setAttribute("playerId", playerId);
 		try{
 			retStr = loginService.login(commandMap);
 		}catch(Exception e){

@@ -244,6 +244,14 @@ public class LoginService {
 	public List<Player> queryAllOnlinePlayer(){
 		return PlayerMapMapper.queryAllOnlinePlayer();
 	}
+	
+	/***
+	 * 查询所有询人态的用户
+	 * @return
+	 */
+	public List<PlayerMap> selectAllQueryStatusPlayer(){
+		return PlayerMapMapper.selectAllQueryStatusPlayer();
+	}
 
 	public DeskMapMapper getDeskMapMapper() {
 		return deskMapMapper;

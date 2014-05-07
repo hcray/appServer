@@ -14,6 +14,7 @@ public class PlayerLogoutActionImpl implements PlayerLogoutAction {
 	@Override
 	public String doCommand(IoSession session, Map<String,String> commandMap) {
 		String retStr = "";
+		session.removeAttribute("playerId");
 		try{
 			retStr = loginService.logout(commandMap);
 		}catch(Exception e){

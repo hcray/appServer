@@ -19,4 +19,6 @@ public interface PlayerMapMapper {
 	public void updatePlayerScore(PlayerScore playerScore);
 	
 	public List<Player> queryAllOnlinePlayer();
+	
+	public List<PlayerMap> selectAllQueryStatusPlayer();
 }

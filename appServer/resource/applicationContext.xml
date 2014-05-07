@@ -131,6 +131,7 @@
 	<import resource="applicationContext-service-login.xml" />
 	<import resource="applicationContext-service-game.xml" />
 	<import resource="applicationContext-service-chatLog.xml" />
+	<import resource="applicationContext-interceptor.xml" />
 
 	<bean name="mainAction" class="com.krakentouch.server.action.MainAction">
 		<property name="loginService" ref="loginService" />
@@ -186,9 +187,6 @@
 	<bean name="terminalLogoutAction" class="com.krakentouch.server.action.impl.TerminalLogoutActionImpl">
 		<property name="loginService" ref="loginService" />
 	</bean>
-
-	<bean name="afterPlayerLoginAction"
-		class="com.krakentouch.server.interceptor.AfterPlayerLoginAction" />
 	
 	<!-- 用户登录 -->
 	<bean name="playerLoginAction" class="com.krakentouch.server.action.impl.PlayerLoginActionImpl">
