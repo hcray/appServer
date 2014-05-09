@@ -3,6 +3,6 @@
     "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans>		
 	<bean name="afterPlayerLoginAction" class="com.krakentouch.server.interceptor.AfterPlayerLoginAction" >
-		
+		<property name="loginService" ref="loginService"/>
 	</bean>	
 </beans>

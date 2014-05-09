@@ -3,6 +3,7 @@ package com.krakentouch.server.mapper;
 import java.util.List;
 
 import com.krakentouch.server.domain.Player;
+import com.krakentouch.server.domain.PlayerInfo;
 import com.krakentouch.server.domain.PlayerMap;
 import com.krakentouch.server.domain.PlayerScore;
 
@@ -20,5 +21,9 @@ public interface PlayerMapMapper {
 	
 	public List<Player> queryAllOnlinePlayer();
 	
+	public PlayerInfo queryPlayerInfoById(String playerId);
+	
 	public List<PlayerMap> selectAllQueryStatusPlayer();
+	
+	
 }

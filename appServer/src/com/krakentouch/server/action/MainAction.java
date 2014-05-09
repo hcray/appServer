@@ -124,6 +124,11 @@ public class MainAction {
 	private ComputeScoreAction computeScoreAction;
 	
 	/**
+	 * 收桌
+	 */
+	private CloseStageAction closeStageAction;
+	
+	/**
 	 * 询众
 	 */
 	private QueryAllPlayerAction queryAllPlayerAction; 
@@ -212,7 +217,7 @@ public class MainAction {
 				
 			}else if("CloseStage".equals(command)){//玩闭
 				//retStr = doEndStage(commandMap);
-				concludeGameAction.doCommand(session, commandMap);
+				closeStageAction.doCommand(session, commandMap);
 				
 			}else if("QueryAllPlayer".equals(command)){//询众
 				//retStr = doSearchPlayer(commandMap);
@@ -1015,6 +1020,16 @@ public class MainAction {
 
 	public void setGiveGiftAction(GiveGiftAction giveGiftAction) {
 		this.giveGiftAction = giveGiftAction;
+	}
+
+
+	public CloseStageAction getCloseStageAction() {
+		return closeStageAction;
+	}
+
+
+	public void setCloseStageAction(CloseStageAction closeStageAction) {
+		this.closeStageAction = closeStageAction;
 	}
 	
 }

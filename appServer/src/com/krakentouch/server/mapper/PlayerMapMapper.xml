@@ -55,14 +55,25 @@
     	FROM PLAYERVIEW
     </select>
     
+    <select id="queryPlayerInfoById" resultType="PlayerInfo" parameterType="java.lang.String">
+    	SELECT
+    		PLAYERID as playerID,
+			GENDER as gender,
+			NICKNAME as nickName,
+			ICON as icon,
+			GRADE as grade
+    	FROM PLAYERINFO 
+    	WHERE PLAYERID = #{playerId}#
+    </select>
+    
     <select id="selectAllQueryStatusPlayer" resultType="PlayerMap">
     	SELECT 
     		PLAYERID as playerId,
     		DESKID as deskId,
     		STATUS as status,
-    		GAMEID as gameId,
+    		GAMEID as gameId
     	FROM PLAYERMAP 
-    	WHERR STATUS=2
+    	WHERE STATUS=2
     </select>
     
 	<!-- 当使用该Mybatis与Spring整合的时候，该文件必须和相应的Mapper接口文件同名，并在同一路径下 -->

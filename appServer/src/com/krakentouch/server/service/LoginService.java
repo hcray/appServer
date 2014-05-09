@@ -10,6 +10,7 @@ import com.krakentouch.server.bean.QueryScoreCommand;
 import com.krakentouch.server.bean.QueryScoreCommandValue;
 import com.krakentouch.server.domain.DeskMap;
 import com.krakentouch.server.domain.Player;
+import com.krakentouch.server.domain.PlayerInfo;
 import com.krakentouch.server.domain.PlayerMap;
 import com.krakentouch.server.domain.PlayerScore;
 import com.krakentouch.server.mapper.DeskMapMapper;
@@ -251,6 +252,10 @@ public class LoginService {
 	 */
 	public List<PlayerMap> selectAllQueryStatusPlayer(){
 		return PlayerMapMapper.selectAllQueryStatusPlayer();
+	}
+	
+	public PlayerInfo queryPlayerInfoById(String playerId){
+		return PlayerMapMapper.queryPlayerInfoById(playerId);
 	}
 
 	public DeskMapMapper getDeskMapMapper() {

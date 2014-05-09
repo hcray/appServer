@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name="value")
-@XmlType(name = "PlayerOnline", propOrder = {"playerId", "deskId", "status", "gameID" ,"gender" ,"nickName" ,"icon" ,"grade"})
+@XmlType(name = "PlayerOnline", propOrder = {"playerId", "deskId", "status", "gameId" ,"gender" ,"nickName" ,"icon" ,"grade"})
 public class PlayerOnline {
 	@XmlElement(name = "PlayerId", required = true)
 	private String playerId;	//PM.PLAYERID,
