@@ -60,8 +60,8 @@ create table DBLog(
 
 drop table if EXISTS TerminalLog;
 create table TerminalLog(
-	SN int(10) primary key comment '流水号',
-	chatTime timestamp comment '时间戳',
+	SN int(11) zerofill auto_increment primary key comment '流水号',
+	Time timestamp comment '时间戳',
 	DeskID char(8) comment '终端串号',
 	Script varchar(1024)comment '终端日志内容'
 )comment '终端日志';

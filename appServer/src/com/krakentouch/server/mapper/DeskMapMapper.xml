@@ -28,6 +28,16 @@
     	WHERE DESKID = #{deskId}# and DELFLAG = 0
     </update>
     
+    <insert id="insertTerminalLog" parameterType="TerminalLog">
+    	INSERT INTO TERMINALLOG
+			(TIME, DESKID, SCRIPT) 
+		VALUES
+			(#{time}, #{deskId}, #{script})
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="SN" >
+        	SELECT LAST_INSERT_ID() AS sn
+      	</selectKey>
+    </insert>
+    
     
 	<!-- 当使用该Mybatis与Spring整合的时候，该文件必须和相应的Mapper接口文件同名，并在同一路径下 -->
 </mapper> 

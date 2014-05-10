@@ -63,6 +63,11 @@ public class MainAction {
 	 */
 	private TerminalLogoutAction terminalLogoutAction;
 	
+	/***
+	 * 物理端登记 
+	 */
+	private LoginWriteAction loginWriteAction;
+	
 	/**
 	 * 用户登录
 	 */
@@ -163,6 +168,9 @@ public class MainAction {
 				
 			}else if("TerminalLogout".equals(command)){//物理端签出
 				terminalLogoutAction.doCommand(session, commandMap);
+				
+			}else if("LoginWrite".equals(command)){//物理终端登记
+				loginWriteAction.doCommand(session, commandMap);
 				
 			}else if("PlayerLogin".equals(command)){//登录
 				
@@ -1030,6 +1038,16 @@ public class MainAction {
 
 	public void setCloseStageAction(CloseStageAction closeStageAction) {
 		this.closeStageAction = closeStageAction;
+	}
+
+
+	public LoginWriteAction getLoginWriteAction() {
+		return loginWriteAction;
+	}
+
+
+	public void setLoginWriteAction(LoginWriteAction loginWriteAction) {
+		this.loginWriteAction = loginWriteAction;
 	}
 	
 }

@@ -36,7 +36,8 @@
 
 #物理端登录
 <TCP><action>TerminalLogin</action><value><DeskID>123456</DeskID></value><category>Account</category><address>OP</address></TCP>
-
+设备登记
+<TCP><action>LoginWrite</action><value><DeskID>00000000</DeskID><Script>xxxxxxxxx</Script></value></TCP>
 用户登入
 <TCP><action>PlayerLogin</action><value><PlayerID>user4</PlayerID><DeskID>00000000</DeskID></value></TCP>
 用户登出

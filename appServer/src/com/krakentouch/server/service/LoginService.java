@@ -13,6 +13,7 @@ import com.krakentouch.server.domain.Player;
 import com.krakentouch.server.domain.PlayerInfo;
 import com.krakentouch.server.domain.PlayerMap;
 import com.krakentouch.server.domain.PlayerScore;
+import com.krakentouch.server.domain.TerminalLog;
 import com.krakentouch.server.mapper.DeskMapMapper;
 import com.krakentouch.server.mapper.PlayerMapMapper;
 import com.krakentouch.server.tools.JaxbUtil;
@@ -254,6 +255,15 @@ public class LoginService {
 		return PlayerMapMapper.selectAllQueryStatusPlayer();
 	}
 	
+	/***
+	 * 插入设备统计
+	 * @param terminalLog
+	 */
+	public int insertTerminalLog(TerminalLog terminalLog){
+		deskMapMapper.insertTerminalLog(terminalLog);
+		return terminalLog.getSn();
+	}
+	
 	public PlayerInfo queryPlayerInfoById(String playerId){
 		return PlayerMapMapper.queryPlayerInfoById(playerId);
 	}
@@ -261,7 +271,6 @@ public class LoginService {
 	public DeskMapMapper getDeskMapMapper() {
 		return deskMapMapper;
 	}
-
 
 	public void setDeskMapMapper(DeskMapMapper deskMapMapper) {
 		this.deskMapMapper = deskMapMapper;

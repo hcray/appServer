@@ -142,6 +142,8 @@
 
 		<property name="terminalLogoutAction" ref="terminalLogoutAction" />
 
+		<property name="loginWriteAction" ref="loginWriteAction" />
+
 		<property name="playerLoginAction" ref="playerLoginAction" />
 
 		<property name="playerLogoutAction" ref="playerLogoutAction" />
@@ -185,6 +187,11 @@
 
 	<!-- 物理端登出 -->
 	<bean name="terminalLogoutAction" class="com.krakentouch.server.action.impl.TerminalLogoutActionImpl">
+		<property name="loginService" ref="loginService" />
+	</bean>
+	
+	<!-- 物理端登记 -->
+	<bean name="loginWriteAction" class="com.krakentouch.server.action.impl.LoginWriteActionImpl">
 		<property name="loginService" ref="loginService" />
 	</bean>
 	

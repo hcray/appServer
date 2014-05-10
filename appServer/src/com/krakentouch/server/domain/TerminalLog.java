@@ -5,33 +5,33 @@ package com.krakentouch.server.domain;
  *
  */
 public class TerminalLog {
-	private int SN;			// int(10) primary key comment '流水号',
-	private String chatTime;// timestamp comment '时间戳',
-	private String DeskID;	// char(8) comment '终端串号',
-	private String Script;// varchar(1024)comment '终端日志内容'
+	private int sn;			// int(10) primary key comment '流水号',
+	private String time;// timestamp comment '时间戳',
+	private String deskId;	// char(8) comment '终端串号',
+	private String script;// varchar(1024)comment '终端日志内容'
 	
-	public int getSN() {
-		return SN;
+	public int getSn() {
+		return sn;
 	}
-	public void setSN(int sN) {
-		SN = sN;
+	public void setSn(int sn) {
+		this.sn = sn;
 	}
-	public String getChatTime() {
-		return chatTime;
+	public String getTime() {
+		return time;
 	}
-	public void setChatTime(String chatTime) {
-		this.chatTime = chatTime;
+	public void setTime(String time) {
+		this.time = time;
 	}
-	public String getDeskID() {
-		return DeskID;
+	public String getDeskId() {
+		return deskId;
 	}
-	public void setDeskID(String deskID) {
-		DeskID = deskID;
+	public void setDeskId(String deskId) {
+		this.deskId = deskId;
 	}
 	public String getScript() {
-		return Script;
+		return script;
 	}
 	public void setScript(String script) {
-		Script = script;
+		this.script = script;
 	}
 }
