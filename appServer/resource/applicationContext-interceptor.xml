@@ -5,4 +5,8 @@
 	<bean name="afterPlayerLoginAction" class="com.krakentouch.server.interceptor.AfterPlayerLoginAction" >
 		<property name="loginService" ref="loginService"/>
 	</bean>	
+	
+	<bean name="afterPlayerLogoutAction" class="com.krakentouch.server.interceptor.AfterPlayerLogoutAction" >
+		<property name="loginService" ref="loginService"/>
+	</bean>	
 </beans>

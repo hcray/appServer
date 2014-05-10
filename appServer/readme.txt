@@ -38,4 +38,6 @@
 <TCP><action>TerminalLogin</action><value><DeskID>123456</DeskID></value><category>Account</category><address>OP</address></TCP>
 
 用户登入
-<TCP><action>PlayerLogin</action><value><PlayerID>ABCDEFGHIJ</PlayerID><DeskID>00000000</DeskID></value></TCP>
+<TCP><action>PlayerLogin</action><value><PlayerID>user4</PlayerID><DeskID>00000000</DeskID></value></TCP>
+用户登出
+<TCP><action>PlayerLogout</action><value><PlayerID>user1</PlayerID></value></TCP>
