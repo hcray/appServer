@@ -33,8 +33,8 @@
 			(TIME, DESKID, SCRIPT) 
 		VALUES
 			(#{time}, #{deskId}, #{script})
-		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="SN" >
-        	SELECT LAST_INSERT_ID() AS sn
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="sn" >
+        	SELECT LAST_INSERT_ID()
       	</selectKey>
     </insert>
     
