@@ -12,7 +12,7 @@ public class PlayerMap {
 	private int ID;			//主键ID
 	private String PlayerID;// char(10) comment '串号',
 	private String DeskID;	// char(8) comment '串号',
-	private int Status;		// int(1) comment '工作状态（0~3分别表示(0)待机、(1)询人、(2)查桌、(3)游戏）',
+	private int Status;		// int(1) comment '工作状态（-1~3分别表示离开(-1)、待机(0)、询众(1)、查厅(2)、游戏(3)）,
 	private String GameID;	// char(6) comment '串号'
 	private Date LoginTime; //登录时间
 	private Date LogoutTime;//退出时间

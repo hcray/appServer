@@ -13,7 +13,6 @@ import org.aspectj.lang.annotation.Pointcut;
 
 import com.krakentouch.server.bean.PlayerOnline;
 import com.krakentouch.server.bean.PlayerOnlineBean;
-import com.krakentouch.server.domain.PlayerInfo;
 import com.krakentouch.server.domain.PlayerMap;
 import com.krakentouch.server.service.LoginService;
 import com.krakentouch.server.tools.JaxbUtil;
@@ -36,7 +35,7 @@ public class AfterPlayerLogoutAction {
 		String deskId = commandMap.get("DeskID");
 		String command = commandMap.get("action");
 		
-		PlayerInfo playerInfo = loginService.queryPlayerInfoById(playerId);
+		//PlayerInfo playerInfo = loginService.queryPlayerInfoById(playerId);
 		
 		//System.out.println("登录后通知其他的用户");
 		List<String> playerIdList = new ArrayList<String>();
@@ -54,15 +53,7 @@ public class AfterPlayerLogoutAction {
 		playerOnline.setDeskId(deskId);
 		playerOnline.setGameId("null");
 		playerOnline.setPlayerId(playerId);
-		playerOnline.setStatus("0");
-		String nickName = playerInfo.getNickname();
-		playerOnline.setNickName(nickName);
-		String gender = String.valueOf(playerInfo.getGender());
-		playerOnline.setGender(gender);
-		String grade = String.valueOf(playerInfo.getGrade());
-		playerOnline.setGrade(grade);
-		String icon = String.valueOf(playerInfo.getIcon());
-		playerOnline.setIcon(icon);
+		playerOnline.setStatus("1");
 		
 		playerOnlineBean.setPlayerOnline(playerOnline);
 		
