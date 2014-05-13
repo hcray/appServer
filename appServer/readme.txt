@@ -34,8 +34,10 @@
 
 <TCP><Command>present</Command><SenderID>user4</SenderID><RecverID>user10</RecverID><Score>1</Score><Money>2</Money><Prop0>0</Prop0></TCP>
 
-#物理端登录
+物理端登录
 <TCP><action>TerminalLogin</action><value><DeskID>123456</DeskID></value><category>Account</category><address>OP</address></TCP>
+物理端签出
+<TCP><action>TerminalLogout</action><value><DeskID>00000000</DeskID></value></TCP>
 设备登记
 <TCP><action>LoginWrite</action><value><DeskID>00000000</DeskID><Script>xxxxxxxxx</Script></value></TCP>
 用户登入
