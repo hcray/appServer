@@ -116,11 +116,15 @@ public class ServerHandler extends IoHandlerAdapter {
 	@Override
 	public void sessionClosed(IoSession session) throws Exception {
 		LOG.debug("session Closed");
+		String playerId = (String) session.getAttribute("playerId");
+		String message = "<TCP><action>PlayerLogout</action><value><PlayerID>"+playerId+"</PlayerID></value></TCP>";
+		mainAction.doCommand(session, (String)message);
+		/*
 		String user = (String) session.getAttribute("user");
         users.remove(user);
         sessions.remove(session);
         broadcast("The user " + user + " has left the chat session.");
-		
+		*/
 	}
 
 	@Override
