@@ -629,7 +629,7 @@ public class MainAction {
      *
 	 * @return
 	 */
-	public String doEndStage(Map<String,String> commandMap){
+/*	public String doEndStage(Map<String,String> commandMap){
 		String retStr = null;
 		//删除座位
 		String command = commandMap.get("Command");
@@ -669,7 +669,7 @@ public class MainAction {
 		
 		retStr = JaxbUtil.convertToXml(endStageCommand, "utf-8");
 		return retStr;
-	}
+	}*/
 	
 	/***
 	 * 询人
