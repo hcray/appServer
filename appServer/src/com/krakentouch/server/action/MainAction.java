@@ -537,7 +537,7 @@ public class MainAction {
 	 *
 	 * @return
 	 */
-	public String doJoinStage(Map<String,String> commandMap){
+	/*public String doJoinStage(Map<String,String> commandMap){
 		String retStr = null;
 		String command = commandMap.get("Command");
 		String stageSN = commandMap.get("StageSN");
@@ -560,7 +560,7 @@ public class MainAction {
 		
 		retStr = JaxbUtil.convertToXml(joinStageCommand, "utf-8");
 		return retStr;
-	}
+	}*/
 	/**
 	 * 开玩
 	 * @param commandMap

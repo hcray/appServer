@@ -6,12 +6,38 @@ import org.apache.mina.core.session.IoSession;
 
 import com.krakentouch.server.action.JoinStageAction;
 import com.krakentouch.server.bean.JoinStageCommand;
+import com.krakentouch.server.bean.JoinStageCommandValue;
 import com.krakentouch.server.domain.SeatMap;
 import com.krakentouch.server.service.GameService;
 import com.krakentouch.server.tools.JaxbUtil;
 /**
- * 查桌：发出<TCP action="QueryStage" address="OP" category="Game" value="StageSN=2"></TCP>，
- * 服务器端反馈以<TCP action="QueryStageSeat" address="FB" category="Game" value="StageSN=2;Status=0;HostIndex=0;GameID=abcdef"></TCP>
+ * 发出
+ * 	<TCP>
+ * 		<action>JoinStage</action>
+ * 		<value>
+ * 			<StageSN>2</StageSN>
+ * 			<PlayerID>EFGHIJKLMN</PlayerID>
+ * 			<SeatIndex>1</SeatIndex>
+ * 		</value>
+ * 	</TCP>
+ * 服务器端在SeatMap表新增一条记录并反馈以
+ * <TCP>
+ * 		<action>JoinStage</action>
+ * 		<value>
+ * 			<StageSN>2</StageSN>
+ * 			<PlayerID>EFGHIJKLMN</PlayerID>
+ * 			<SeatIndex>1</SeatIndex>
+ * 		</value>
+ * 	</TCP>
+ * 并对所有处于本游戏查厅态的用户（通过查询PlayerMap表获知）进行下行通知：
+ * <TCP>
+ * 		<action>JoinStage</action>
+ * 		<value>
+ * 			<StageSN>2</StageSN>
+ * 			<PlayerID>EFGHIJKLMN</PlayerID>
+ * 			<SeatIndex>1</SeatIndex>
+ * 		</value>
+ * 	</TCP>
  * @author 21829
  *
  */
@@ -37,9 +63,13 @@ public class JoinStageActionImpl implements JoinStageAction {
 		joinStageCommand.setCommand(command);
 		joinStageCommand.setResult("1");
 		joinStageCommand.setNote("success");
-		joinStageCommand.setPlayerID(playerID);
-		joinStageCommand.setStageSN(stageSN);
-		joinStageCommand.setSeatIndex(seatIndex);
+		
+		JoinStageCommandValue joinStageCommandValue = new JoinStageCommandValue();
+		joinStageCommandValue.setPlayerID(playerID);
+		joinStageCommandValue.setStageSN(stageSN);
+		joinStageCommandValue.setSeatIndex(seatIndex);
+		
+		joinStageCommand.setJoinStageCommandValue(joinStageCommandValue);
 		
 		retStr = JaxbUtil.convertToXml(joinStageCommand, "utf-8");
 		session.write(retStr);

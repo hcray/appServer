@@ -12,6 +12,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
 import com.krakentouch.server.bean.JoinStageCommand;
+import com.krakentouch.server.bean.JoinStageCommandValue;
 import com.krakentouch.server.domain.PlayerMap;
 import com.krakentouch.server.service.LoginService;
 import com.krakentouch.server.tools.JaxbUtil;
@@ -59,9 +60,13 @@ public class AfterJoinStageAction {
 		joinStageCommand.setCommand(command);
 		joinStageCommand.setResult("1");
 		joinStageCommand.setNote("success");
-		joinStageCommand.setPlayerID(playerID);
-		joinStageCommand.setStageSN(stageSN);
-		joinStageCommand.setSeatIndex(seatIndex);
+
+		JoinStageCommandValue joinStageCommandValue = new JoinStageCommandValue();
+		joinStageCommandValue.setPlayerID(playerID);
+		joinStageCommandValue.setStageSN(stageSN);
+		joinStageCommandValue.setSeatIndex(seatIndex);
+		
+		joinStageCommand.setJoinStageCommandValue(joinStageCommandValue);
 		
 		String notify = JaxbUtil.convertToXml(joinStageCommand, "utf-8");
 		

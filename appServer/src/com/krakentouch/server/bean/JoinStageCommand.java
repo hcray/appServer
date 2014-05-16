@@ -8,10 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name="TCP")
-@XmlType(name = "JoinStageCommand", propOrder = { "command", "result", "note", "playerID",
-		"stageSN", "seatIndex"})
+@XmlType(name = "JoinStageCommand", propOrder = { "command", "result", "note", "joinStageCommandValue"})
 public class JoinStageCommand {
-	@XmlElement(name = "Command", required = true)
+	@XmlElement(name = "action", required = true)
 	private String command; // <Command>login</Command>
 	
 	@XmlElement(name = "Result", required = true)
@@ -19,16 +18,10 @@ public class JoinStageCommand {
 	
 	@XmlElement(name="Note", required = true)
 	private String note; // <Note>....</Note> ----备注
-	
-	@XmlElement(name="StageSN",required = true)
-	private String stageSN;//<StageSN>abcdef</StageSN>
-	
-	@XmlElement(name="PlayerID",required = true)
-	private String playerID;//<PlayerID>CDEFGHIJKL</PlayerID>
-	
-	@XmlElement(name="SeatIndex",required = true)
-	private String seatIndex;//<SeatIndex>CDEFGHIJKL</SeatIndex>
 
+	@XmlElement(name="value", required = true)
+	private JoinStageCommandValue joinStageCommandValue;
+	
 	public String getCommand() {
 		return command;
 	}
@@ -53,27 +46,12 @@ public class JoinStageCommand {
 		this.note = note;
 	}
 
-	public String getStageSN() {
-		return stageSN;
+	public JoinStageCommandValue getJoinStageCommandValue() {
+		return joinStageCommandValue;
 	}
 
-	public void setStageSN(String stageSN) {
-		this.stageSN = stageSN;
+	public void setJoinStageCommandValue(JoinStageCommandValue joinStageCommandValue) {
+		this.joinStageCommandValue = joinStageCommandValue;
 	}
 
-	public String getPlayerID() {
-		return playerID;
-	}
-
-	public void setPlayerID(String playerID) {
-		this.playerID = playerID;
-	}
-
-	public String getSeatIndex() {
-		return seatIndex;
-	}
-
-	public void setSeatIndex(String seatIndex) {
-		this.seatIndex = seatIndex;
-	}
 }
