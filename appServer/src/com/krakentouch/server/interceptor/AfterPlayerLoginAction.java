@@ -40,7 +40,7 @@ public class AfterPlayerLoginAction {
 		
 		//System.out.println("登录后通知其他的用户");
 		List<String> playerIdList = new ArrayList<String>();
-		List<PlayerMap> otherUsers = loginService.selectAllQueryStatusPlayer();
+		List<PlayerMap> otherUsers = loginService.selectPlayerByStatus(1);
 		for(PlayerMap player:otherUsers){
 			playerIdList.add(player.getPlayerID());
 		}

@@ -24,6 +24,17 @@
     	WHERE GAMEID = #{gameId}
     </select>
     
+    <select id="queryStageViewByStatus" resultType="StageView" parameterType="int">
+    	SELECT 
+    		STAGESN as stageSN, 
+    		STATUS  as status, 
+    		HOSTINDEX as hostIndex, 
+    		GAMEID as gameId,
+    		PLAYERID as playerId
+    	FROM STAGEVIEW 
+    	WHERE STATUS = #{status}
+    </select>
+    
     <select id="queryStageMapByStageSN" resultType="StageMap" parameterType="java.lang.String">
     	SELECT 
     		STAGESN as StageSN, 

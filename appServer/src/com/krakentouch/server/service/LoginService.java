@@ -248,11 +248,11 @@ public class LoginService {
 	}
 	
 	/***
-	 * 查询所有询人态的用户
+	 * 根据状态查询用户
 	 * @return
 	 */
-	public List<PlayerMap> selectAllQueryStatusPlayer(){
-		return PlayerMapMapper.selectAllQueryStatusPlayer();
+	public List<PlayerMap> selectPlayerByStatus(int status){
+		return PlayerMapMapper.selectPlayerByStatus(status);
 	}
 	
 	/***

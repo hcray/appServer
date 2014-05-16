@@ -1,5 +1,8 @@
 package com.krakentouch.server.action.impl;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.mina.core.session.IoSession;
@@ -13,6 +16,7 @@ import com.krakentouch.server.domain.StageMap;
 import com.krakentouch.server.service.GameService;
 import com.krakentouch.server.service.LoginService;
 import com.krakentouch.server.tools.JaxbUtil;
+import com.krakentouch.server.tools.ServerConstants;
 
 public class NewStageActionImpl implements NewStageAction {
 	
@@ -65,6 +69,22 @@ public class NewStageActionImpl implements NewStageAction {
 		
 		retStr = JaxbUtil.convertToXml(openStageCommand, "utf-8");
 		session.write(retStr);
+		
+		List<String> playerIdList = new ArrayList<String>();
+		//查厅状态的用户
+		List<PlayerMap> otherUsers = loginService.selectPlayerByStatus(ServerConstants.playerMap_status_queryHall);
+		for(PlayerMap player:otherUsers){
+			playerIdList.add(player.getPlayerID());
+		}
+		
+		Collection<IoSession> sessions = session.getService().getManagedSessions().values();
+		for(IoSession s : sessions){
+			String tempPlayerId = (String) s.getAttribute("playerId");
+			if(playerIdList.contains(tempPlayerId)){
+				s.write(retStr);
+			}
+		}
+		
 		return retStr;
 	}
 

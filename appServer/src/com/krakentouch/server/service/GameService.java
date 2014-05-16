@@ -10,6 +10,7 @@ import com.krakentouch.server.bean.QueryGamesCommand;
 import com.krakentouch.server.domain.GameInfo;
 import com.krakentouch.server.domain.SeatMap;
 import com.krakentouch.server.domain.StageMap;
+import com.krakentouch.server.domain.StageView;
 import com.krakentouch.server.mapper.GameInfoMapper;
 import com.krakentouch.server.mapper.SeatMapMapper;
 import com.krakentouch.server.mapper.StageMapMapper;
@@ -108,6 +109,15 @@ public class GameService {
 	 */
 	public StageMap queryStageMapByStageSN(String stageSN){
 		return stageMapMapper.queryStageMapByStageSN(stageSN);
+	}
+	
+	/***
+	 * 根据状态查询在线用户
+	 * @param status
+	 * @return
+	 */
+	public List<StageView> queryStageViewByStatus(int status){
+		return stageMapMapper.queryStageViewByStatus(status);
 	}
 	
 	/***

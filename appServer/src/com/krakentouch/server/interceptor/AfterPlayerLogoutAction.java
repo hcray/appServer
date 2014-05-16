@@ -16,6 +16,7 @@ import com.krakentouch.server.bean.PlayerOnlineBean;
 import com.krakentouch.server.domain.PlayerMap;
 import com.krakentouch.server.service.LoginService;
 import com.krakentouch.server.tools.JaxbUtil;
+import com.krakentouch.server.tools.ServerConstants;
 
 @Aspect
 public class AfterPlayerLogoutAction {
@@ -32,14 +33,14 @@ public class AfterPlayerLogoutAction {
 		@SuppressWarnings("unchecked")
 		Map<String,String> commandMap = (Map<String, String>) args[1];
 		String playerId = commandMap.get("PlayerID");
-		String deskId = commandMap.get("DeskID");
+		//String deskId = commandMap.get("DeskID");
 		String command = commandMap.get("action");
 		
 		//PlayerInfo playerInfo = loginService.queryPlayerInfoById(playerId);
 		
 		//System.out.println("登录后通知其他的用户");
 		List<String> playerIdList = new ArrayList<String>();
-		List<PlayerMap> otherUsers = loginService.selectAllQueryStatusPlayer();
+		List<PlayerMap> otherUsers = loginService.selectPlayerByStatus(ServerConstants.playerMap_status_queryPlayers);
 		for(PlayerMap player:otherUsers){
 			playerIdList.add(player.getPlayerID());
 		}
@@ -50,8 +51,8 @@ public class AfterPlayerLogoutAction {
 		playerOnlineBean.setNote("success");
 		
 		PlayerOnline playerOnline = new PlayerOnline();
-		playerOnline.setDeskId(deskId);
-		playerOnline.setGameId("null");
+		//playerOnline.setDeskId(deskId);
+		//playerOnline.setGameId("null");
 		playerOnline.setPlayerId(playerId);
 		playerOnline.setStatus("1");
 		

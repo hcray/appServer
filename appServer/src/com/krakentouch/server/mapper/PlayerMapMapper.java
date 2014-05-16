@@ -23,7 +23,7 @@ public interface PlayerMapMapper {
 	
 	public PlayerInfo queryPlayerInfoById(String playerId);
 	
-	public List<PlayerMap> selectAllQueryStatusPlayer();
+	public List<PlayerMap> selectPlayerByStatus(int status);
 	
 	
 }

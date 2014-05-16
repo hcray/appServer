@@ -67,14 +67,14 @@
     </select>
     
     <!-- 所有询众态的用户 -->
-    <select id="selectAllQueryStatusPlayer" resultType="PlayerMap">
+    <select id="selectPlayerByStatus" resultType="PlayerMap" parameterType="int">
     	SELECT 
     		PLAYERID as playerId,
     		DESKID as deskId,
     		STATUS as status,
     		GAMEID as gameId
     	FROM PLAYERMAP 
-    	WHERE STATUS=1
+    	WHERE STATUS = #{status}#
     </select>
     
 	<!-- 当使用该Mybatis与Spring整合的时候，该文件必须和相应的Mapper接口文件同名，并在同一路径下 -->
