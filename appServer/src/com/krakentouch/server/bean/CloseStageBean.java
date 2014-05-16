@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name="TCP")
 @XmlType(name = "CloseStageBean", propOrder = { "command", "result", "note", "closeStageBeanValue"})
 public class CloseStageBean {
-	@XmlElement(name = "Command", required = true)
+	@XmlElement(name = "action", required = true)
 	private String command; // <Command>login</Command>
 	
 	@XmlElement(name = "Result", required = true)
