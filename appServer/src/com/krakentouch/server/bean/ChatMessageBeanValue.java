@@ -7,13 +7,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name="TCP")
-@XmlType(name = "ReceiveMessageBean", propOrder = { "command", "sn", "time", "senderId",
+@XmlRootElement(name="value")
+@XmlType(name = "ChatMessageBeanValue", propOrder = { "sn", "time", "senderId",
 		"recoverId", "memo"})
-public class ReceiveMessageBean {
-	@XmlElement(name = "Command", required = true)
-	private String command;//<Command>receiveMessage</Command>
-	
+public class ChatMessageBeanValue {
 	@XmlElement(name = "SN", required = true)
 	private int sn;//<SN>0</SN>
 	
@@ -28,14 +25,6 @@ public class ReceiveMessageBean {
 	
 	@XmlElement(name = "Memo", required = true)
 	private String memo;//<Memo>哈喽</Memo>
-
-	public String getCommand() {
-		return command;
-	}
-
-	public void setCommand(String command) {
-		this.command = command;
-	}
 
 	public int getSn() {
 		return sn;

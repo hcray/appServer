@@ -11,29 +11,22 @@ import org.apache.mina.core.session.IoSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.krakentouch.server.bean.CommandBean;
-import com.krakentouch.server.bean.EndStageCommand;
-import com.krakentouch.server.bean.JoinStageCommand;
 import com.krakentouch.server.bean.OpenStageCommand;
 import com.krakentouch.server.bean.OpenStageCommandValue;
 import com.krakentouch.server.bean.PlayerBean;
 import com.krakentouch.server.bean.Players;
 import com.krakentouch.server.bean.QueryAllStageCommand;
-import com.krakentouch.server.bean.ReceiveMessageBean;
 import com.krakentouch.server.bean.RefreshStageCommand;
 import com.krakentouch.server.bean.SearchPlayerCommand;
 import com.krakentouch.server.bean.SeatBean;
 import com.krakentouch.server.bean.SeatBeans;
 import com.krakentouch.server.bean.StageBean;
 import com.krakentouch.server.bean.StageBeans;
-import com.krakentouch.server.bean.StartStageCommand;
 import com.krakentouch.server.bean.StartupBean;
 import com.krakentouch.server.bean.StartupBeanValue;
-import com.krakentouch.server.domain.ChatLog;
 import com.krakentouch.server.domain.DeskMap;
 import com.krakentouch.server.domain.Player;
 import com.krakentouch.server.domain.PlayerMap;
-import com.krakentouch.server.domain.PlayerScore;
 import com.krakentouch.server.domain.SeatMap;
 import com.krakentouch.server.domain.StageMap;
 import com.krakentouch.server.service.ChatService;
@@ -721,7 +714,7 @@ public class MainAction {
 	 * </TCP>
 	 *
 	 */
-	public String[] doSendMessage(Map<String,String> commandMap){
+/*	public String[] doSendMessage(Map<String,String> commandMap){
 		String retStr = null;
 		String command = commandMap.get("Command"); //命令
 		String senderID = commandMap.get("SenderID");//发送者
@@ -744,7 +737,7 @@ public class MainAction {
 		commandBean.setNote("success");
 		retStr = JaxbUtil.convertToXml(commandBean, "utf-8");
 		
-		ReceiveMessageBean receiveMessageBean = new ReceiveMessageBean();
+		ChatMessageBean receiveMessageBean = new ChatMessageBean();
 		receiveMessageBean.setCommand("receiveMessage");
 		receiveMessageBean.setSn(chatLog.getSN());
 		receiveMessageBean.setTime(chatTime);
@@ -755,9 +748,9 @@ public class MainAction {
 		String receiveMessage = JaxbUtil.convertToXml(receiveMessageBean, "utf-8");
 		
 		return new String[]{retStr,receiveMessage};
-	}
+	}*/
 	
-	
+	/*	
 	public String[] doPresent(Map<String,String> commandMap) throws Exception{
 		//String command = commandMap.get("Command"); //命令
 		String senderID = commandMap.get("SenderID");//发送者
@@ -791,7 +784,7 @@ public class MainAction {
 			chatLog.setChatTime(chatTime);
 			chatService.insertChatLog(chatLog );
 			
-			ReceiveMessageBean senderPresentBean = new ReceiveMessageBean();
+			ChatMessageBean senderPresentBean = new ChatMessageBean();
 			senderPresentBean.setCommand("sendPresent");
 			senderPresentBean.setSn(chatLog.getSN());
 			senderPresentBean.setTime(chatLog.getChatTime());
@@ -814,7 +807,7 @@ public class MainAction {
 			chatLog.setMemo(rMemoBuffer.toString());
 			chatService.insertChatLog(chatLog);
 			
-			ReceiveMessageBean receivePresentBean = new ReceiveMessageBean();
+			ChatMessageBean receivePresentBean = new ChatMessageBean();
 			receivePresentBean.setCommand("receivePresent");
 			receivePresentBean.setSn(chatLog.getSN());
 			receivePresentBean.setTime(chatLog.getChatTime());
@@ -825,7 +818,7 @@ public class MainAction {
 			return new String[]{senderPresent, receivePresent};
 		}
 		
-	}
+	}*/
 	
 	public LoginService getLoginService() {
 		return loginService;
