@@ -573,6 +573,7 @@ public class MainAction {
 	 *
 	 * @return
 	 */
+	/*
 	public String doStartStage(Map<String,String> commandMap){
 		String retStr = null;
 		String command = commandMap.get("Command");
@@ -603,7 +604,7 @@ public class MainAction {
 		retStr = JaxbUtil.convertToXml(startStageCommand, "utf-8");
 		return retStr;
 	}
-	
+	*/
 	/**
 	 * 结分
 	 * @param commandMap

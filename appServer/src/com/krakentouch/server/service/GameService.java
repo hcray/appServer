@@ -89,8 +89,8 @@ public class GameService {
 	 * @param StageSN
 	 * @return
 	 */
-	public List<SeatMap> querySeatMapByStageSN(String StageSN){
-		return seatMapMapper.querySeatMapByStageSN(StageSN);
+	public List<SeatMap> querySeatMapByStageSN(String stageSN){
+		return seatMapMapper.querySeatMapByStageSN(stageSN);
 	}
 	
 	/**

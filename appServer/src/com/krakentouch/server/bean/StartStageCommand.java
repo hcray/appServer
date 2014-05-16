@@ -8,10 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name="TCP")
-@XmlType(name = "StartStageCommand", propOrder = { "command", "result", "note", "playerID",
-		"stageSN", "status"})
+@XmlType(name = "StartStageCommand", propOrder = { "command", "result", "note", "startStageCommandValue"})
 public class StartStageCommand {
-	@XmlElement(name = "Command", required = true)
+	@XmlElement(name = "action", required = true)
 	private String command; // <Command>login</Command>
 	
 	@XmlElement(name = "Result", required = true)
@@ -20,15 +19,9 @@ public class StartStageCommand {
 	@XmlElement(name="Note", required = true)
 	private String note; // <Note>....</Note> ----备注
 	
-	@XmlElement(name="StageSN",required = true)
-	private String stageSN;//<StageSN>abcdef</StageSN>
+	@XmlElement(name="value",required = true)
+	private StartStageCommandValue startStageCommandValue;
 	
-	@XmlElement(name="PlayerID",required = true)
-	private String playerID;//<PlayerID>CDEFGHIJKL</PlayerID>
-	
-	@XmlElement(name="Status",required = true)
-	private String status;//<Status>CDEFGHIJKL</Status>
-
 	public String getCommand() {
 		return command;
 	}
@@ -53,28 +46,13 @@ public class StartStageCommand {
 		this.note = note;
 	}
 
-	public String getStageSN() {
-		return stageSN;
+	public StartStageCommandValue getStartStageCommandValue() {
+		return startStageCommandValue;
 	}
 
-	public void setStageSN(String stageSN) {
-		this.stageSN = stageSN;
-	}
-
-	public String getPlayerID() {
-		return playerID;
-	}
-
-	public void setPlayerID(String playerID) {
-		this.playerID = playerID;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
+	public void setStartStageCommandValue(
+			StartStageCommandValue startStageCommandValue) {
+		this.startStageCommandValue = startStageCommandValue;
 	}
 
 }
