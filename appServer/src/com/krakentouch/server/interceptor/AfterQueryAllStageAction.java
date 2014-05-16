@@ -19,21 +19,10 @@ import com.krakentouch.server.tools.JaxbUtil;
 import com.krakentouch.server.tools.ServerConstants;
 
 /****
- * 对所有处于本游戏查厅态的用户（通过查询PlayerMap表获知）进行下行通知：
- * 	<TCP>
- * 		<action>NewStage</action>
- * 		<value>
- * 			<StageSN>1</StageSN>
- * 			<Status>0</Status>
- * 			<HostIndex>2</HostIndex>
- * 			<GameID>abcdef</GameID>
- * 			<PlayerID>ABCDEFGHIJ</PlayerID>
- * 		</value>
- * 	</TCP>
  * 
  * 对该用户以及所有处于询众态的用户（通过查询PlayerMap获知）进行下行通知：
  * <TCP>
- * 		<action>NewStage</action>
+ * 		<action>QueryAllStage</action>
  * 		<value>
  * 			<PlayerID>ABCDEFGHIJ</PlayerID>
  * 			<Status>2</Status>
@@ -43,11 +32,11 @@ import com.krakentouch.server.tools.ServerConstants;
  *
  */
 @Aspect
-public class AfterNewStageAction {
+public class AfterQueryAllStageAction {
 	
 	private LoginService loginService;
 	
-	@Pointcut("execution(* com.krakentouch.server.action.NewStageAction.*(..))")  
+	@Pointcut("execution(* com.krakentouch.server.action.QueryAllStageAction.*(..))")  
     private void anyMethod(){}//定义一个切入点
 	
 	@AfterReturning("anyMethod()")  
@@ -97,4 +86,5 @@ public class AfterNewStageAction {
 	public void setLoginService(LoginService loginService) {
 		this.loginService = loginService;
 	}
+	
 }
