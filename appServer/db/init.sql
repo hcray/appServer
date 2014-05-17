@@ -114,7 +114,8 @@ CREATE OR REPLACE VIEW playerView as
               m.deskid as deskid
        from playerinfo p ,
             playermap m 
-       where p.PlayerID = m.PlayerID;
+       where p.PlayerID = m.PlayerID
+       	and m.DelFlag = 0;
        
 /*** StageView视图**/       
 CREATE OR REPLACE VIEW StageView as

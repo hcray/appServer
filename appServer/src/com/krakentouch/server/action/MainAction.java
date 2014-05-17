@@ -247,8 +247,8 @@ public class MainAction {
 				session.write(retStr);
 			}
 			
-			retMap.put("command",command);
-			retMap.put("result",retStr);
+			//retMap.put("command",command);
+			//retMap.put("result",retStr);
 			LOG.debug("doCommand(String commandStr) out... ");
 		}catch(Exception e){
 			LOG.error(e.getMessage() + e.getCause());
