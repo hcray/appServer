@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name="TCP")
 @XmlType(name = "QueryGamesCommand", propOrder = { "command", "result", "note", "gmeInfoBeans" })
 public class QueryGamesCommand {
-	@XmlElement(name = "Command", required = true)
+	@XmlElement(name = "action", required = true)
 	private String command; // <Command>login</Command>
 	
 	@XmlElement(name = "Result", required = true)

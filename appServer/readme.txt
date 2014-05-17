@@ -5,8 +5,7 @@
 5、jvm内存大小的调整
 6、安装程序、注册成服务、系统所有情况的跑通 ---- 周五
 7、会话的记录----session
-
-
+   
 
 insert into playerinfo values('user1',1,'user1',1,1,'user1');
 insert into playerinfo values('user2',2,'user2',2,2,'user2');

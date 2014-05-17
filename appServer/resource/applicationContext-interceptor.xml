@@ -8,5 +8,18 @@
 	
 	<bean name="afterPlayerLogoutAction" class="com.krakentouch.server.interceptor.AfterPlayerLogoutAction" >
 		<property name="loginService" ref="loginService"/>
-	</bean>	
+	</bean>
+
+	<bean name="afterQueryAllStageAction" class="com.krakentouch.server.interceptor.AfterQueryAllStageAction" >
+		<property name="loginService" ref="loginService"/>
+	</bean>
+
+	<bean name="afterJoinStageAction" class="com.krakentouch.server.interceptor.AfterJoinStageAction" >
+		<property name="loginService" ref="loginService"/>
+	</bean>
+
+	<bean name="afterNewStageAction" class="com.krakentouch.server.interceptor.AfterNewStageAction" >
+		<property name="loginService" ref="loginService"/>
+	</bean>
+	
 </beans>
