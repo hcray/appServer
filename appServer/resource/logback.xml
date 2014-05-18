@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <configuration>
-	<substitutionProperty name="log.base" value="E:/log/appServerlog" />
+	<substitutionProperty name="log.base" value="../logs/appServer" />
 	<jmxConfigurator />
 	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
 

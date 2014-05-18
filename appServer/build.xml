@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="appServer" default="jar">
+	<!--
+	<property file="ant.properties"/>
+	-->
+	<property name="project.name" value="appServer" />
+	<property name="project.author" value="caiyingying" />
+	<property name="project.version" value="1.0" />
+	<!--
+      	系统目录定义
+    -->
+	<property name="release.dir" value="E:/appServer" />
+	<property name="src.dir" value="src" />
+	<property name="resource.dir" value="resource" />
+	<property name="build.dir" value="${release.dir}/classes" />
+	<property name="jarfile.dir" value="${release.dir}/bin" />
+	<property name="lib.dir" value="${release.dir}/lib" />
+	<property name="logs.dir" value="${release.dir}/logs" />
+
+	<property name="buildlib.dir" value="build-lib" />
+
+	<tstamp>
+		<format property="datestamp" pattern="yyyy-MM-dd" locale="zh" />
+	</tstamp>
+
+
+	<pathconvert property="lib" pathsep=" ">
+		<!--mapper,对路径组合方式进行控制-->
+		<mapper>
+			<!--chainedmapper 作用是联合多个mapper-->
+			<chainedmapper>
+				<!--过滤文件，将路径去掉，只保留文件名-->
+				<flattenmapper />
+				<!--过滤+转换器，将所有的文件名前面都加上一个lib，我们知道lib目录下面有jar包，  
+	                    lib/*的作用其实是将jar包名与路径进行组合形成如：lib/google.jar这样的相对路径  
+	                 -->
+				<globmapper from="*" to="../lib/*" />
+			</chainedmapper>
+		</mapper>
+		<!--按照mapper定义的格式组合lib目录下面的所有jar文件，形成诸如lib/jar1.jar lib/jar2.jar的字符串-->
+		<fileset dir="lib">
+			<include name="*.jar" />
+		</fileset>
+	</pathconvert>
+
+	<!--组合各个路径，构成MANIFEST.MF文件中Class-Path所需的字符串-->
+	<property name="libs" value="${lib}" />
+
+	<!--
+    	  初始化目录
+    -->
+	<target name="init">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${release.dir}" />
+		<!--
+		<mkdir dir="${release.dir}/${datestamp}" />
+		-->
+		<mkdir dir="${jarfile.dir}" />
+		<mkdir dir="${lib.dir}" />
+		<mkdir dir="${logs.dir}" />
+	</target>
+
+	<!--
+      	定义Class Path
+    -->
+	<path id="compile.classpath">
+		<fileset dir="lib" includes="**/*.jar" />
+	</path>
+
+	<!--
+    	 编译选项
+    -->
+	<property name="compiler.args" value="-encoding UTF-8" />
+
+	<patternset id="compiler.resources">
+		<include name="**/?*.properties" />
+		<include name="**/?*.script" />
+		<include name="**/?*.groovy" />
+		<include name="**/?*.drl" />
+		<include name="**/?*.xml" />
+		<include name="**/?*.html" />
+		<include name="**/?*.dtd" />
+		<include name="**/?*.tld" />
+		<include name="**/?*.gif" />
+		<include name="**/?*.png" />
+		<include name="**/?*.jpeg" />
+		<include name="**/?*.jpg" />
+		<include name="**/?*.sql" />
+	</patternset>
+
+	<!--
+      	编译Java文件并复制资源文件
+    -->
+	<target name="compile" depends="init" description="编译Java文件并复制资源文件">
+
+		<javac destdir="${build.dir}" fork="true" includeantruntime="true">
+			<compilerarg line="${compiler.args}" />
+			<classpath refid="compile.classpath" />
+			<src path="${src.dir}" />
+		</javac>
+
+
+		<copy todir="${build.dir}">
+			<fileset dir="${src.dir}">
+				<patternset refid="compiler.resources" />
+			</fileset>
+			<fileset dir="${resource.dir}">
+				<patternset refid="compiler.resources" />
+			</fileset>
+		</copy>
+		
+		<copy todir="${lib.dir}">
+			<fileset dir="lib" includes="**/*.jar"/>
+		</copy>
+		
+		<copy todir="${jarfile.dir}">
+			<fileset dir="start" includes="**/*.bat"/>
+		</copy>
+	</target>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+	<!--
+      	生成jar文件
+    -->
+	<property name="jarfilename" value="appServer.jar" />
+	<target name="jar" depends="clean,compile" description="生成jar文件">
+		<jar jarfile="${jarfile.dir}/appServer.jar" basedir="${build.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="com.krakentouch.server.bootstrap.BootstrapClass" />
+				<attribute name="Class-Path" value="${libs}" />
+				
+				<attribute name="Author" value="${project.author}" />
+				<section name="Shared">
+					<attribute name="Vendor" value="${project.author}" />
+					<attribute name="Version" value="${project.version}" />
+					<attribute name="Build" value="${build.number}" />
+					<attribute name="Date" value="${datestamp}" />
+				</section>
+
+				<section name="Copyright">
+					<attribute name="Copy" value="(C) ${project.author} 2014" />
+				</section>
+			</manifest>
+		</jar>
+    	<antcall target="clean"></antcall>
+	</target>
+
+
+</project>
