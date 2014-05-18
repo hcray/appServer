@@ -30,7 +30,7 @@ public class ConcludeGameActionImpl implements ConcludeGameAction {
 	public String doCommand(IoSession session, Map<String,String> commandMap) {
 		String retStr = null;
 		//得到座位的上的用户
-		String command = commandMap.get("Command");
+		String command = commandMap.get("action");
 		String stageSN = commandMap.get("StageSN");
 //		String playerID = commandMap.get("PlayerID");
 		

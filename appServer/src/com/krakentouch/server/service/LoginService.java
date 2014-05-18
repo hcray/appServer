@@ -78,8 +78,8 @@ public class LoginService {
 	 *	</TCP>
 	 * 
 	 */
-	public String login(Map<String, String> commandMap) throws Exception{
-		String retStr = null;
+	public PlayerMap login(Map<String, String> commandMap) throws Exception{
+		//String retStr = null;
 		PlayerMap playerMap = new PlayerMap();
 		String playerID = commandMap.get("PlayerID");
 		String deskID = commandMap.get("DeskID");
@@ -88,8 +88,10 @@ public class LoginService {
 		playerMap.setStatus(0);
 		playerMap.setLoginTime(new Date());
 		PlayerMapMapper.insertPlayer(playerMap);
-		int id = playerMap.getID(); 
+		
+		/*
 		System.out.println("id:"+id);
+		int id = playerMap.getID(); 
 		//返回
 		CommandBean commandBean = new CommandBean();
 		CommandBeanValue commandBeanValue = new CommandBeanValue();
@@ -104,8 +106,9 @@ public class LoginService {
 		commandBeanValue.setGameID("");
 		
 		commandBean.setCommandBeanValue(commandBeanValue);
-		retStr = JaxbUtil.convertToXml(commandBean, "utf-8");
-		return retStr;
+		retStr = JaxbUtil.convertToXml(commandBean, "utf-8");*/
+		
+		return playerMap;
 	}
 	
 	
@@ -119,9 +122,12 @@ public class LoginService {
 		String retStr = null;
 		PlayerMap playerMap = new PlayerMap();
 		String playerID = commandMap.get("PlayerID");
+		//String primaryKey = commandMap.get("primaryKey");
+		
 		playerMap.setPlayerID(playerID);
 		playerMap.setLogoutTime(new Date());//退出时间
 		playerMap.setDelFlag(1);//删除标志
+		//playerMap.setID(Integer.parseInt(primaryKey));
 		
 		PlayerMapMapper.updatePlayerStatus(playerMap);
 		
@@ -157,7 +163,7 @@ public class LoginService {
 		QueryScoreCommand queryScoreCommand = new QueryScoreCommand();
 		QueryScoreCommandValue queryScoreCommandValue = new QueryScoreCommandValue();
 		
-		queryScoreCommand.setCommand(commandMap.get("Command"));
+		queryScoreCommand.setCommand(commandMap.get("action"));
 		queryScoreCommand.setResult("1");
 		queryScoreCommand.setNote("success");
 		

@@ -32,7 +32,7 @@ public class QuerySeatActionImpl implements QuerySeatAction {
 		List<SeatMap> seatList = gameService.querySeatMapByStageSN(stageSN);
 		
 		RefreshStageCommand refreshStageCommand = new RefreshStageCommand();
-		refreshStageCommand.setCommand(commandMap.get("Command"));
+		refreshStageCommand.setCommand(commandMap.get("action"));
 		refreshStageCommand.setResult("1");
 		refreshStageCommand.setNote("success");
 		SeatBeans stageBeans = new SeatBeans();

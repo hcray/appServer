@@ -25,7 +25,7 @@ public class GiveGiftActionImpl implements GiveGiftAction {
 	@Override
 	public String doCommand(IoSession session, Map<String,String> commandMap) {
 		String senderPresent = "";
-		String command = commandMap.get("Command"); //命令
+		String command = commandMap.get("action"); //命令
 		String senderID = commandMap.get("SenderID");//发送者
 		String recoverID = commandMap.get("RecoverID");//接收者
 		int score = Integer.parseInt(commandMap.get("Score"));//分数

@@ -45,7 +45,7 @@ public class GameService {
 		}
 		
 		QueryGamesCommand queryGamesCommand = new QueryGamesCommand();
-		queryGamesCommand.setCommand(commandMap.get("Command"));
+		queryGamesCommand.setCommand(commandMap.get("action"));
 		queryGamesCommand.setResult("1");
 		queryGamesCommand.setNote("success");
 		GameInfoBeans gameInfoBeans = new GameInfoBeans();

@@ -13,6 +13,8 @@ import com.krakentouch.server.bean.EndStageCommand;
 import com.krakentouch.server.bean.EndStageCommandValue;
 import com.krakentouch.server.bean.PlayerOnline;
 import com.krakentouch.server.bean.PlayerOnlineBean;
+import com.krakentouch.server.bean.StartStageCommand;
+import com.krakentouch.server.bean.StartStageCommandValue;
 import com.krakentouch.server.domain.PlayerMap;
 import com.krakentouch.server.domain.SeatMap;
 import com.krakentouch.server.domain.StageMap;
@@ -42,12 +44,22 @@ public class CloseStageActionImpl implements CloseStageAction {
 	@Override
 	public String doCommand(IoSession session, Map<String,String> commandMap) {
 		String retStr = null;
-		//删除座位
-		String command = commandMap.get("Command");
+		
+		String command = commandMap.get("action");
 		String stageSN = commandMap.get("StageSN");
 		String playerId = commandMap.get("PlayerID");
+	
+		//需要通知的用户
+		Set<String> playerIdSet = new HashSet<String>();
+		Set<String> playerIdSetNotify = new HashSet<String>();
+		//本桌的用户
+		List<SeatMap> seatList = gameService.querySeatMapByStageSN(stageSN);
+		for(SeatMap seat:seatList){
+			playerIdSet.add(seat.getPlayerID());
+			playerIdSetNotify.add(seat.getPlayerID());
+		}
 		
-		
+		//删除座位
 		SeatMap seatMap = new SeatMap();
 		seatMap.setStageSN(Integer.parseInt(stageSN));
 		gameService.deleteSeatMap(seatMap);
@@ -77,15 +89,7 @@ public class CloseStageActionImpl implements CloseStageAction {
 		retStr = JaxbUtil.convertToXml(endStageCommand, "utf-8");
 		session.write(retStr);
 		
-		//需要通知的用户
-		Set<String> playerIdSet = new HashSet<String>();
-		Set<String> playerIdSetNotify = new HashSet<String>();
-		//本桌的用户
-		List<SeatMap> seatList = gameService.querySeatMapByStageSN(stageSN);
-		for(SeatMap seat:seatList){
-			playerIdSet.add(seat.getPlayerID());
-			playerIdSetNotify.add(seat.getPlayerID());
-		}
+	
 		
 		//查厅状态的用户
 		List<PlayerMap> otherUsers = loginService.selectPlayerByStatus(ServerConstants.playerMap_status_queryHall);
@@ -93,11 +97,23 @@ public class CloseStageActionImpl implements CloseStageAction {
 			playerIdSet.add(player.getPlayerID());
 		}
 		
+		StartStageCommand startStageCommand = new StartStageCommand();
+		startStageCommand.setCommand(command);
+		startStageCommand.setResult("1");
+		startStageCommand.setNote("success");
+		
+		StartStageCommandValue startStageCommandValue = new StartStageCommandValue();
+		startStageCommandValue.setStageSN(stageSN);
+		startStageCommandValue.setStatus(String.valueOf(ServerConstants.stageMap_status_shutDown));
+		startStageCommand.setStartStageCommandValue(startStageCommandValue);
+		
+		String notifyQuery = JaxbUtil.convertToXml(startStageCommand, "utf-8");
+		
 		Collection<IoSession> sessions = session.getService().getManagedSessions().values();
 		for(IoSession s : sessions){
 			String tempPlayerId = (String) s.getAttribute("playerId");
 			if(playerIdSet.contains(tempPlayerId)){
-				s.write(retStr);
+				s.write(notifyQuery);
 			}
 		}
 		
@@ -117,12 +133,8 @@ public class CloseStageActionImpl implements CloseStageAction {
 		PlayerOnline playerOnline = new PlayerOnline();
 		//playerOnline.setDeskId(deskId);
 		//playerOnline.setGameId("null");
-		playerOnline.setPlayerId(playerId);
-		playerOnline.setStatus(String.valueOf(ServerConstants.playerMap_status_play));
+		playerOnline.setStatus(String.valueOf(ServerConstants.playerMap_status_queryHall));
 		
-		playerOnlineBean.setPlayerOnline(playerOnline);
-		
-		String notify = JaxbUtil.convertToXml(playerOnlineBean, "utf-8");
 		
 		//询众状态的用户
 		List<PlayerMap> queryPlayers = loginService.selectPlayerByStatus(ServerConstants.playerMap_status_queryPlayers);
@@ -133,6 +145,9 @@ public class CloseStageActionImpl implements CloseStageAction {
 		for(IoSession s : sessions){
 			String tempPlayerId = (String) s.getAttribute("playerId");
 			if(playerIdSetNotify.contains(tempPlayerId)){
+				playerOnline.setPlayerId(tempPlayerId);
+				playerOnlineBean.setPlayerOnline(playerOnline);
+				String notify = JaxbUtil.convertToXml(playerOnlineBean, "utf-8");
 				s.write(notify);
 			}
 		}

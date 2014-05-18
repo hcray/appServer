@@ -45,7 +45,7 @@ public class AfterJoinStageAction {
 		IoSession session = (IoSession) args[0];
 		@SuppressWarnings("unchecked")
 		Map<String,String> commandMap = (Map<String, String>) args[1];
-		String command = commandMap.get("Command");
+		String command = commandMap.get("action");
 		String stageSN = commandMap.get("StageSN");
 		String playerID = commandMap.get("PlayerID");
 		String seatIndex = commandMap.get("SeatIndex");
@@ -53,7 +53,10 @@ public class AfterJoinStageAction {
 		List<String> playerIdList = new ArrayList<String>();
 		List<PlayerMap> otherUsers = loginService.selectPlayerByStatus(ServerConstants.playerMap_status_queryHall);
 		for(PlayerMap player:otherUsers){
-			playerIdList.add(player.getPlayerID());
+			//排除自己,自己已经通知过了
+			if(!playerID.equals(player.getPlayerID())){
+				playerIdList.add(player.getPlayerID());
+			}
 		}
 		
 		JoinStageCommand joinStageCommand = new JoinStageCommand();

@@ -352,11 +352,11 @@ public class MainAction {
 	 * @throws Exception 
 	 * 
 	 */
-	public String doLogin(Map<String,String> commandMap) throws Exception{
+	/*public String doLogin(Map<String,String> commandMap) throws Exception{
 		String retStr = loginService.login(commandMap);
 		return retStr;
 	}
-	
+	*/
 	/**
 	 * 注销
 	 * @param commandMap
@@ -437,7 +437,7 @@ public class MainAction {
 		openStageCommandValue.setSeatIndex(0);
 		openStageCommandValue.setStatus(3);
 		
-		openStageCommand.setOpenStageCommand(openStageCommand);
+		openStageCommand.setOpenStageCommandValue(openStageCommandValue);
 		
 		retStr = JaxbUtil.convertToXml(openStageCommand, "utf-8");
 		return retStr;

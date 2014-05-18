@@ -32,11 +32,14 @@ public class ComputeScoreActionImpl implements ComputeScoreAction {
 		String prop0 = commandMap.get("Prop0");
 		
 		try{
+			//原来的分数
+			PlayerScore oldPlayerScore = loginService.queryScoreBean(playerId);
+			
 			PlayerScore playerScore = new PlayerScore();
-			playerScore.setMoney(Integer.parseInt(money));
 			playerScore.setPlayerID(playerId);
-			playerScore.setScore(Integer.parseInt(score));
-			playerScore.setProp0(Integer.parseInt(prop0));
+			playerScore.setMoney(oldPlayerScore.getMoney() + Integer.parseInt(money));
+			playerScore.setScore(oldPlayerScore.getScore() + Integer.parseInt(score));
+			playerScore.setProp0(oldPlayerScore.getProp0() + Integer.parseInt(prop0));
 			
 			loginService.updatePlayerScore(playerScore);
 			

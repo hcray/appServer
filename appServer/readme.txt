@@ -5,7 +5,8 @@
 5、jvm内存大小的调整
 6、安装程序、注册成服务、系统所有情况的跑通 ---- 周五
 7、会话的记录----session
-8、传输内容的加密
+8、传输内容的加密 (SSL)
+9、异常的处理，没有初始化的登录，没有初始化的查分，没有登录的后续操作
    
 
 insert into playerinfo values('user1',1,'user1',1,1,'user1');
@@ -55,6 +56,29 @@ insert into playerscore values('user10',100,100,100);
 <TCP><action>PlayerLogout</action><value><PlayerID>user4</PlayerID></value></TCP>
 用户查分
 <TCP><action>QueryScore</action><value><PlayerID>user4</PlayerID></value></TCP>
+
+游戏
+查游：
+<TCP><action>QueryGame</action></TCP>
+开桌：
+<TCP><action>NewStage</action><value><GameID>game1</GameID><HostIndex>2</HostIndex><PlayerID>user4</PlayerID></value></TCP>
+查厅：
+<TCP><action>QueryAllStage</action><value><GameID>game1</GameID><PlayerID>user6</PlayerID></value></TCP>
+查座：然后根据每一个StageSN依次发出
+<TCP><action>QuerySeat</action><value><StageSN>2</StageSN></value></TCP>
+参桌：发出
+<TCP><action>JoinStage</action><value><StageSN>2</StageSN><PlayerID>user6</PlayerID><SeatIndex>1</SeatIndex></value></TCP>
+开玩：首先由桌主发出
+<TCP><action>BeginGame</action><value><StageSN>12</StageSN><PlayerID>user4</PlayerID></value></TCP>
+结分：首先由桌主发出
+<TCP><action>ConcludeGame</action><value><StageSN>12</StageSN><PlayerID>user4</PlayerID></value></TCP>
+算分：然后所有用户发出
+<TCP><action>ComputeScore</action><value><PlayerID>user4</PlayerID><Score>20</Score><Money>20</Money><Prop0>20</Prop0></value></TCP>
+收桌：首先由桌主发出
+<TCP><action>CloseStage</action><value><StageSN>12</StageSN><PlayerID>user4</PlayerID></value></TCP>
+
+
+
 社交:
 询众
 <TCP><action>QueryAllPlayer</action><value><PlayerID>user4</PlayerID></value></TCP>

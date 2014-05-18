@@ -24,24 +24,31 @@
 			SCORE as Score,
 			MONEY as Money,
 			PROP0 as Prop0
-    	FROM PLAYERSCORE WHERE PLAYERID = #{PlayerID}#
+    	FROM PLAYERSCORE
+    	WHERE PLAYERID = #{PlayerID}#
     </select>
     
     <update id="updatePlayerStatus" parameterType="PlayerMap">
     	UPDATE PLAYERMAP
     	<set>
 	      <if test="Status != null">STATUS = #{Status},</if>
-	      <if test="DeskID != null">DESKID=#{DeskID},</if>
-	      <if test="Status != null">STATUS=#{Status},</if>
-	      <if test="GameID != null">GAMEID=#{GameID},</if>
-	      <if test="LogoutTime != null">LOGOUTTIME=#{LogoutTime},</if>
-	      <if test="DelFlag != null">DELFLAG=#{DelFlag}</if>
+	      <if test="DeskID != null">DESKID = #{DeskID},</if>
+	      <if test="GameID != null">GAMEID = #{GameID},</if>
+	      <if test="LogoutTime != null">LOGOUTTIME = #{LogoutTime},</if>
+	      <if test="DelFlag != null">DELFLAG = #{DelFlag}</if>
     	</set>
-    	WHERE PLAYERID = #{PlayerID}# and DELFLAG = 0
+    	WHERE DELFLAG = 0
+    	and PLAYERID = #{PlayerID}#
     </update>
     
     <update id="updatePlayerScore" parameterType="PlayerScore">
-    	UPDATE PLAYERSCORE SET SCORE = #{score} WHERE PLAYERID = #{PlayerID}#
+    	UPDATE PLAYERSCORE
+    	<set>
+    		<if test="Score != null">SCORE = #{Score},</if>
+	      	<if test="Money != null">MONEY=#{Money},</if>
+	      	<if test="Prop0 != null">PROP0=#{Prop0},</if>
+    	</set>
+    	WHERE PLAYERID = #{PlayerID}#
     </update>
     
     <select id="queryAllOnlinePlayer" resultType="Player">

@@ -21,7 +21,7 @@ public class QueryPlayerActionImpl implements QueryPlayerAction {
 	@Override
 	public String doCommand(IoSession session, Map<String,String> commandMap) {
 		String retStr = null;
-		String command = commandMap.get("Command");
+		String command = commandMap.get("action");
 		
 		List<Player> playerlist = loginService.queryAllOnlinePlayer();
 		List<PlayerBean> playerBeans = new ArrayList<PlayerBean>();
