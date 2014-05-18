@@ -15,6 +15,7 @@
 	<property name="build.dir" value="${release.dir}/classes" />
 	<property name="jarfile.dir" value="${release.dir}/bin" />
 	<property name="lib.dir" value="${release.dir}/lib" />
+	<property name="conf.dir" value="${release.dir}/conf" />
 	<property name="logs.dir" value="${release.dir}/logs" />
 
 	<property name="buildlib.dir" value="build-lib" />
@@ -57,6 +58,7 @@
 		-->
 		<mkdir dir="${jarfile.dir}" />
 		<mkdir dir="${lib.dir}" />
+		<mkdir dir="${conf.dir}" />
 		<mkdir dir="${logs.dir}" />
 	</target>
 
