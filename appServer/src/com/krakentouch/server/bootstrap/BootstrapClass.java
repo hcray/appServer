@@ -1,9 +1,8 @@
 package com.krakentouch.server.bootstrap;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import java.util.Calendar;
 
-import com.krakentouch.server.domain.User;
-import com.krakentouch.server.service.UserService;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class BootstrapClass {
 
@@ -31,9 +30,15 @@ public class BootstrapClass {
 			e.printStackTrace();
 		}
 		 */
-		ClassPathXmlApplicationContext ct = new ClassPathXmlApplicationContext("applicationContext.xml");
+		//ClassPathXmlApplicationContext ct = 
+		Calendar calendar = Calendar.getInstance();
+		long startTime = calendar.getTimeInMillis();
+		new ClassPathXmlApplicationContext("applicationContext.xml");
 		
-		System.out.println("Server started...");
+		calendar = Calendar.getInstance();
+		long endTime = calendar.getTimeInMillis();
+		
+		System.out.println("Server startup in " + (endTime-startTime) +" ms");
 		/*
 		UserService userService = (UserService) ct.getBean("userService");
 		User user = new User();

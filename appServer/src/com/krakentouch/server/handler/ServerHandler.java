@@ -2,13 +2,11 @@ package com.krakentouch.server.handler;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
-import org.apache.mina.filter.logging.MdcInjectionFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +19,7 @@ public class ServerHandler extends IoHandlerAdapter {
 	//session集合
     private final Set<IoSession> sessions = Collections.synchronizedSet(new HashSet<IoSession>());
     //用户集合
-    private final Set<String> users = Collections.synchronizedSet(new HashSet<String>());
+    //private final Set<String> users = Collections.synchronizedSet(new HashSet<String>());
 	
 	private UserService userService;
 	
