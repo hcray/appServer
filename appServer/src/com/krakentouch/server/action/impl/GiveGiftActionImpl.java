@@ -35,85 +35,82 @@ public class GiveGiftActionImpl implements GiveGiftAction {
 		try {
 			PlayerScore playerScore = loginService.queryScoreBean(senderID);
 			PlayerScore recoverScore = loginService.queryScoreBean(recoverID);
-			if(playerScore.getScore() < score || playerScore.getMoney() < money || playerScore.getProp0() < prop0){
-				senderPresent = "score or money or prop0 is not enough";
-			}else{
-				//发送者减少
-				playerScore.setScore(playerScore.getScore() - score);
-				playerScore.setMoney(playerScore.getMoney() - money);
-				playerScore.setProp0(playerScore.getProp0() - prop0);
-				loginService.updatePlayerScore(playerScore);
-				
-				ChatLog chatLog = new ChatLog();
-				chatLog.setSenderID("0000000000"); //系统发送
-				chatLog.setRecoverID(senderID);
-				StringBuffer memoBuffer = new StringBuffer();
-				memoBuffer.append("您赠送 ").append(recoverID);
-				if(score != 0) memoBuffer.append(" score:").append(score);
-				if(money != 0) memoBuffer.append(" money:").append(money);
-				if(prop0 != 0) memoBuffer.append(" prop0:").append(prop0);
-				chatLog.setMemo(memoBuffer.toString());
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-				String chatTime = sdf.format(new Date());
-				chatLog.setChatTime(chatTime);
-				chatService.insertChatLog(chatLog );
-				
-				ChatMessageBean senderPresentBean = new ChatMessageBean();
-				senderPresentBean.setCommand(command);
-				senderPresentBean.setResult("1");
-				senderPresentBean.setNote("success");
-				
-				ChatMessageBeanValue senderPresentBeanValue = new ChatMessageBeanValue();
-				
-				senderPresentBeanValue.setSn(chatLog.getSN());
-				senderPresentBeanValue.setTime(chatLog.getChatTime());
-				senderPresentBeanValue.setRecoverId(chatLog.getRecoverID());
-				senderPresentBeanValue.setSenderId(chatLog.getSenderID());
-				senderPresentBeanValue.setMemo(chatLog.getMemo());
-				
-				senderPresent = JaxbUtil.convertToXml(senderPresentBean, "utf-8");
-				
-				session.write(senderPresent);
-				
-				//接受者增加
-				
-				recoverScore.setScore(recoverScore.getScore() + score);
-				recoverScore.setMoney(recoverScore.getMoney() + money);
-				recoverScore.setProp0(recoverScore.getProp0() + prop0);
-				loginService.updatePlayerScore(recoverScore);
-				chatLog.setRecoverID(recoverID);
-				StringBuffer rMemoBuffer = new StringBuffer();
-				rMemoBuffer.append(senderID).append("赠送您 ");
-				if(score != 0) rMemoBuffer.append(" score:").append(score);
-				if(money != 0) rMemoBuffer.append(" money:").append(money);
-				if(prop0 != 0) rMemoBuffer.append(" prop0:").append(prop0);
-				chatLog.setMemo(rMemoBuffer.toString());
-				chatService.insertChatLog(chatLog);
-				
-				ChatMessageBean receivePresentBean = new ChatMessageBean();
-				receivePresentBean.setCommand("receivePresent");
-				receivePresentBean.setResult("1");
-				receivePresentBean.setNote("success");
-				
-				ChatMessageBeanValue receivePresentBeanValue = new ChatMessageBeanValue();
-				
-				receivePresentBeanValue.setSn(chatLog.getSN());
-				receivePresentBeanValue.setTime(chatLog.getChatTime());
-				receivePresentBeanValue.setRecoverId(chatLog.getRecoverID());
-				receivePresentBeanValue.setSenderId(chatLog.getSenderID());
-				receivePresentBeanValue.setMemo(chatLog.getMemo());
-				
-				receivePresentBean.setChatMessageBeanValue(receivePresentBeanValue);
-				//接受者的信息
-				String receivePresent = JaxbUtil.convertToXml(receivePresentBean, "utf-8");
+			//发送者减少
+			playerScore.setScore(playerScore.getScore() - score);
+			playerScore.setMoney(playerScore.getMoney() - money);
+			playerScore.setProp0(playerScore.getProp0() - prop0);
+			loginService.updatePlayerScore(playerScore);
 			
-				Collection<IoSession> sessions = session.getService().getManagedSessions().values();
-				
-				for(IoSession s : sessions){
-					String tempPlayerId = (String) s.getAttribute("playerId");
-					if(recoverID.equalsIgnoreCase(tempPlayerId)){
-						s.write(receivePresent);
-					}
+			ChatLog chatLog = new ChatLog();
+			chatLog.setSenderID("0000000000"); //系统发送
+			chatLog.setRecoverID(senderID);
+			StringBuffer memoBuffer = new StringBuffer();
+			memoBuffer.append("您赠送 ").append(recoverID);
+			if(score != 0) memoBuffer.append(" score:").append(score);
+			if(money != 0) memoBuffer.append(" money:").append(money);
+			if(prop0 != 0) memoBuffer.append(" prop0:").append(prop0);
+			chatLog.setMemo(memoBuffer.toString());
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			String chatTime = sdf.format(new Date());
+			chatLog.setChatTime(chatTime);
+			chatService.insertChatLog(chatLog );
+			
+			ChatMessageBean senderPresentBean = new ChatMessageBean();
+			senderPresentBean.setCommand(command);
+			senderPresentBean.setResult("1");
+			senderPresentBean.setNote("success");
+			
+			ChatMessageBeanValue senderPresentBeanValue = new ChatMessageBeanValue();
+			
+			senderPresentBeanValue.setSn(chatLog.getSN());
+			senderPresentBeanValue.setTime(chatLog.getChatTime());
+			senderPresentBeanValue.setRecoverId(chatLog.getRecoverID());
+			senderPresentBeanValue.setSenderId(chatLog.getSenderID());
+			senderPresentBeanValue.setMemo(chatLog.getMemo());
+			
+			senderPresentBean.setChatMessageBeanValue(senderPresentBeanValue);
+			
+			senderPresent = JaxbUtil.convertToXml(senderPresentBean, "utf-8");
+			//发送者的信息
+			session.write(senderPresent);
+			
+			//接受者增加
+			recoverScore.setScore(recoverScore.getScore() + score);
+			recoverScore.setMoney(recoverScore.getMoney() + money);
+			recoverScore.setProp0(recoverScore.getProp0() + prop0);
+			loginService.updatePlayerScore(recoverScore);
+			chatLog.setRecoverID(recoverID);
+			StringBuffer rMemoBuffer = new StringBuffer();
+			rMemoBuffer.append(senderID).append("赠送您 ");
+			if(score != 0) rMemoBuffer.append(" score:").append(score);
+			if(money != 0) rMemoBuffer.append(" money:").append(money);
+			if(prop0 != 0) rMemoBuffer.append(" prop0:").append(prop0);
+			chatLog.setMemo(rMemoBuffer.toString());
+			chatService.insertChatLog(chatLog);
+			
+			ChatMessageBean receivePresentBean = new ChatMessageBean();
+			receivePresentBean.setCommand(command);
+			receivePresentBean.setResult("1");
+			receivePresentBean.setNote("success");
+			
+			ChatMessageBeanValue receivePresentBeanValue = new ChatMessageBeanValue();
+			
+			receivePresentBeanValue.setSn(chatLog.getSN());
+			receivePresentBeanValue.setTime(chatLog.getChatTime());
+			receivePresentBeanValue.setRecoverId(chatLog.getRecoverID());
+			receivePresentBeanValue.setSenderId(chatLog.getSenderID());
+			receivePresentBeanValue.setMemo(chatLog.getMemo());
+			
+			receivePresentBean.setChatMessageBeanValue(receivePresentBeanValue);
+			//接收者的信息
+			String receivePresent = JaxbUtil.convertToXml(receivePresentBean, "utf-8");
+		
+			Collection<IoSession> sessions = session.getService().getManagedSessions().values();
+			
+			for(IoSession s : sessions){
+				String tempPlayerId = (String) s.getAttribute("playerId");
+				if(recoverID.equalsIgnoreCase(tempPlayerId)){
+					s.write(receivePresent);
 				}
 			}
 		} catch (Exception e) {

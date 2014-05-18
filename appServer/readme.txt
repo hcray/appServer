@@ -1,5 +1,5 @@
 1、登陆，登出的用户id的保存
-2、跨JVM的乱码问题
+2、跨JVM的乱码问题--不支持发送中文
 3、分层 AOP的通知  ---- 周三
 4、返回值的value区分 ---- 周四
 5、jvm内存大小的调整
@@ -78,7 +78,12 @@ insert into playerscore values('user10',100,100,100);
 <TCP><action>CloseStage</action><value><StageSN>12</StageSN><PlayerID>user4</PlayerID></value></TCP>
 
 
-
 社交:
 询众
 <TCP><action>QueryAllPlayer</action><value><PlayerID>user4</PlayerID></value></TCP>
+询人：发出
+<TCP><action>QueryPlayer</action></TCP>
+聊天：由发送方用户发出
+<TCP><action>Chat</action><value><SenderID>user4</SenderID><RecoverID>user6</RecoverID><Memo>11</Memo></value></TCP>
+赠予：由发送方用户发出
+<TCP><action>GiveGift</action><value><SenderID>user4</SenderID><RecoverID>user6</RecoverID><Score>10</Score><Money>20</Money><Prop0>2</Prop0></value></TCP>
