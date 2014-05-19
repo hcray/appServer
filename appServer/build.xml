@@ -128,6 +128,7 @@
     -->
 	<property name="jarfilename" value="appServer.jar" />
 	<target name="jar" depends="clean,compile" description="生成jar文件">
+		<buildnumber/>
 		<jar jarfile="${jarfile.dir}/appServer.jar" basedir="${build.dir}">
 			<manifest>
 				<attribute name="Main-Class" value="com.krakentouch.server.bootstrap.BootstrapClass" />
